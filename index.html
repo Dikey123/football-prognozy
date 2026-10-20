@@ -83,6 +83,19 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .exp-go{display:flex;gap:8px;flex-wrap:wrap}
 .exp-go .primary{background:linear-gradient(90deg,var(--accent),var(--ai));color:#fff;border:0;font-weight:600;padding:10px 18px;border-radius:999px;cursor:pointer;font:inherit;font-size:14px}
 .exp-warn{font-size:13px;color:var(--warn);background:color-mix(in srgb,var(--warn) 13%,transparent);border-radius:8px;padding:11px 13px}
+.exp-status{font-size:12px;color:var(--muted);font-family:var(--mono)}
+.paywall{background:var(--surface);border:1px solid var(--ai);border-radius:14px;padding:22px 18px;display:flex;flex-direction:column;align-items:center;gap:12px;text-align:center}
+.pw-ic{font-size:34px}
+.paywall h3{font-family:var(--display);font-weight:700;font-size:20px;text-transform:uppercase;margin:0;color:var(--ink)}
+.paywall p{margin:0;color:var(--muted);font-size:14px;max-width:44ch}
+.paywall p b{color:var(--ink)}
+.pw-pay{display:flex;flex-direction:column;gap:7px;align-items:center;background:var(--ai-soft);border-radius:10px;padding:12px 16px;width:100%}
+.pw-pay>span{font-size:13px;color:var(--muted)}
+.pw-num{display:flex;align-items:center;gap:10px;flex-wrap:wrap;justify-content:center}
+.pw-num b{font-family:var(--mono);font-size:21px;color:var(--ai);letter-spacing:.02em}
+.pw-num button{font:inherit;font-size:13px;border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:8px;padding:6px 12px;cursor:pointer}
+.paywall .primary{background:linear-gradient(90deg,var(--accent),var(--ai));color:#fff;border:0;font-weight:600;padding:12px 22px;border-radius:999px;cursor:pointer;font:inherit;font-size:15px}
+.pw-note{font-size:12px!important;color:var(--muted)}
 /* навигация */
 .tabs{position:sticky;top:env(safe-area-inset-top,0px);z-index:50;display:flex;gap:4px;overflow-x:auto;border-bottom:1px solid var(--line);scrollbar-width:thin;background:var(--bg);padding-top:6px}
 .tab{font:inherit;font-family:var(--display);font-weight:600;font-size:16px;text-transform:uppercase;letter-spacing:.02em;border:0;background:none;color:var(--muted);padding:10px 12px 9px;cursor:pointer;border-bottom:3px solid transparent;white-space:nowrap;display:flex;gap:6px;align-items:center}
@@ -282,7 +295,7 @@ function hexLum(c){if(c[0]!=="#")return .5;const n=c.length===4?c.slice(1).split
 function initials(name){const w=String(name).replace(/[«»"().]/g,"").trim().split(/\s+/);if(w.length>=2)return (w[0][0]+w[1][0]).toUpperCase();const s=w[0]||"";return s.length<=3?s.toUpperCase():s.slice(0,2).toUpperCase()}
 function badge(name){const bg=clubColor(name),fg=hexLum(bg)>0.6?"#111":"#fff";return '<span class="badge" style="background:'+bg+';color:'+fg+'">'+esc(initials(name))+'</span>'}
 
-let D=null,tab=null,filter="all",dateFilter="all",query="",favs=new Set(),expCfg=null,expResult=null;
+let D=null,tab=null,filter="all",dateFilter="all",query="",favs=new Set(),expCfg=null,expResult=null,expUse=null,expLocked=false;
 try{filter=localStorage.getItem("lch-filter")||"all"}catch(e){}
 try{favs=new Set(JSON.parse(localStorage.getItem("lch-favs")||"[]"))}catch(e){}
 function saveFavs(){try{localStorage.setItem("lch-favs",JSON.stringify([...favs]))}catch(e){}}
@@ -409,6 +422,11 @@ const CAT_ORDER=["Исход","Двойной шанс","Фора","Тотал �
 function defCfg(avail){return {cats:new Set(avail),target:4,tol:1,nmin:3,nmax:4}}
 function loadCfg(){try{const s=JSON.parse(localStorage.getItem("lch-exp")||"null");if(s&&s.cats)return {cats:new Set(s.cats),target:s.target,tol:s.tol,nmin:s.nmin,nmax:s.nmax}}catch(e){}return null}
 function saveCfg(c){try{localStorage.setItem("lch-exp",JSON.stringify({cats:[...c.cats],target:c.target,tol:c.tol,nmin:c.nmin,nmax:c.nmax}))}catch(e){}}
+function dayStr(){const d=new Date();return d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate()}
+function loadUse(){let u;try{u=JSON.parse(localStorage.getItem("lch-use")||"null")}catch(e){}if(!u)u={d:dayStr(),n:0,paid:0};if(u.d!==dayStr())u={d:dayStr(),n:0,paid:u.paid||0};return u}
+function saveUse(){try{localStorage.setItem("lch-use",JSON.stringify(expUse))}catch(e){}}
+function unlocked(){return expUse&&expUse.paid>Date.now()}
+const FREE_LIMIT=3;
 function buildExpress(cfg,pool,rand){
   const allowed=pool.filter(c=>cfg.cats.has(c.mk));
   const byM={};allowed.forEach(c=>{if(!byM[c.m._id]||c.odd<byM[c.m._id].odd)byM[c.m._id]=c});
@@ -440,7 +458,9 @@ function renderExpress(){
   const distinct=new Set(pool.map(c=>c.m._id)).size;
   if(distinct<2){v.innerHTML='<div class="detail"><button class="back" id="back">← Все матчи</button><div class="empty">Пока недостаточно матчей с коэффициентами, чтобы собрать экспресс. Загляните ближе к игровому дню.</div></div>';document.getElementById("back").onclick=()=>{location.hash=tab};return}
   if(!expCfg){expCfg=loadCfg()||defCfg(avail);if(!expCfg.cats||!expCfg.cats.size)expCfg.cats=new Set(avail)}
-  if(!expResult)expResult=buildExpress(expCfg,pool,false);
+  if(!expUse)expUse=loadUse();
+  const locked=expLocked&&!unlocked();
+  if(!expResult&&!locked)expResult=buildExpress(expCfg,pool,false);
   let h='<div class="detail"><button class="back" id="back">← Все матчи</button><div class="exp">'
    +'<div class="exp-head"><span class="ai-label" style="color:var(--accent)">⚡ Конструктор экспресса</span><p>Выберите рынки, желаемый коэффициент и количество событий — ИИ подберёт самые вероятные прогнозы под ваши параметры.</p></div>'
    +'<div class="exp-form">'
@@ -450,8 +470,11 @@ function renderExpress(){
      +'<div class="exp-num"><label>Количество событий</label><div class="row"><span>от</span><input id="exp-nmin" type="number" min="2" max="8" value="'+expCfg.nmin+'"><span>до</span><input id="exp-nmax" type="number" min="2" max="8" value="'+expCfg.nmax+'"></div></div>'
    +'</div>'
    +'<div class="exp-go"><button class="primary" id="build">Собрать экспресс</button><button class="chip" id="reroll">🎲 Другой вариант</button></div>'
+   +'<div class="exp-status">'+(unlocked()?'✅ Полный доступ активен (куплен на сегодня)':('Бесплатно осталось сегодня: '+Math.max(0,FREE_LIMIT-expUse.n)+' из '+FREE_LIMIT))+'</div>'
    +'</div>';
-  if(!expResult||expResult.error||!expResult.legs||!expResult.legs.length){
+  if(locked){
+    h+='<div class="paywall"><div class="pw-ic">🔒</div><h3>Лимит бесплатных экспрессов исчерпан</h3><p>Вы собрали '+FREE_LIMIT+' бесплатных экспресса сегодня. Полный доступ к конструктору — <b>100 ₽ на 1 день</b>.</p><div class="pw-pay"><span>Оплата по СБП на номер:</span><div class="pw-num"><b>8 965 456 24 91</b><button id="pwcopy">Копировать</button></div></div><button class="primary" id="pwpaid">Я оплатил — открыть на день</button><p class="pw-note">После оплаты нажмите кнопку — доступ к конструктору откроется на 24 часа.</p></div>';
+  }else if(!expResult||expResult.error||!expResult.legs||!expResult.legs.length){
     h+='<div class="exp-warn">Под эти параметры не нашлось событий. Добавьте категории ставок, увеличьте разброс коэффициента или уменьшите «от» в количестве событий.</div>';
   }else{
     const legs=expResult.legs,total=legs.reduce((a,c)=>a*c.odd,1),payout=Math.round(total*1000),impl=Math.round(100/total);
@@ -463,8 +486,13 @@ function renderExpress(){
   v.innerHTML=h;
   document.getElementById("back").onclick=()=>{location.hash=tab};
   v.querySelectorAll("[data-cat]").forEach(b=>b.onclick=()=>{readExpForm();const c=b.dataset.cat;if(expCfg.cats.has(c))expCfg.cats.delete(c);else expCfg.cats.add(c);saveCfg(expCfg);renderExpress()});
-  document.getElementById("build").onclick=()=>{readExpForm();saveCfg(expCfg);expResult=buildExpress(expCfg,pool,false);renderExpress()};
-  document.getElementById("reroll").onclick=()=>{readExpForm();saveCfg(expCfg);expResult=buildExpress(expCfg,pool,true);renderExpress()};
+  function gen(rand){if(!unlocked()&&expUse.n>=FREE_LIMIT){expLocked=true;renderExpress();return}if(!unlocked()){expUse.n++;saveUse()}expLocked=false;expResult=buildExpress(expCfg,pool,rand);renderExpress()}
+  document.getElementById("build").onclick=()=>{readExpForm();saveCfg(expCfg);gen(false)};
+  document.getElementById("reroll").onclick=()=>{readExpForm();saveCfg(expCfg);gen(true)};
+  if(locked){
+    const pc=document.getElementById("pwcopy");if(pc)pc.onclick=()=>{const num="89654562491";try{navigator.clipboard.writeText(num).then(()=>{pc.textContent="Скопировано ✓";setTimeout(()=>pc.textContent="Копировать",1500)},()=>{pc.textContent=num})}catch(e){pc.textContent=num}};
+    const pp=document.getElementById("pwpaid");if(pp)pp.onclick=()=>{expUse.paid=Date.now()+86400000;saveUse();expLocked=false;expResult=buildExpress(expCfg,pool,false);renderExpress()};
+  }
 }
 function renderDetail(m){
   const st=matchState(m),t=D.tournaments.find(x=>x.id===m._tab);
