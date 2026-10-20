@@ -48,6 +48,25 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .search{position:relative;display:flex;align-items:center}
 .search input{width:100%;font:inherit;font-size:15px;padding:10px 14px 10px 38px;border:1px solid var(--line);border-radius:10px;background:var(--surface);color:var(--ink)}
 .search svg{position:absolute;left:12px;width:18px;height:18px;color:var(--muted);pointer-events:none}
+.exp-btn{width:100%;font:inherit;font-weight:600;font-size:15px;font-family:var(--display);letter-spacing:.03em;text-transform:uppercase;color:#fff;background:linear-gradient(90deg,var(--accent),var(--ai));border:0;border-radius:12px;padding:13px;cursor:pointer}
+.exp-btn:hover{filter:brightness(1.08)}
+.exp{display:flex;flex-direction:column;gap:14px;margin-top:6px}
+.exp-head p{margin:4px 0 0;color:var(--muted);font-size:14px}
+.exp-list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px;counter-reset:e}
+.exp-item{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px 14px;display:flex;flex-direction:column;gap:8px;position:relative}
+.exp-item::before{counter-increment:e;content:counter(e);position:absolute;top:12px;right:14px;font-family:var(--mono);font-size:12px;color:var(--muted)}
+.exp-m{display:flex;flex-direction:column;gap:2px;text-decoration:none;color:inherit;padding-right:20px}
+.exp-teams{font-family:var(--display);font-weight:600;font-size:17px;text-transform:uppercase;line-height:1.05}
+.exp-meta{font-family:var(--mono);font-size:11px;color:var(--muted)}
+.exp-pick{display:flex;justify-content:space-between;align-items:center;gap:10px;border-top:1px dashed var(--line);padding-top:8px}
+.exp-pick .pk{font-weight:600;color:var(--pitch)}
+.exp-k{font-family:var(--mono);font-weight:700;font-size:16px}
+.exp-total{background:var(--ai-soft);border-radius:12px;padding:14px;display:flex;flex-direction:column;gap:8px}
+.exp-row{display:flex;justify-content:space-between;align-items:baseline;gap:10px;font-size:14px;color:var(--muted)}
+.exp-row b{font-family:var(--mono);color:var(--ink);font-size:18px;font-variant-numeric:tabular-nums}
+.exp-row.big b{font-size:24px;color:var(--ai)}
+.exp-ctl{display:flex;gap:8px;flex-wrap:wrap}
+.exp-note{font-size:12px;color:var(--muted);margin:0}
 /* навигация */
 .tabs{position:sticky;top:env(safe-area-inset-top,0px);z-index:50;display:flex;gap:4px;overflow-x:auto;border-bottom:1px solid var(--line);scrollbar-width:thin;background:var(--bg);padding-top:6px}
 .tab{font:inherit;font-family:var(--display);font-weight:600;font-size:16px;text-transform:uppercase;letter-spacing:.02em;border:0;background:none;color:var(--muted);padding:10px 12px 9px;cursor:pointer;border-bottom:3px solid transparent;white-space:nowrap;display:flex;gap:6px;align-items:center}
@@ -212,6 +231,7 @@ footer{font-size:12px;color:var(--muted);text-align:center;padding-top:18px}
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4-4"/></svg>
       <input id="search" type="search" placeholder="Поиск команды…" autocomplete="off" aria-label="Поиск команды">
     </div>
+    <button class="exp-btn" id="expbtn">⚡ Собрать экспресс дня</button>
   </div>
 
   <nav class="tabs" role="tablist" aria-label="Турниры" id="tabs"></nav>
@@ -246,7 +266,7 @@ function hexLum(c){if(c[0]!=="#")return .5;const n=c.length===4?c.slice(1).split
 function initials(name){const w=String(name).replace(/[«»"().]/g,"").trim().split(/\s+/);if(w.length>=2)return (w[0][0]+w[1][0]).toUpperCase();const s=w[0]||"";return s.length<=3?s.toUpperCase():s.slice(0,2).toUpperCase()}
 function badge(name){const bg=clubColor(name),fg=hexLum(bg)>0.6?"#111":"#fff";return '<span class="badge" style="background:'+bg+';color:'+fg+'">'+esc(initials(name))+'</span>'}
 
-let D=null,tab=null,filter="all",dateFilter="all",query="",favs=new Set();
+let D=null,tab=null,filter="all",dateFilter="all",query="",favs=new Set(),expN=4,expSel=null;
 try{filter=localStorage.getItem("lch-filter")||"all"}catch(e){}
 try{favs=new Set(JSON.parse(localStorage.getItem("lch-favs")||"[]"))}catch(e){}
 function saveFavs(){try{localStorage.setItem("lch-favs",JSON.stringify([...favs]))}catch(e){}}
@@ -342,6 +362,34 @@ function renderList(){
   const v=document.getElementById("view");v.innerHTML=html;
   bindFavs(v);
 }
+function expCands(){
+  const n=Date.now(),out=[];
+  allMatches().forEach(m=>{
+    if(m.status!=="full"||inst(m)<=n)return;
+    const o=m.odds||[],p1=o[0],p2=o[2];let side,odd;
+    if(p1!=null&&(p2==null||p1<=p2)){side="1";odd=Number(p1)}
+    else if(p2!=null){side="2";odd=Number(p2)}else return;
+    out.push({m,side,odd,pick:side==="1"?"Победа «"+m.home+"»":"Победа «"+m.away+"»",tab:m._tab});
+  });
+  out.sort((a,b)=>a.odd-b.odd);return out;
+}
+function renderExpress(){
+  const pool=expCands(),v=document.getElementById("view");
+  if(pool.length<3){v.innerHTML='<div class="detail"><button class="back" id="back">← Все матчи</button><div class="empty">Пока недостаточно матчей с коэффициентами, чтобы собрать экспресс. Загляните ближе к игровому дню.</div></div>';document.getElementById("back").onclick=()=>{location.hash=tab};return}
+  const N=Math.min(expN,pool.length);
+  if(!expSel||expSel.length!==N)expSel=pool.slice(0,N);
+  const total=expSel.reduce((a,c)=>a*c.odd,1),payout=Math.round(total*1000),impl=Math.round(100/total);
+  let h='<div class="detail"><button class="back" id="back">← Все матчи</button><div class="exp">'
+   +'<div class="exp-head"><span class="ai-label" style="color:var(--accent)">⚡ Экспресс дня от ИИ</span><p>'+N+' события с самым высоким шансом прохода по оценке букмекеров (фавориты с наименьшим коэффициентом). Чем ниже итоговый коэффициент — тем надёжнее.</p></div>'
+   +'<ol class="exp-list">'+expSel.map(c=>{const t=D.tournaments.find(x=>x.id===c.tab);return '<li class="exp-item"><a class="exp-m" href="#m-'+c.m._id+'"><span class="exp-teams">'+esc(c.m.home)+' — '+esc(c.m.away)+'</span><span class="exp-meta">'+esc(t.short||"")+' · '+esc(c.m.time)+' · шанс ~'+Math.round(100/c.odd)+'%</span></a><div class="exp-pick"><span class="pk">'+esc(c.pick)+'</span><span class="exp-k">'+c.odd.toFixed(2)+'</span></div></li>'}).join("")+'</ol>'
+   +'<div class="exp-total"><div class="exp-row"><span>Итоговый коэффициент</span><b>'+total.toFixed(2)+'</b></div><div class="exp-row"><span>Оценка вероятности прохода</span><b>~'+impl+'%</b></div><div class="exp-row big"><span>1000 ₽ принесут</span><b>'+payout.toLocaleString("ru-RU")+' ₽</b></div></div>'
+   +'<div class="exp-ctl"><button class="chip" data-n="3" aria-pressed="'+(expN===3)+'">3 события</button><button class="chip" data-n="4" aria-pressed="'+(expN===4)+'">4 события</button><button class="chip" id="reroll">🎲 Другой вариант</button></div>'
+   +'<p class="exp-note">Это аналитика на основе коэффициентов, а не гарантия. В экспрессе должны сыграть все события — одна осечка проигрывает всю ставку. 18+, ставки связаны с риском потери денег.</p></div>';
+  v.innerHTML=h;
+  document.getElementById("back").onclick=()=>{location.hash=tab};
+  v.querySelectorAll("[data-n]").forEach(b=>b.onclick=()=>{expN=+b.dataset.n;expSel=null;renderExpress()});
+  document.getElementById("reroll").onclick=()=>{const top=pool.slice(0,Math.min(8,pool.length)),idx=[...top.keys()],pick=[];while(pick.length<Math.min(expN,top.length)&&idx.length){pick.push(top[idx.splice(Math.floor(Math.random()*idx.length),1)[0]])}pick.sort((a,b)=>a.odd-b.odd);expSel=pick;renderExpress()};
+}
 function renderDetail(m){
   const st=matchState(m),t=D.tournaments.find(x=>x.id===m._tab);
   const url=location.origin+location.pathname+"#m-"+m._id;
@@ -373,6 +421,7 @@ let byId={};
 function route(){
   const h=(location.hash||"").replace(/^#/,"");
   if(h.indexOf("m-")===0){const m=byId[h.slice(2)];if(m){tab=m._tab;renderTabs();renderDetail(m);tickCd();scrollTo({top:0,behavior:"instant"in document.documentElement.style?"instant":"auto"});return}}
+  if(h==="express"){renderExpress();scrollTo({top:0,behavior:"auto"});return}
   const ids=D.tournaments.map(t=>t.id);
   if(ids.includes(h))tab=h;
   else if(!tab)tab=(D.tournaments.find(t=>t.matches.some(m=>m.date===D.today))||D.tournaments[0]).id;
@@ -401,6 +450,7 @@ document.getElementById("theme").onclick=()=>{
   try{localStorage.setItem("lch-theme",next)}catch(e){}
 };
 document.getElementById("search").addEventListener("input",e=>{query=e.target.value.trim().toLowerCase();if((location.hash||"").indexOf("#m-")===0)location.hash=tab;else renderList()});
+document.getElementById("expbtn").onclick=()=>{expSel=null;location.hash="express"};
 window.addEventListener("hashchange",route);
 fetch("data.json",{cache:"no-store"}).then(r=>{if(!r.ok)throw new Error(r.status);return r.json()}).then(boot).catch(()=>{document.getElementById("view").innerHTML='<div class="empty">Не удалось загрузить данные. Обновите страницу.</div>'});
 </script>
