@@ -59,7 +59,8 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .exp-teams{font-family:var(--display);font-weight:600;font-size:17px;text-transform:uppercase;line-height:1.05}
 .exp-meta{font-family:var(--mono);font-size:11px;color:var(--muted)}
 .exp-pick{display:flex;justify-content:space-between;align-items:center;gap:10px;border-top:1px dashed var(--line);padding-top:8px}
-.exp-pick .pk{font-weight:600;color:var(--pitch)}
+.exp-pick .pk{font-weight:600;color:var(--pitch);display:flex;align-items:center;gap:7px;flex-wrap:wrap;min-width:0}
+.exp-mk{font-family:var(--mono);font-size:10px;letter-spacing:.04em;text-transform:uppercase;color:var(--accent);background:var(--accent-soft);padding:2px 7px;border-radius:999px;font-weight:700}
 .exp-k{font-family:var(--mono);font-weight:700;font-size:16px}
 .exp-total{background:var(--ai-soft);border-radius:12px;padding:14px;display:flex;flex-direction:column;gap:8px}
 .exp-row{display:flex;justify-content:space-between;align-items:baseline;gap:10px;font-size:14px;color:var(--muted)}
@@ -362,33 +363,63 @@ function renderList(){
   const v=document.getElementById("view");v.innerHTML=html;
   bindFavs(v);
 }
+function parseK(k){if(k==null)return null;const n=parseFloat(String(k).replace(",","."));return isFinite(n)&&n>1.01&&n<30?n:null}
+function market(pick){const p=" "+String(pick).toLowerCase().trim()+" ";
+  if(/угл/.test(p))return"Угловые";
+  if(/удал|красн|карточ|желт|фол/.test(p))return"Карточки";
+  if(/обе заб|оба заб| оз /.test(p))return"Обе забьют";
+  if(/тотал больш| тб[ 0-9(]|больше [0-9]/.test(p))return"Тотал больше";
+  if(/тотал мен| тм[ 0-9(]|меньше [0-9]/.test(p))return"Тотал меньше";
+  if(/фора| ф1| ф2|ф1\(|ф2\(/.test(p))return"Фора";
+  if(/двойн|1х|х2|не проигр|не уступ/.test(p))return"Двойной шанс";
+  if(/счёт|счет|[0-9]\s*:\s*[0-9]/.test(p))return"Точный счёт";
+  if(/побед|выигр| п1 | п2 |индивид/.test(p))return"Исход";
+  return"Ставка";
+}
 function expCands(){
   const n=Date.now(),out=[];
   allMatches().forEach(m=>{
     if(m.status!=="full"||inst(m)<=n)return;
-    const o=m.odds||[],p1=o[0],p2=o[2];let side,odd;
-    if(p1!=null&&(p2==null||p1<=p2)){side="1";odd=Number(p1)}
-    else if(p2!=null){side="2";odd=Number(p2)}else return;
-    out.push({m,side,odd,pick:side==="1"?"Победа «"+m.home+"»":"Победа «"+m.away+"»",tab:m._tab});
+    const seen={};
+    const o=m.odds||[],p1=o[0],p2=o[2];
+    if(p1!=null&&(p2==null||p1<=p2)){out.push({m,odd:+p1,pick:"Победа «"+m.home+"»",mk:"Исход",tab:m._tab});seen["побед«"+m.home.toLowerCase()]=1}
+    else if(p2!=null){out.push({m,odd:+p2,pick:"Победа «"+m.away+"»",mk:"Исход",tab:m._tab})}
+    (m.tips||[]).forEach(t=>{const k=parseK(t.k);if(!k)return;const key=(t.pick||"").toLowerCase().replace(/[\s«»]/g,"");if(!key||seen[key])return;seen[key]=1;out.push({m,odd:k,pick:t.pick,mk:market(t.pick),tab:m._tab})});
   });
-  out.sort((a,b)=>a.odd-b.odd);return out;
+  out.forEach(c=>c.prob=1/c.odd);
+  out.sort((a,b)=>b.prob-a.prob);
+  return out;
+}
+function pickExpress(src,N){
+  const uM={},uT={},sel=[];
+  // 1-й проход: по одному самому вероятному событию КАЖДОГО типа рынка (разные матчи) — для разнообразия
+  for(const c of src){if(sel.length>=N)break;if(uM[c.m._id]||uT[c.mk])continue;uM[c.m._id]=1;uT[c.mk]=1;sel.push(c)}
+  // 2-й проход: добираем самыми вероятными из оставшихся матчей
+  if(sel.length<N)for(const c of src){if(sel.length>=N)break;if(uM[c.m._id])continue;uM[c.m._id]=1;sel.push(c)}
+  return sel;
+}
+function pickExpressRandom(pool,N){
+  const top=pool.slice(0,Math.min(18,pool.length)).slice();
+  for(let i=top.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));const x=top[i];top[i]=top[j];top[j]=x}
+  return pickExpress(top,N);
 }
 function renderExpress(){
   const pool=expCands(),v=document.getElementById("view");
-  if(pool.length<3){v.innerHTML='<div class="detail"><button class="back" id="back">← Все матчи</button><div class="empty">Пока недостаточно матчей с коэффициентами, чтобы собрать экспресс. Загляните ближе к игровому дню.</div></div>';document.getElementById("back").onclick=()=>{location.hash=tab};return}
-  const N=Math.min(expN,pool.length);
-  if(!expSel||expSel.length!==N)expSel=pool.slice(0,N);
+  const distinct=new Set(pool.map(c=>c.m._id)).size;
+  if(distinct<3){v.innerHTML='<div class="detail"><button class="back" id="back">← Все матчи</button><div class="empty">Пока недостаточно матчей с коэффициентами, чтобы собрать экспресс. Загляните ближе к игровому дню.</div></div>';document.getElementById("back").onclick=()=>{location.hash=tab};return}
+  const N=Math.min(expN,distinct);
+  if(!expSel)expSel=pickExpress(pool,N);
   const total=expSel.reduce((a,c)=>a*c.odd,1),payout=Math.round(total*1000),impl=Math.round(100/total);
   let h='<div class="detail"><button class="back" id="back">← Все матчи</button><div class="exp">'
-   +'<div class="exp-head"><span class="ai-label" style="color:var(--accent)">⚡ Экспресс дня от ИИ</span><p>'+N+' события с самым высоким шансом прохода по оценке букмекеров (фавориты с наименьшим коэффициентом). Чем ниже итоговый коэффициент — тем надёжнее.</p></div>'
-   +'<ol class="exp-list">'+expSel.map(c=>{const t=D.tournaments.find(x=>x.id===c.tab);return '<li class="exp-item"><a class="exp-m" href="#m-'+c.m._id+'"><span class="exp-teams">'+esc(c.m.home)+' — '+esc(c.m.away)+'</span><span class="exp-meta">'+esc(t.short||"")+' · '+esc(c.m.time)+' · шанс ~'+Math.round(100/c.odd)+'%</span></a><div class="exp-pick"><span class="pk">'+esc(c.pick)+'</span><span class="exp-k">'+c.odd.toFixed(2)+'</span></div></li>'}).join("")+'</ol>'
+   +'<div class="exp-head"><span class="ai-label" style="color:var(--accent)">⚡ Экспресс дня от ИИ</span><p>'+expSel.length+' самых вероятных события по оценке экспертов и букмекеров — исходы, форы, тоталы, «обе забьют», карточки и другие рынки. Чем ниже итоговый коэффициент — тем надёжнее экспресс.</p></div>'
+   +'<ol class="exp-list">'+expSel.map(c=>{const t=D.tournaments.find(x=>x.id===c.tab);return '<li class="exp-item"><a class="exp-m" href="#m-'+c.m._id+'"><span class="exp-teams">'+esc(c.m.home)+' — '+esc(c.m.away)+'</span><span class="exp-meta">'+esc(t.short||"")+' · '+esc(c.m.time)+' · шанс ~'+Math.round(100/c.odd)+'%</span></a><div class="exp-pick"><span class="pk"><span class="exp-mk">'+esc(c.mk)+'</span>'+esc(c.pick)+'</span><span class="exp-k">'+c.odd.toFixed(2)+'</span></div></li>'}).join("")+'</ol>'
    +'<div class="exp-total"><div class="exp-row"><span>Итоговый коэффициент</span><b>'+total.toFixed(2)+'</b></div><div class="exp-row"><span>Оценка вероятности прохода</span><b>~'+impl+'%</b></div><div class="exp-row big"><span>1000 ₽ принесут</span><b>'+payout.toLocaleString("ru-RU")+' ₽</b></div></div>'
    +'<div class="exp-ctl"><button class="chip" data-n="3" aria-pressed="'+(expN===3)+'">3 события</button><button class="chip" data-n="4" aria-pressed="'+(expN===4)+'">4 события</button><button class="chip" id="reroll">🎲 Другой вариант</button></div>'
-   +'<p class="exp-note">Это аналитика на основе коэффициентов, а не гарантия. В экспрессе должны сыграть все события — одна осечка проигрывает всю ставку. 18+, ставки связаны с риском потери денег.</p></div>';
+   +'<p class="exp-note">Это аналитика на основе коэффициентов и прогнозов, а не гарантия. В экспрессе должны сыграть все события — одна осечка проигрывает всю ставку. 18+, ставки связаны с риском потери денег.</p></div>';
   v.innerHTML=h;
   document.getElementById("back").onclick=()=>{location.hash=tab};
   v.querySelectorAll("[data-n]").forEach(b=>b.onclick=()=>{expN=+b.dataset.n;expSel=null;renderExpress()});
-  document.getElementById("reroll").onclick=()=>{const top=pool.slice(0,Math.min(8,pool.length)),idx=[...top.keys()],pick=[];while(pick.length<Math.min(expN,top.length)&&idx.length){pick.push(top[idx.splice(Math.floor(Math.random()*idx.length),1)[0]])}pick.sort((a,b)=>a.odd-b.odd);expSel=pick;renderExpress()};
+  document.getElementById("reroll").onclick=()=>{expSel=pickExpressRandom(pool,Math.min(expN,distinct));renderExpress()};
 }
 function renderDetail(m){
   const st=matchState(m),t=D.tournaments.find(x=>x.id===m._tab);
