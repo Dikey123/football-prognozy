@@ -82,6 +82,8 @@ button:focus-visible,a:focus-visible,summary:focus-visible,input:focus-visible{o
 .mid{display:flex;flex-direction:column;align-items:center;gap:3px}
 .time{font-family:var(--mono);font-weight:700;font-size:17px;background:var(--ink);color:var(--bg);padding:3px 10px;border-radius:4px}
 .time.live{background:var(--live);color:#fff}
+.mcd{font-family:var(--mono);font-size:11px;color:var(--accent);text-align:center;font-variant-numeric:tabular-nums;white-space:nowrap;margin-top:1px}
+.mcd.live{color:var(--live);font-weight:700}
 .venue{font-size:11px;color:var(--muted);text-align:center;max-width:16ch}
 .open-hint{display:block;font-family:var(--mono);font-size:12px;color:var(--accent);text-align:center;text-decoration:none;padding:9px;border-top:1px dashed var(--line);cursor:pointer}
 .open-hint:hover{background:var(--raise)}
@@ -206,7 +208,6 @@ footer{font-size:12px;color:var(--muted);text-align:center;padding-top:18px}
       </div>
       <button class="theme-btn" id="theme" title="Сменить тему" aria-label="Сменить тему">◐</button>
     </div>
-    <div class="countdown" id="countdown" hidden></div>
     <div class="search">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4-4"/></svg>
       <input id="search" type="search" placeholder="Поиск команды…" autocomplete="off" aria-label="Поиск команды">
@@ -235,6 +236,8 @@ const dLabel=s=>{const d=new Date(s+"T12:00:00");return DAYS[d.getDay()]+", "+d.
 const inst=m=>new Date(m.date+"T"+(m.time||"00:00")+":00+03:00").getTime();
 const LIVE_MS=115*60*1000;
 function matchState(m){const n=Date.now(),k=inst(m);if(n>=k&&n<k+LIVE_MS)return"live";if(n>=k+LIVE_MS)return"done";return"soon"}
+function tickCd(){document.querySelectorAll(".mcd[data-k]").forEach(el=>{el.textContent=fmtCd(+el.dataset.k)})}
+function fmtCd(k){const n=Date.now(),d=k-n;if(d<=0)return n<k+LIVE_MS?"идёт":"завершён";const dd=Math.floor(d/86400000);if(dd>=1)return "через "+dd+(dd===1?" день":dd<5?" дня":" дней");const hh=Math.floor(d/3600000),mm=Math.floor(d%3600000/60000),ss=Math.floor(d%60000/1000),p=x=>String(x).padStart(2,"0");if(hh>=1)return "через "+hh+" ч "+p(mm)+" мин";return "через "+p(mm)+":"+p(ss)}
 const TR={а:"a",б:"b",в:"v",г:"g",д:"d",е:"e",ё:"e",ж:"zh",з:"z",и:"i",й:"y",к:"k",л:"l",м:"m",н:"n",о:"o",п:"p",р:"r",с:"s",т:"t",у:"u",ф:"f",х:"h",ц:"c",ч:"ch",ш:"sh",щ:"sch",ъ:"",ы:"y",ь:"",э:"e",ю:"yu",я:"ya"};
 const slug=s=>String(s).toLowerCase().split("").map(c=>TR[c]!==undefined?TR[c]:/[a-z0-9]/.test(c)?c:"-").join("").replace(/-+/g,"-").replace(/^-|-$/g,"");
 let CLUB=[["псж","#004170"],["барселон","#a50044"],["реал","#00529f"],["ливерпул","#c8102e"],["манчестер сити","#6cabdd"],["манчестер юнайт","#da020e"],["атлетико","#272e61"],["арсенал","#ef0107"],["челси","#034694"],["тоттенхэм","#132257"],["бавария","#dc052d"],["боруссия","#fde100"],["наполи","#12a0d7"],["интер","#0068a8"],["милан","#fb090b"],["ювентус","#1a1a1a"],["рома","#8e1111"],["лацио","#87d8f7"],["аталанта","#1d1d1b"],["порту","#00428c"],["псв","#ed1c24"],["фенербахче","#1a3160"],["славия","#d7142a"],["сабах","#1b63b0"],["вильярреал","#ffe667"],["штутгарт","#e32219"],["буде","#ffd200"],["аек","#f8c300"],["марсель","#2faee0"],["лион","#da001a"],["лилль","#e01e13"],["монако","#e51b22"],["байер","#e32221"],["лейпциг","#dd0741"],["севилья","#d8010a"],["бетис","#00954c"]];
@@ -276,7 +279,7 @@ function cardInner(m,open){
   return h+'</div>';
 }
 function boardHead(m,st,asLink){
-  const t='<div class="mid"><div class="time'+(st==="live"?" live":"")+'">'+(st==="live"?"LIVE":st==="done"?"итог":esc(m.time))+'</div>'+(m.venue?'<div class="venue">'+esc(m.venue)+'</div>':"")+'</div>';
+  const t='<div class="mid"><div class="time'+(st==="live"?" live":"")+'">'+(st==="live"?"LIVE":esc(m.time))+'</div><div class="mcd'+(st==="live"?" live":"")+'" data-k="'+inst(m)+'">'+fmtCd(inst(m))+'</div>'+(m.venue?'<div class="venue">'+esc(m.venue)+'</div>':"")+'</div>';
   const inner='<div class="side-t"><span class="team">'+esc(m.home)+'</span></div>'+t+'<div class="side-t"><span class="team">'+esc(m.away)+'</span></div>';
   return asLink?'<a class="board" href="#m-'+m._id+'">'+inner+'</a>':'<div class="board">'+inner+'</div>';
 }
@@ -298,19 +301,6 @@ function allMatches(){const a=[];D.tournaments.forEach(t=>t.matches.forEach(m=>a
 function nextMatch(){const n=Date.now();return allMatches().filter(m=>inst(m)>n).sort((a,b)=>inst(a)-inst(b))[0]||null}
 function liveMatches(){return allMatches().filter(m=>matchState(m)==="live")}
 
-function renderCountdown(){
-  const el=document.getElementById("countdown");
-  const lv=liveMatches();
-  if(lv.length){const m=lv[0];el.hidden=false;el.innerHTML='<span class="cd-badge live">идёт сейчас</span><span class="cd-match">'+esc(m.home)+' — '+esc(m.away)+'</span><a class="cd-time live" href="#m-'+m._id+'" style="text-decoration:none">LIVE'+(lv.length>1?" +"+(lv.length-1):"")+'</a>';return}
-  const m=nextMatch();
-  if(!m){el.hidden=true;return}
-  const diff=inst(m)-Date.now();
-  const hh=Math.floor(diff/3600000),mm=Math.floor(diff%3600000/60000),ss=Math.floor(diff%60000/1000);
-  const pad=x=>String(x).padStart(2,"0");
-  const t=hh>=24?Math.floor(hh/24)+" д "+(hh%24)+" ч":pad(hh)+":"+pad(mm)+":"+pad(ss);
-  el.hidden=false;
-  el.innerHTML='<span class="cd-badge">до матча</span><a class="cd-match" href="#m-'+m._id+'" style="color:inherit;text-decoration:none">'+esc(m.home)+' — '+esc(m.away)+'</a><span class="cd-time">'+t+'</span>';
-}
 
 function renderTabs(){
   const liveByT={};liveMatches().forEach(m=>liveByT[m._tab]=1);
@@ -382,11 +372,11 @@ function bindFavs(root){
 let byId={};
 function route(){
   const h=(location.hash||"").replace(/^#/,"");
-  if(h.indexOf("m-")===0){const m=byId[h.slice(2)];if(m){tab=m._tab;renderTabs();renderCountdown();renderDetail(m);scrollTo({top:0,behavior:"instant"in document.documentElement.style?"instant":"auto"});return}}
+  if(h.indexOf("m-")===0){const m=byId[h.slice(2)];if(m){tab=m._tab;renderTabs();renderDetail(m);tickCd();scrollTo({top:0,behavior:"instant"in document.documentElement.style?"instant":"auto"});return}}
   const ids=D.tournaments.map(t=>t.id);
   if(ids.includes(h))tab=h;
   else if(!tab)tab=(D.tournaments.find(t=>t.matches.some(m=>m.date===D.today))||D.tournaments[0]).id;
-  renderTabs();renderCountdown();renderList();
+  renderTabs();renderList();tickCd();
   const at=document.getElementById("tab-"+tab);if(at)at.scrollIntoView({inline:"center",block:"nearest"});
 }
 function boot(data){
@@ -397,9 +387,9 @@ function boot(data){
   const up=new Date(D.updated);
   document.getElementById("foot").textContent="Обновлено "+up.getDate()+" "+MON[up.getMonth()]+" в "+String(up.getHours()).padStart(2,"0")+":"+String(up.getMinutes()).padStart(2,"0")+" · 18+ · Ставки связаны с риском потери денег";
   route();
-  clearInterval(window._tick);
-  window._tick=setInterval(()=>{renderCountdown();if((location.hash||"").indexOf("#m-")!==0&&!query){/* лёгкое обновление лайв-состояний раз в минуту */}},1000);
-  window._tick2=setInterval(()=>{const h=location.hash||"";renderTabs();if(h.indexOf("#m-")!==0)renderList();},60000);
+  clearInterval(window._tick);clearInterval(window._tick2);
+  window._tick=setInterval(tickCd,1000);
+  window._tick2=setInterval(()=>{const h=location.hash||"";renderTabs();if(h.indexOf("#m-")!==0)renderList();else{const m=byId[h.slice(2)];if(m)renderDetail(m)}tickCd()},60000);
 }
 // тема
 (function(){try{const s=localStorage.getItem("lch-theme");if(s)document.documentElement.setAttribute("data-theme",s)}catch(e){}})();
