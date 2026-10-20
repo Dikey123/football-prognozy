@@ -1,0 +1,870 @@
+{
+ "updated": "2026-10-21T00:49:58.242552",
+ "sources": {
+  "LiveSport.ru": {
+   "reg": "ru",
+   "win": 4,
+   "lose": 2,
+   "push": 1
+  },
+  "Metaratings": {
+   "reg": "ru",
+   "win": 5,
+   "lose": 3,
+   "push": 0
+  },
+  "Ставка ТВ": {
+   "reg": "ru",
+   "win": 5,
+   "lose": 0,
+   "push": 0
+  },
+  "ВсеПроСпорт": {
+   "reg": "ru",
+   "win": 4,
+   "lose": 2,
+   "push": 0
+  },
+  "vprognoze": {
+   "reg": "ru",
+   "win": 0,
+   "lose": 2,
+   "push": 0
+  },
+  "UA-Футбол": {
+   "reg": "ru",
+   "win": 1,
+   "lose": 1,
+   "push": 0
+  },
+  "Sport.ua": {
+   "reg": "ru",
+   "win": 4,
+   "lose": 2,
+   "push": 0
+  },
+  "Last Word on Football": {
+   "reg": "eu",
+   "win": 0,
+   "lose": 2,
+   "push": 0
+  },
+  "RotoWire": {
+   "reg": "eu",
+   "win": 2,
+   "lose": 2,
+   "push": 0
+  },
+  "Covers": {
+   "reg": "eu",
+   "win": 2,
+   "lose": 1,
+   "push": 0
+  },
+  "ВсеПроСпорт (ред.)": {
+   "reg": "ru",
+   "win": 0,
+   "lose": 1,
+   "push": 0
+  },
+  "Legalbet": {
+   "reg": "ru",
+   "win": 1,
+   "lose": 0,
+   "push": 0
+  },
+  "Olimpbet Arena": {
+   "reg": "ru",
+   "win": 0,
+   "lose": 0,
+   "push": 0
+  },
+  "Sports Mole": {
+   "reg": "eu",
+   "win": 1,
+   "lose": 0,
+   "push": 0
+  },
+  "Overbetting": {
+   "reg": "ru",
+   "win": 1,
+   "lose": 1,
+   "push": 0
+  },
+  "Куш в спорте": {
+   "reg": "ru",
+   "win": 0,
+   "lose": 0,
+   "push": 0
+  },
+  "Марафон (блог)": {
+   "reg": "ru",
+   "win": 2,
+   "lose": 0,
+   "push": 0
+  },
+  "William Hill": {
+   "reg": "eu",
+   "win": 0,
+   "lose": 0,
+   "push": 0
+  },
+  "SportyTrader": {
+   "reg": "eu",
+   "win": 1,
+   "lose": 0,
+   "push": 0
+  },
+  "WinDrawWin": {
+   "reg": "eu",
+   "win": 0,
+   "lose": 1,
+   "push": 0
+  },
+  "MightyTips": {
+   "reg": "eu",
+   "win": 1,
+   "lose": 0,
+   "push": 0
+  },
+  "Ставки-прогнозы": {
+   "reg": "ru",
+   "win": 1,
+   "lose": 1,
+   "push": 0
+  },
+  "SportClan": {
+   "reg": "ru",
+   "win": 1,
+   "lose": 0,
+   "push": 0
+  },
+  "101 Great Goals": {
+   "reg": "eu",
+   "win": 0,
+   "lose": 1,
+   "push": 0
+  },
+  "Стратегия": {
+   "reg": "ru",
+   "win": 0,
+   "lose": 1,
+   "push": 0
+  },
+  "IronWin": {
+   "reg": "ru",
+   "win": 1,
+   "lose": 0,
+   "push": 0
+  },
+  "Betteam": {
+   "reg": "ru",
+   "win": 1,
+   "lose": 0,
+   "push": 0
+  },
+  "Goal.com": {
+   "reg": "eu",
+   "win": 0,
+   "lose": 0,
+   "push": 0
+  },
+  "Sportskeeda": {
+   "reg": "eu",
+   "win": 0,
+   "lose": 0,
+   "push": 0
+  },
+  "Footballpredictions": {
+   "reg": "eu",
+   "win": 0,
+   "lose": 0,
+   "push": 0
+  },
+  "SportsGambler": {
+   "reg": "eu",
+   "win": 0,
+   "lose": 0,
+   "push": 0
+  },
+  "RatingBet": {
+   "reg": "eu",
+   "win": 0,
+   "lose": 1,
+   "push": 0
+  },
+  "Betfred": {
+   "reg": "eu",
+   "win": 1,
+   "lose": 0,
+   "push": 0
+  },
+  "Бомбардир": {
+   "reg": "ru",
+   "win": 1,
+   "lose": 1,
+   "push": 0
+  },
+  "Tips.gg": {
+   "reg": "eu",
+   "win": 0,
+   "lose": 1,
+   "push": 0
+  },
+  "Online-bookmakers": {
+   "reg": "ru",
+   "win": 0,
+   "lose": 1,
+   "push": 0
+  },
+  "SportsbookReview": {
+   "reg": "eu",
+   "win": 0,
+   "lose": 1,
+   "push": 0
+  }
+ },
+ "ai": {
+  "win": 5,
+  "lose": 3,
+  "push": 1
+ },
+ "recent": [
+  {
+   "date": "2026-10-20",
+   "home": "Штутгарт",
+   "away": "Атлетико Мадрид",
+   "score": "1:1",
+   "tour": "ЛЧ",
+   "ai": "push",
+   "picks": [
+    {
+     "src": "LiveSport.ru",
+     "reg": "ru",
+     "pick": "П2",
+     "res": "lose"
+    },
+    {
+     "src": "Бомбардир",
+     "reg": "ru",
+     "pick": "П2",
+     "res": "lose"
+    },
+    {
+     "src": "Metaratings",
+     "reg": "ru",
+     "pick": "П2 · Ф2(0)",
+     "res": "lose"
+    },
+    {
+     "src": "ВсеПроСпорт",
+     "reg": "ru",
+     "pick": "П2",
+     "res": "lose"
+    },
+    {
+     "src": "Sport.ua",
+     "reg": "ru",
+     "pick": "П2",
+     "res": "lose"
+    },
+    {
+     "src": "Online-bookmakers",
+     "reg": "ru",
+     "pick": "П2",
+     "res": "lose"
+    },
+    {
+     "src": "Ставки-прогнозы",
+     "reg": "ru",
+     "pick": "П1",
+     "res": "lose"
+    },
+    {
+     "src": "SportsbookReview",
+     "reg": "eu",
+     "pick": "П2",
+     "res": "lose"
+    },
+    {
+     "src": "RotoWire",
+     "reg": "eu",
+     "pick": "П1",
+     "res": "lose"
+    },
+    {
+     "src": "Covers",
+     "reg": "eu",
+     "pick": "Ничья",
+     "res": "win"
+    }
+   ]
+  },
+  {
+   "date": "2026-10-20",
+   "home": "Наполи",
+   "away": "Буде-Глимт",
+   "score": "4:3",
+   "tour": "ЛЧ",
+   "ai": "lose",
+   "picks": [
+    {
+     "src": "LiveSport.ru",
+     "reg": "ru",
+     "pick": "Х2",
+     "res": "lose"
+    },
+    {
+     "src": "Metaratings",
+     "reg": "ru",
+     "pick": "ТМ 3.5 · П1",
+     "res": "lose"
+    },
+    {
+     "src": "Бомбардир",
+     "reg": "ru",
+     "pick": "Ф1(−1)",
+     "res": "win"
+    },
+    {
+     "src": "Sport.ua",
+     "reg": "ru",
+     "pick": "П1",
+     "res": "win"
+    },
+    {
+     "src": "Куш в спорте",
+     "reg": "ru",
+     "pick": "Ф2(+1)",
+     "res": "skip"
+    },
+    {
+     "src": "ВсеПроСпорт",
+     "reg": "ru",
+     "pick": "Обе забьют",
+     "res": "win"
+    },
+    {
+     "src": "Ставки-прогнозы",
+     "reg": "ru",
+     "pick": "П1",
+     "res": "win"
+    },
+    {
+     "src": "UA-Футбол",
+     "reg": "ru",
+     "pick": "Ничья 2:2",
+     "res": "skip"
+    },
+    {
+     "src": "Tips.gg",
+     "reg": "eu",
+     "pick": "П1 + ТМ 2.5",
+     "res": "lose"
+    },
+    {
+     "src": "Covers",
+     "reg": "eu",
+     "pick": "Ничья",
+     "res": "lose"
+    }
+   ]
+  },
+  {
+   "date": "2026-10-20",
+   "home": "ПСЖ",
+   "away": "Барселона",
+   "score": "4:2",
+   "tour": "ЛЧ",
+   "ai": "win",
+   "picks": [
+    {
+     "src": "LiveSport.ru",
+     "reg": "ru",
+     "pick": "ТБ 4.5",
+     "res": "win"
+    },
+    {
+     "src": "Metaratings",
+     "reg": "ru",
+     "pick": "ТБ 3.5 · П1",
+     "res": "win"
+    },
+    {
+     "src": "Ставка ТВ",
+     "reg": "ru",
+     "pick": "П1",
+     "res": "win"
+    },
+    {
+     "src": "Марафон (блог)",
+     "reg": "ru",
+     "pick": "ТБ 4",
+     "res": "win"
+    },
+    {
+     "src": "Стратегия",
+     "reg": "ru",
+     "pick": "Ф2(0)",
+     "res": "lose"
+    },
+    {
+     "src": "IronWin",
+     "reg": "ru",
+     "pick": "П1",
+     "res": "win"
+    },
+    {
+     "src": "Betteam",
+     "reg": "ru",
+     "pick": "ТБ 4.5",
+     "res": "win"
+    },
+    {
+     "src": "Goal.com",
+     "reg": "eu",
+     "pick": "ТБ 4.5 · 3:4",
+     "res": "skip"
+    },
+    {
+     "src": "Covers",
+     "reg": "eu",
+     "pick": "П1 + ТБ 3.5",
+     "res": "win"
+    },
+    {
+     "src": "Sportskeeda",
+     "reg": "eu",
+     "pick": "Ничья 2:2",
+     "res": "skip"
+    },
+    {
+     "src": "Footballpredictions",
+     "reg": "eu",
+     "pick": "2:2 · ОЗ",
+     "res": "skip"
+    },
+    {
+     "src": "SportsGambler",
+     "reg": "eu",
+     "pick": "Азиатская фора на «Барсу»",
+     "res": "skip"
+    },
+    {
+     "src": "RatingBet",
+     "reg": "eu",
+     "pick": "Ф2(0)",
+     "res": "lose"
+    },
+    {
+     "src": "Betfred",
+     "reg": "eu",
+     "pick": "ТБ 4.5",
+     "res": "win"
+    },
+    {
+     "src": "RotoWire",
+     "reg": "eu",
+     "pick": "Х2 + ОЗ",
+     "res": "lose"
+    }
+   ]
+  },
+  {
+   "date": "2026-10-20",
+   "home": "Манчестер Сити",
+   "away": "АЕК Афины",
+   "score": "5:1",
+   "tour": "ЛЧ",
+   "ai": "win",
+   "picks": [
+    {
+     "src": "LiveSport.ru",
+     "reg": "ru",
+     "pick": "Обе забьют",
+     "res": "win"
+    },
+    {
+     "src": "Metaratings",
+     "reg": "ru",
+     "pick": "Ф1(−2.5) · ТБ 3.5",
+     "res": "win"
+    },
+    {
+     "src": "Ставка ТВ",
+     "reg": "ru",
+     "pick": "Ф2(+2.5)",
+     "res": "skip"
+    },
+    {
+     "src": "Ставки-прогнозы",
+     "reg": "ru",
+     "pick": "Ф2(+3.5)",
+     "res": "skip"
+    },
+    {
+     "src": "SportClan",
+     "reg": "ru",
+     "pick": "П1 + ТБ 1.5 в 1-м тайме",
+     "res": "win"
+    },
+    {
+     "src": "UA-Футбол",
+     "reg": "ru",
+     "pick": "ТБ 2.5 · 3:0",
+     "res": "skip"
+    },
+    {
+     "src": "101 Great Goals",
+     "reg": "eu",
+     "pick": "Счёт 3:0",
+     "res": "lose"
+    },
+    {
+     "src": "Covers",
+     "reg": "eu",
+     "pick": "П1 (рынок 89%)",
+     "res": "skip"
+    }
+   ]
+  },
+  {
+   "date": "2026-10-20",
+   "home": "Ливерпуль",
+   "away": "Вильярреал",
+   "score": "4:3",
+   "tour": "ЛЧ",
+   "ai": "win",
+   "picks": [
+    {
+     "src": "LiveSport.ru",
+     "reg": "ru",
+     "pick": "ОЗ + ТБ 2.5",
+     "res": "win"
+    },
+    {
+     "src": "Марафон (блог)",
+     "reg": "ru",
+     "pick": "П1 + ТБ 1.5",
+     "res": "win"
+    },
+    {
+     "src": "Ставка ТВ",
+     "reg": "ru",
+     "pick": "Ф1(−1.5)",
+     "res": "win"
+    },
+    {
+     "src": "Metaratings",
+     "reg": "ru",
+     "pick": "ТБ 3",
+     "res": "win"
+    },
+    {
+     "src": "ВсеПроСпорт",
+     "reg": "ru",
+     "pick": "Ф1(−1)",
+     "res": "win"
+    },
+    {
+     "src": "Sport.ua",
+     "reg": "ru",
+     "pick": "П1",
+     "res": "win"
+    },
+    {
+     "src": "William Hill",
+     "reg": "eu",
+     "pick": "П1 + 3+ гола · 3:1",
+     "res": "skip"
+    },
+    {
+     "src": "SportyTrader",
+     "reg": "eu",
+     "pick": "П1 + ТБ 3.5",
+     "res": "win"
+    },
+    {
+     "src": "WinDrawWin",
+     "reg": "eu",
+     "pick": "П1 · счёт 3:1",
+     "res": "lose"
+    },
+    {
+     "src": "MightyTips",
+     "reg": "eu",
+     "pick": "Обе забьют",
+     "res": "win"
+    },
+    {
+     "src": "RotoWire",
+     "reg": "eu",
+     "pick": "ТБ 3.5",
+     "res": "win"
+    },
+    {
+     "src": "Last Word on Football",
+     "reg": "eu",
+     "pick": "Счёт 4:2",
+     "res": "lose"
+    }
+   ]
+  },
+  {
+   "date": "2026-10-20",
+   "home": "Порту",
+   "away": "ПСВ",
+   "score": "0:1",
+   "tour": "ЛЧ",
+   "ai": "lose",
+   "picks": [
+    {
+     "src": "LiveSport.ru",
+     "reg": "ru",
+     "pick": "Прогноз за 1.86",
+     "res": "skip"
+    },
+    {
+     "src": "Ставка ТВ",
+     "reg": "ru",
+     "pick": "Ф1(−1.5)",
+     "res": "win"
+    },
+    {
+     "src": "ВсеПроСпорт",
+     "reg": "ru",
+     "pick": "Ф1(−1) · ТМ 3.5",
+     "res": "win"
+    },
+    {
+     "src": "vprognoze",
+     "reg": "ru",
+     "pick": "ТБ 3",
+     "res": "lose"
+    },
+    {
+     "src": "Sport.ua",
+     "reg": "ru",
+     "pick": "П1",
+     "res": "lose"
+    },
+    {
+     "src": "UA-Футбол",
+     "reg": "ru",
+     "pick": "П1",
+     "res": "lose"
+    },
+    {
+     "src": "Куш в спорте",
+     "reg": "ru",
+     "pick": "П1 (выбор игроков)",
+     "res": "skip"
+    },
+    {
+     "src": "Covers",
+     "reg": "eu",
+     "pick": "П1 (рынок 61%)",
+     "res": "skip"
+    }
+   ]
+  },
+  {
+   "date": "2026-10-20",
+   "home": "Рома",
+   "away": "Слован Братислава",
+   "score": "4:0",
+   "tour": "ЛЧ",
+   "ai": "win",
+   "picks": [
+    {
+     "src": "LiveSport.ru",
+     "reg": "ru",
+     "pick": "ТБ 4",
+     "res": "push"
+    },
+    {
+     "src": "Metaratings",
+     "reg": "ru",
+     "pick": "ТМ 3.5 + П1",
+     "res": "lose"
+    },
+    {
+     "src": "Ставка ТВ",
+     "reg": "ru",
+     "pick": "Ф1(−2.5)",
+     "res": "win"
+    },
+    {
+     "src": "Sport.ua",
+     "reg": "ru",
+     "pick": "Ф1(−2)",
+     "res": "win"
+    },
+    {
+     "src": "Overbetting",
+     "reg": "ru",
+     "pick": "Сухая победа «Ромы»",
+     "res": "win"
+    },
+    {
+     "src": "Overbetting",
+     "reg": "ru",
+     "pick": "ТМ 3.5",
+     "res": "lose"
+    },
+    {
+     "src": "UA-Футбол",
+     "reg": "ru",
+     "pick": "«Слован» не забьёт",
+     "res": "skip"
+    },
+    {
+     "src": "Covers",
+     "reg": "eu",
+     "pick": "П1 (рынок 84%)",
+     "res": "skip"
+    }
+   ]
+  },
+  {
+   "date": "2026-10-20",
+   "home": "Сабах",
+   "away": "Боруссия Дортмунд",
+   "score": "1:2",
+   "tour": "ЛЧ",
+   "ai": "win",
+   "picks": [
+    {
+     "src": "Metaratings",
+     "reg": "ru",
+     "pick": "ТМ 3.5 + П2",
+     "res": "win"
+    },
+    {
+     "src": "Ставка ТВ",
+     "reg": "ru",
+     "pick": "Ф1(+1.5)",
+     "res": "skip"
+    },
+    {
+     "src": "ВсеПроСпорт",
+     "reg": "ru",
+     "pick": "Ф2(−1.5)",
+     "res": "win"
+    },
+    {
+     "src": "ВсеПроСпорт (ред.)",
+     "reg": "ru",
+     "pick": "ТМ 2.5",
+     "res": "lose"
+    },
+    {
+     "src": "Legalbet",
+     "reg": "ru",
+     "pick": "ТМ 3.5",
+     "res": "win"
+    },
+    {
+     "src": "Olimpbet Arena",
+     "reg": "ru",
+     "pick": "Ф1(+1.5)",
+     "res": "skip"
+    },
+    {
+     "src": "Sports Mole",
+     "reg": "eu",
+     "pick": "Счёт 1:2",
+     "res": "win"
+    },
+    {
+     "src": "Covers",
+     "reg": "eu",
+     "pick": "П2 (рынок 75%)",
+     "res": "skip"
+    }
+   ]
+  },
+  {
+   "date": "2026-10-20",
+   "home": "Фенербахче",
+   "away": "Славия Прага",
+   "score": "2:2",
+   "tour": "ЛЧ",
+   "ai": "lose",
+   "picks": [
+    {
+     "src": "LiveSport.ru",
+     "reg": "ru",
+     "pick": "Ф1(−1)",
+     "res": "win"
+    },
+    {
+     "src": "Metaratings",
+     "reg": "ru",
+     "pick": "Ф1(−1)",
+     "res": "win"
+    },
+    {
+     "src": "Ставка ТВ",
+     "reg": "ru",
+     "pick": "Ф1(−1.5)",
+     "res": "win"
+    },
+    {
+     "src": "ВсеПроСпорт",
+     "reg": "ru",
+     "pick": "П1",
+     "res": "lose"
+    },
+    {
+     "src": "vprognoze",
+     "reg": "ru",
+     "pick": "П1",
+     "res": "lose"
+    },
+    {
+     "src": "UA-Футбол",
+     "reg": "ru",
+     "pick": "1Х + ОЗ",
+     "res": "win"
+    },
+    {
+     "src": "Sport.ua",
+     "reg": "ru",
+     "pick": "Обе забьют",
+     "res": "win"
+    },
+    {
+     "src": "Last Word on Football",
+     "reg": "eu",
+     "pick": "Счёт 2:0",
+     "res": "lose"
+    },
+    {
+     "src": "RotoWire",
+     "reg": "eu",
+     "pick": "Ф1(−1.5)",
+     "res": "win"
+    },
+    {
+     "src": "Covers",
+     "reg": "eu",
+     "pick": "П1 (рынок 58%)",
+     "res": "skip"
+    }
+   ]
+  }
+ ],
+ "done": [
+  "2026-10-20|Ливерпуль|Вильярреал",
+  "2026-10-20|Сабах|Боруссия Дортмунд",
+  "2026-10-20|Фенербахче|Славия Прага",
+  "2026-10-20|Рома|Слован Братислава",
+  "2026-10-20|Наполи|Буде-Глимт",
+  "2026-10-20|Штутгарт|Атлетико Мадрид",
+  "2026-10-20|Порту|ПСВ",
+  "2026-10-20|ПСЖ|Барселона",
+  "2026-10-20|Манчестер Сити|АЕК Афины"
+ ],
+ "matches": 9
+}

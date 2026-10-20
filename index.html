@@ -48,7 +48,9 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .search{position:relative;display:flex;align-items:center}
 .search input{width:100%;font:inherit;font-size:15px;padding:10px 14px 10px 38px;border:1px solid var(--line);border-radius:10px;background:var(--surface);color:var(--ink)}
 .search svg{position:absolute;left:12px;width:18px;height:18px;color:var(--muted);pointer-events:none}
-.exp-btn{width:100%;font:inherit;font-weight:600;font-size:15px;font-family:var(--display);letter-spacing:.03em;text-transform:uppercase;color:#fff;background:linear-gradient(90deg,var(--accent),var(--ai));border:0;border-radius:12px;padding:13px;cursor:pointer}
+.hero-btns{display:flex;gap:8px;flex-wrap:wrap}
+.exp-btn{flex:1;min-width:150px;font:inherit;font-weight:600;font-size:14px;font-family:var(--display);letter-spacing:.03em;text-transform:uppercase;color:#fff;background:linear-gradient(90deg,var(--accent),var(--ai));border:0;border-radius:12px;padding:13px;cursor:pointer}
+.exp-btn.alt{background:linear-gradient(90deg,var(--pitch),var(--accent))}
 .exp-btn:hover{filter:brightness(1.08)}
 .exp{display:flex;flex-direction:column;gap:14px;margin-top:6px}
 .exp-head p{margin:4px 0 0;color:var(--muted);font-size:14px}
@@ -96,6 +98,26 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .pw-num button{font:inherit;font-size:13px;border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:8px;padding:6px 12px;cursor:pointer}
 .paywall .primary{background:linear-gradient(90deg,var(--accent),var(--ai));color:#fff;border:0;font-weight:600;padding:12px 22px;border-radius:999px;cursor:pointer;font:inherit;font-size:15px}
 .pw-note{font-size:12px!important;color:var(--muted)}
+.rate{display:flex;flex-direction:column;gap:12px}
+.rate-list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:6px}
+.rate-row{display:grid;grid-template-columns:26px 1fr 110px;gap:10px;align-items:center;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:10px 12px}
+.rate-row.ai{border-color:var(--ai);background:var(--ai-soft)}
+.rank{font-family:var(--mono);font-size:13px;color:var(--muted);text-align:center}
+.rsrc{display:flex;flex-direction:column;gap:2px;min-width:0;font-weight:600}
+.rrec{font-family:var(--mono);font-size:11px;color:var(--muted);font-weight:400}
+.aib{display:inline-block;font-family:var(--mono);font-size:10px;font-weight:700;color:#fff;background:var(--ai);border-radius:999px;padding:1px 7px;margin-left:6px;vertical-align:1px}
+.rpct{display:flex;flex-direction:column;gap:4px;align-items:flex-end}
+.rpct b{font-family:var(--mono);font-size:18px;font-variant-numeric:tabular-nums}
+.rbar{width:100%;height:6px;background:var(--line);border-radius:3px;overflow:hidden}
+.rbar i{display:block;height:100%;background:var(--pitch)}
+.rres{display:flex;flex-direction:column;gap:6px}
+.rres-row{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:10px 12px;font-size:14px}
+.rr-m{font-weight:600;min-width:0}
+.rr-m b{font-family:var(--mono)}
+.rr-t{font-family:var(--mono);font-size:11px;color:var(--muted);margin-left:8px}
+.rr-s{display:flex;gap:10px;align-items:center;font-size:12px;color:var(--muted)}
+.rr-hit{white-space:nowrap}
+.aib.win{background:var(--pitch)}.aib.lose{background:var(--live)}.aib.push,.aib.skip{background:var(--muted)}
 /* навигация */
 .tabs{position:sticky;top:env(safe-area-inset-top,0px);z-index:50;display:flex;gap:4px;overflow-x:auto;border-bottom:1px solid var(--line);scrollbar-width:thin;background:var(--bg);padding-top:6px}
 .tab{font:inherit;font-family:var(--display);font-weight:600;font-size:16px;text-transform:uppercase;letter-spacing:.02em;border:0;background:none;color:var(--muted);padding:10px 12px 9px;cursor:pointer;border-bottom:3px solid transparent;white-space:nowrap;display:flex;gap:6px;align-items:center}
@@ -260,7 +282,10 @@ footer{font-size:12px;color:var(--muted);text-align:center;padding-top:18px}
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4-4"/></svg>
       <input id="search" type="search" placeholder="Поиск команды…" autocomplete="off" aria-label="Поиск команды">
     </div>
-    <button class="exp-btn" id="expbtn">⚡ Собрать экспресс дня</button>
+    <div class="hero-btns">
+      <button class="exp-btn" id="expbtn">⚡ Собрать экспресс</button>
+      <button class="exp-btn alt" id="ratebtn">🏆 Рейтинг прогнозистов</button>
+    </div>
   </div>
 
   <nav class="tabs" role="tablist" aria-label="Турниры" id="tabs"></nav>
@@ -295,7 +320,7 @@ function hexLum(c){if(c[0]!=="#")return .5;const n=c.length===4?c.slice(1).split
 function initials(name){const w=String(name).replace(/[«»"().]/g,"").trim().split(/\s+/);if(w.length>=2)return (w[0][0]+w[1][0]).toUpperCase();const s=w[0]||"";return s.length<=3?s.toUpperCase():s.slice(0,2).toUpperCase()}
 function badge(name){const bg=clubColor(name),fg=hexLum(bg)>0.6?"#111":"#fff";return '<span class="badge" style="background:'+bg+';color:'+fg+'">'+esc(initials(name))+'</span>'}
 
-let D=null,tab=null,filter="all",dateFilter="all",query="",favs=new Set(),expCfg=null,expResult=null,expUse=null,expLocked=false;
+let D=null,tab=null,filter="all",dateFilter="all",query="",favs=new Set(),expCfg=null,expResult=null,expUse=null,expLocked=false,RES=null;
 try{filter=localStorage.getItem("lch-filter")||"all"}catch(e){}
 try{favs=new Set(JSON.parse(localStorage.getItem("lch-favs")||"[]"))}catch(e){}
 function saveFavs(){try{localStorage.setItem("lch-favs",JSON.stringify([...favs]))}catch(e){}}
@@ -494,6 +519,28 @@ function renderExpress(){
     const pp=document.getElementById("pwpaid");if(pp)pp.onclick=()=>{expUse.paid=Date.now()+86400000;saveUse();expLocked=false;expResult=buildExpress(expCfg,pool,false);renderExpress()};
   }
 }
+function wilson(w,n){if(!n)return 0;const z=1.0,p=w/n;return (p+z*z/(2*n)-z*Math.sqrt((p*(1-p)+z*z/(4*n))/n))/(1+z*z/n)}
+function renderRating(){
+  const v=document.getElementById("view");
+  if(!RES||!RES.sources||!Object.keys(RES.sources).length){
+    v.innerHTML='<div class="detail"><button class="back" id="back">← Все матчи</button><div class="empty">Статистика ещё собирается. Рейтинг появится после первых сыгранных матчей.</div></div>';
+    document.getElementById("back").onclick=()=>{location.hash=tab};return;
+  }
+  const rows=Object.entries(RES.sources).map(([src,x])=>{const n=x.win+x.lose;return {src,reg:x.reg,win:x.win,lose:x.lose,push:x.push||0,n,pct:n?Math.round(x.win/n*100):0,w:wilson(x.win,n)}});
+  const ai=RES.ai||{win:0,lose:0,push:0},an=ai.win+ai.lose;
+  rows.push({src:"Мнение ИИ",reg:"ai",win:ai.win,lose:ai.lose,push:ai.push||0,n:an,pct:an?Math.round(ai.win/an*100):0,w:wilson(ai.win,an),isAI:1});
+  rows.sort((a,b)=>b.w-a.w||b.n-a.n||b.pct-a.pct);
+  let h='<div class="detail"><button class="back" id="back">← Все матчи</button><div class="rate">'
+   +'<div class="exp-head"><span class="ai-label" style="color:var(--pitch)">🏆 Рейтинг прогнозистов</span><p>Процент проходимости по реально сыгранным матчам (учтено матчей: '+(RES.matches||0)+'). Считаются ставки с понятным исходом; комбо и экзотика не учитываются, пуши-возвраты не входят в процент. Порядок — от лучших к худшим с поправкой на объём выборки.</p></div>'
+   +'<ol class="rate-list">'+rows.map((r,i)=>'<li class="rate-row'+(r.isAI?' ai':'')+'"><span class="rank">'+(i+1)+'</span><span class="rsrc">'+esc(r.src)+(r.isAI?'<span class="aib">ИИ</span>':'<span class="tagr '+r.reg+'">'+(r.reg==="ru"?"РУ":"EU")+'</span>')+'<span class="rrec">'+r.win+'–'+r.lose+(r.push?' · пуш '+r.push:'')+(r.n<3?' · мало данных':'')+'</span></span><span class="rpct"><b>'+r.pct+'%</b><span class="rbar"><i style="width:'+r.pct+'%"></i></span></span></li>').join("")+'</ol>';
+  if(RES.recent&&RES.recent.length){
+    h+='<div class="day" style="margin-top:18px"><h2>Последние результаты</h2><span class="rule"></span></div><div class="rres">'
+     +RES.recent.slice(0,15).map(m=>{const hit=m.picks.filter(p=>p.res==="win").length,set=m.picks.filter(p=>p.res==="win"||p.res==="lose").length;return '<div class="rres-row"><span class="rr-m">'+esc(m.home)+' <b>'+esc(m.score)+'</b> '+esc(m.away)+'<span class="rr-t">'+esc(m.tour||"")+'</span></span><span class="rr-s"><span class="aib '+esc(m.ai)+'">ИИ '+(m.ai==="win"?"✓":m.ai==="lose"?"✕":m.ai==="push"?"=":"—")+'</span><span class="rr-hit">'+hit+'/'+set+' зашло</span></span></div>'}).join("")+'</div>';
+  }
+  h+='<p class="exp-note">Статистика накапливается автоматически после каждого игрового дня. Это аналитика, не гарантия. 18+.</p></div>';
+  v.innerHTML=h;
+  document.getElementById("back").onclick=()=>{location.hash=tab};
+}
 function renderDetail(m){
   const st=matchState(m),t=D.tournaments.find(x=>x.id===m._tab);
   const url=location.origin+location.pathname+"#m-"+m._id;
@@ -526,6 +573,7 @@ function route(){
   const h=(location.hash||"").replace(/^#/,"");
   if(h.indexOf("m-")===0){const m=byId[h.slice(2)];if(m){tab=m._tab;renderTabs();renderDetail(m);tickCd();scrollTo({top:0,behavior:"instant"in document.documentElement.style?"instant":"auto"});return}}
   if(h==="express"){renderExpress();scrollTo({top:0,behavior:"auto"});return}
+  if(h==="rating"){renderRating();scrollTo({top:0,behavior:"auto"});return}
   const ids=D.tournaments.map(t=>t.id);
   if(ids.includes(h))tab=h;
   else if(!tab)tab=(D.tournaments.find(t=>t.matches.some(m=>m.date===D.today))||D.tournaments[0]).id;
@@ -555,6 +603,12 @@ document.getElementById("theme").onclick=()=>{
 };
 document.getElementById("search").addEventListener("input",e=>{query=e.target.value.trim().toLowerCase();if((location.hash||"").indexOf("#m-")===0)location.hash=tab;else renderList()});
 document.getElementById("expbtn").onclick=()=>{expResult=null;location.hash="express"};
+document.getElementById("ratebtn").onclick=()=>{location.hash="rating"};
 window.addEventListener("hashchange",route);
-fetch("data.json",{cache:"no-store"}).then(r=>{if(!r.ok)throw new Error(r.status);return r.json()}).then(boot).catch(()=>{document.getElementById("view").innerHTML='<div class="empty">Не удалось загрузить данные. Обновите страницу.</div>'});
+function start(data,res){RES=res||window.__RES__||null;boot(data)}
+if(window.__DATA__){start(window.__DATA__,window.__RES__||null)}
+else Promise.all([
+  fetch("data.json",{cache:"no-store"}).then(r=>{if(!r.ok)throw new Error(r.status);return r.json()}),
+  fetch("results.json",{cache:"no-store"}).then(r=>r.ok?r.json():null).catch(()=>null)
+]).then(a=>start(a[0],a[1])).catch(()=>{document.getElementById("view").innerHTML='<div class="empty">Не удалось загрузить данные. Обновите страницу.</div>'});
 </script>
