@@ -78,7 +78,7 @@ button:focus-visible,a:focus-visible,summary:focus-visible,input:focus-visible{o
 .board{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:10px;padding:18px 16px 12px;text-decoration:none;color:inherit}
 .side-t{display:flex;flex-direction:column;align-items:center;gap:7px;min-width:0}
 .badge{width:44px;height:44px;border-radius:50%;display:grid;place-items:center;font-family:var(--display);font-weight:700;font-size:15px;letter-spacing:.02em;flex:none}
-.team{font-family:var(--display);font-weight:600;font-size:clamp(15px,3.4vw,19px);line-height:1.05;text-transform:uppercase;text-align:center;overflow-wrap:anywhere}
+.team{font-family:var(--display);font-weight:600;font-size:clamp(18px,4.4vw,26px);line-height:1.05;text-transform:uppercase;text-align:center;overflow-wrap:anywhere}
 .mid{display:flex;flex-direction:column;align-items:center;gap:3px}
 .time{font-family:var(--mono);font-weight:700;font-size:17px;background:var(--ink);color:var(--bg);padding:3px 10px;border-radius:4px}
 .time.live{background:var(--live);color:#fff}
@@ -174,8 +174,7 @@ footer{font-size:12px;color:var(--muted);text-align:center;padding-top:18px}
 .detail-head .lg{font-family:var(--mono);font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.05em}
 @media (max-width:560px){
   .board{grid-template-columns:1fr auto 1fr;padding:16px 10px 10px}
-  .team{font-size:13px}
-  .badge{width:38px;height:38px;font-size:13px}
+  .team{font-size:16px}
   .tip{grid-template-columns:1fr auto}
   .tip .src{grid-column:1/-1}
   .pitches{grid-template-columns:1fr}
@@ -277,7 +276,7 @@ function cardInner(m,open){
 }
 function boardHead(m,st,asLink){
   const t='<div class="mid"><div class="time'+(st==="live"?" live":"")+'">'+(st==="live"?"LIVE":st==="done"?"итог":esc(m.time))+'</div>'+(m.venue?'<div class="venue">'+esc(m.venue)+'</div>':"")+'</div>';
-  const inner='<div class="side-t">'+badge(m.home)+'<span class="team">'+esc(m.home)+'</span></div>'+t+'<div class="side-t">'+badge(m.away)+'<span class="team">'+esc(m.away)+'</span></div>';
+  const inner='<div class="side-t"><span class="team">'+esc(m.home)+'</span></div>'+t+'<div class="side-t"><span class="team">'+esc(m.away)+'</span></div>';
   return asLink?'<a class="board" href="#m-'+m._id+'">'+inner+'</a>':'<div class="board">'+inner+'</div>';
 }
 function card(m){
