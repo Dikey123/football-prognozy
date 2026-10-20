@@ -68,6 +68,21 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .exp-row.big b{font-size:24px;color:var(--ai)}
 .exp-ctl{display:flex;gap:8px;flex-wrap:wrap}
 .exp-note{font-size:12px;color:var(--muted);margin:0}
+.exp-form{display:flex;flex-direction:column;gap:14px;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px}
+.exp-f{display:flex;flex-direction:column;gap:8px}
+.exp-f>label{font-size:13px;color:var(--muted);font-weight:600}
+.exp-cats{display:flex;flex-wrap:wrap;gap:7px}
+.catchip{font:inherit;font-size:13px;border:1px solid var(--line);background:var(--bg);color:var(--ink);padding:5px 11px;border-radius:999px;cursor:pointer}
+.catchip[aria-pressed="true"]{background:var(--accent);color:#fff;border-color:var(--accent)}
+.exp-nums{display:flex;gap:18px;flex-wrap:wrap}
+.exp-num{display:flex;flex-direction:column;gap:6px}
+.exp-num>label{font-size:13px;color:var(--muted);font-weight:600}
+.exp-num .row{display:flex;align-items:center;gap:7px}
+.exp-num input{width:68px;font:inherit;font-size:15px;padding:8px 10px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink);font-variant-numeric:tabular-nums}
+.exp-num .row span{font-size:13px;color:var(--muted)}
+.exp-go{display:flex;gap:8px;flex-wrap:wrap}
+.exp-go .primary{background:linear-gradient(90deg,var(--accent),var(--ai));color:#fff;border:0;font-weight:600;padding:10px 18px;border-radius:999px;cursor:pointer;font:inherit;font-size:14px}
+.exp-warn{font-size:13px;color:var(--warn);background:color-mix(in srgb,var(--warn) 13%,transparent);border-radius:8px;padding:11px 13px}
 /* навигация */
 .tabs{position:sticky;top:env(safe-area-inset-top,0px);z-index:50;display:flex;gap:4px;overflow-x:auto;border-bottom:1px solid var(--line);scrollbar-width:thin;background:var(--bg);padding-top:6px}
 .tab{font:inherit;font-family:var(--display);font-weight:600;font-size:16px;text-transform:uppercase;letter-spacing:.02em;border:0;background:none;color:var(--muted);padding:10px 12px 9px;cursor:pointer;border-bottom:3px solid transparent;white-space:nowrap;display:flex;gap:6px;align-items:center}
@@ -267,7 +282,7 @@ function hexLum(c){if(c[0]!=="#")return .5;const n=c.length===4?c.slice(1).split
 function initials(name){const w=String(name).replace(/[«»"().]/g,"").trim().split(/\s+/);if(w.length>=2)return (w[0][0]+w[1][0]).toUpperCase();const s=w[0]||"";return s.length<=3?s.toUpperCase():s.slice(0,2).toUpperCase()}
 function badge(name){const bg=clubColor(name),fg=hexLum(bg)>0.6?"#111":"#fff";return '<span class="badge" style="background:'+bg+';color:'+fg+'">'+esc(initials(name))+'</span>'}
 
-let D=null,tab=null,filter="all",dateFilter="all",query="",favs=new Set(),expN=4,expSel=null;
+let D=null,tab=null,filter="all",dateFilter="all",query="",favs=new Set(),expCfg=null,expResult=null;
 try{filter=localStorage.getItem("lch-filter")||"all"}catch(e){}
 try{favs=new Set(JSON.parse(localStorage.getItem("lch-favs")||"[]"))}catch(e){}
 function saveFavs(){try{localStorage.setItem("lch-favs",JSON.stringify([...favs]))}catch(e){}}
@@ -390,36 +405,66 @@ function expCands(){
   out.sort((a,b)=>b.prob-a.prob);
   return out;
 }
-function pickExpress(src,N){
-  const uM={},uT={},sel=[];
-  // 1-й проход: по одному самому вероятному событию КАЖДОГО типа рынка (разные матчи) — для разнообразия
-  for(const c of src){if(sel.length>=N)break;if(uM[c.m._id]||uT[c.mk])continue;uM[c.m._id]=1;uT[c.mk]=1;sel.push(c)}
-  // 2-й проход: добираем самыми вероятными из оставшихся матчей
-  if(sel.length<N)for(const c of src){if(sel.length>=N)break;if(uM[c.m._id])continue;uM[c.m._id]=1;sel.push(c)}
-  return sel;
+const CAT_ORDER=["Исход","Двойной шанс","Фора","Тотал больше","Тотал меньше","Обе забьют","Угловые","Карточки","Точный счёт","Ставка"];
+function defCfg(avail){return {cats:new Set(avail),target:4,tol:1,nmin:3,nmax:4}}
+function loadCfg(){try{const s=JSON.parse(localStorage.getItem("lch-exp")||"null");if(s&&s.cats)return {cats:new Set(s.cats),target:s.target,tol:s.tol,nmin:s.nmin,nmax:s.nmax}}catch(e){}return null}
+function saveCfg(c){try{localStorage.setItem("lch-exp",JSON.stringify({cats:[...c.cats],target:c.target,tol:c.tol,nmin:c.nmin,nmax:c.nmax}))}catch(e){}}
+function buildExpress(cfg,pool,rand){
+  const allowed=pool.filter(c=>cfg.cats.has(c.mk));
+  const byM={};allowed.forEach(c=>{if(!byM[c.m._id]||c.odd<byM[c.m._id].odd)byM[c.m._id]=c});
+  const legs=Object.values(byM);
+  const nmin=Math.max(2,Math.min(cfg.nmin,cfg.nmax)),nmax=Math.min(Math.max(cfg.nmin,cfg.nmax),legs.length,8);
+  if(legs.length<nmin)return {error:1};
+  const lo=Math.max(1.01,cfg.target-cfg.tol),hi=cfg.target+cfg.tol,T=cfg.target;
+  const valid=[],seen={};let near=null,nearDz=1e9;
+  function consider(sub){if(sub.length<nmin)return;const prod=sub.reduce((a,c)=>a*c.odd,1),dz=Math.abs(prod-T);if(dz<nearDz){nearDz=dz;near=sub.slice()}if(prod>=lo&&prod<=hi){const sig=sub.map(c=>c.m._id).sort().join(",");if(!seen[sig]&&valid.length<80){seen[sig]=1;valid.push({sub:sub.slice(),dz})}}}
+  const asc=legs.slice().sort((a,b)=>a.odd-b.odd),desc=legs.slice().sort((a,b)=>b.odd-a.odd);
+  for(let k=nmin;k<=nmax;k++){consider(asc.slice(0,k));consider(desc.slice(0,k))}
+  for(let t=0;t<9000&&valid.length<60;t++){const k=nmin+Math.floor(Math.random()*(nmax-nmin+1)),idx=[...legs.keys()],sub=[];for(let i=0;i<k&&idx.length;i++)sub.push(legs[idx.splice(Math.floor(Math.random()*idx.length),1)[0]]);consider(sub)}
+  if(valid.length){const pick=rand?valid[Math.floor(Math.random()*valid.length)]:valid.reduce((b,x)=>x.dz<b.dz?x:b);return {legs:pick.sub.slice().sort((a,b)=>a.odd-b.odd)}}
+  if(near){near.sort((a,b)=>a.odd-b.odd);return {legs:near,approx:1}}
+  return {error:1};
 }
-function pickExpressRandom(pool,N){
-  const top=pool.slice(0,Math.min(18,pool.length)).slice();
-  for(let i=top.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));const x=top[i];top[i]=top[j];top[j]=x}
-  return pickExpress(top,N);
+function readExpForm(){
+  const g=id=>{const el=document.getElementById(id);return el?parseFloat(String(el.value).replace(",",".")):NaN};
+  const t=g("exp-target"),tl=g("exp-tol"),a=g("exp-nmin"),b=g("exp-nmax");
+  if(isFinite(t))expCfg.target=Math.max(1.1,t);
+  if(isFinite(tl))expCfg.tol=Math.max(0,tl);
+  if(isFinite(a))expCfg.nmin=Math.max(2,Math.round(a));
+  if(isFinite(b))expCfg.nmax=Math.min(8,Math.round(b));
+  if(expCfg.nmax<expCfg.nmin)expCfg.nmax=expCfg.nmin;
 }
 function renderExpress(){
   const pool=expCands(),v=document.getElementById("view");
+  const avail=CAT_ORDER.filter(c=>pool.some(p=>p.mk===c));
   const distinct=new Set(pool.map(c=>c.m._id)).size;
-  if(distinct<3){v.innerHTML='<div class="detail"><button class="back" id="back">← Все матчи</button><div class="empty">Пока недостаточно матчей с коэффициентами, чтобы собрать экспресс. Загляните ближе к игровому дню.</div></div>';document.getElementById("back").onclick=()=>{location.hash=tab};return}
-  const N=Math.min(expN,distinct);
-  if(!expSel)expSel=pickExpress(pool,N);
-  const total=expSel.reduce((a,c)=>a*c.odd,1),payout=Math.round(total*1000),impl=Math.round(100/total);
+  if(distinct<2){v.innerHTML='<div class="detail"><button class="back" id="back">← Все матчи</button><div class="empty">Пока недостаточно матчей с коэффициентами, чтобы собрать экспресс. Загляните ближе к игровому дню.</div></div>';document.getElementById("back").onclick=()=>{location.hash=tab};return}
+  if(!expCfg){expCfg=loadCfg()||defCfg(avail);if(!expCfg.cats||!expCfg.cats.size)expCfg.cats=new Set(avail)}
+  if(!expResult)expResult=buildExpress(expCfg,pool,false);
   let h='<div class="detail"><button class="back" id="back">← Все матчи</button><div class="exp">'
-   +'<div class="exp-head"><span class="ai-label" style="color:var(--accent)">⚡ Экспресс дня от ИИ</span><p>'+expSel.length+' самых вероятных события по оценке экспертов и букмекеров — исходы, форы, тоталы, «обе забьют», карточки и другие рынки. Чем ниже итоговый коэффициент — тем надёжнее экспресс.</p></div>'
-   +'<ol class="exp-list">'+expSel.map(c=>{const t=D.tournaments.find(x=>x.id===c.tab);return '<li class="exp-item"><a class="exp-m" href="#m-'+c.m._id+'"><span class="exp-teams">'+esc(c.m.home)+' — '+esc(c.m.away)+'</span><span class="exp-meta">'+esc(t.short||"")+' · '+esc(c.m.time)+' · шанс ~'+Math.round(100/c.odd)+'%</span></a><div class="exp-pick"><span class="pk"><span class="exp-mk">'+esc(c.mk)+'</span>'+esc(c.pick)+'</span><span class="exp-k">'+c.odd.toFixed(2)+'</span></div></li>'}).join("")+'</ol>'
-   +'<div class="exp-total"><div class="exp-row"><span>Итоговый коэффициент</span><b>'+total.toFixed(2)+'</b></div><div class="exp-row"><span>Оценка вероятности прохода</span><b>~'+impl+'%</b></div><div class="exp-row big"><span>1000 ₽ принесут</span><b>'+payout.toLocaleString("ru-RU")+' ₽</b></div></div>'
-   +'<div class="exp-ctl"><button class="chip" data-n="3" aria-pressed="'+(expN===3)+'">3 события</button><button class="chip" data-n="4" aria-pressed="'+(expN===4)+'">4 события</button><button class="chip" id="reroll">🎲 Другой вариант</button></div>'
-   +'<p class="exp-note">Это аналитика на основе коэффициентов и прогнозов, а не гарантия. В экспрессе должны сыграть все события — одна осечка проигрывает всю ставку. 18+, ставки связаны с риском потери денег.</p></div>';
+   +'<div class="exp-head"><span class="ai-label" style="color:var(--accent)">⚡ Конструктор экспресса</span><p>Выберите рынки, желаемый коэффициент и количество событий — ИИ подберёт самые вероятные прогнозы под ваши параметры.</p></div>'
+   +'<div class="exp-form">'
+   +'<div class="exp-f"><label>Какие ставки включать</label><div class="exp-cats">'+avail.map(c=>'<button class="catchip" data-cat="'+esc(c)+'" aria-pressed="'+(expCfg.cats.has(c))+'">'+esc(c)+'</button>').join("")+'</div></div>'
+   +'<div class="exp-nums">'
+     +'<div class="exp-num"><label>Желаемый коэффициент</label><div class="row"><input id="exp-target" type="number" step="0.5" min="1.1" value="'+expCfg.target+'"><span>±</span><input id="exp-tol" type="number" step="0.5" min="0" value="'+expCfg.tol+'"></div></div>'
+     +'<div class="exp-num"><label>Количество событий</label><div class="row"><span>от</span><input id="exp-nmin" type="number" min="2" max="8" value="'+expCfg.nmin+'"><span>до</span><input id="exp-nmax" type="number" min="2" max="8" value="'+expCfg.nmax+'"></div></div>'
+   +'</div>'
+   +'<div class="exp-go"><button class="primary" id="build">Собрать экспресс</button><button class="chip" id="reroll">🎲 Другой вариант</button></div>'
+   +'</div>';
+  if(!expResult||expResult.error||!expResult.legs||!expResult.legs.length){
+    h+='<div class="exp-warn">Под эти параметры не нашлось событий. Добавьте категории ставок, увеличьте разброс коэффициента или уменьшите «от» в количестве событий.</div>';
+  }else{
+    const legs=expResult.legs,total=legs.reduce((a,c)=>a*c.odd,1),payout=Math.round(total*1000),impl=Math.round(100/total);
+    if(expResult.approx)h+='<div class="exp-warn">Точно под коэффициент '+expCfg.target+' ± '+expCfg.tol+' собрать не вышло — показываю ближайший вариант ('+total.toFixed(2)+'). Увеличьте разброс или измените категории/количество.</div>';
+    h+='<ol class="exp-list">'+legs.map(c=>{const t=D.tournaments.find(x=>x.id===c.tab);return '<li class="exp-item"><a class="exp-m" href="#m-'+c.m._id+'"><span class="exp-teams">'+esc(c.m.home)+' — '+esc(c.m.away)+'</span><span class="exp-meta">'+esc(t.short||"")+' · '+esc(c.m.time)+' · шанс ~'+Math.round(100/c.odd)+'%</span></a><div class="exp-pick"><span class="pk"><span class="exp-mk">'+esc(c.mk)+'</span>'+esc(c.pick)+'</span><span class="exp-k">'+c.odd.toFixed(2)+'</span></div></li>'}).join("")+'</ol>'
+     +'<div class="exp-total"><div class="exp-row"><span>Событий в экспрессе</span><b>'+legs.length+'</b></div><div class="exp-row"><span>Итоговый коэффициент</span><b>'+total.toFixed(2)+'</b></div><div class="exp-row"><span>Оценка вероятности прохода</span><b>~'+impl+'%</b></div><div class="exp-row big"><span>1000 ₽ принесут</span><b>'+payout.toLocaleString("ru-RU")+' ₽</b></div></div>';
+  }
+  h+='<p class="exp-note">Это аналитика на основе коэффициентов и прогнозов, а не гарантия. В экспрессе должны сыграть все события — одна осечка проигрывает всю ставку. 18+, ставки связаны с риском потери денег.</p></div>';
   v.innerHTML=h;
   document.getElementById("back").onclick=()=>{location.hash=tab};
-  v.querySelectorAll("[data-n]").forEach(b=>b.onclick=()=>{expN=+b.dataset.n;expSel=null;renderExpress()});
-  document.getElementById("reroll").onclick=()=>{expSel=pickExpressRandom(pool,Math.min(expN,distinct));renderExpress()};
+  v.querySelectorAll("[data-cat]").forEach(b=>b.onclick=()=>{readExpForm();const c=b.dataset.cat;if(expCfg.cats.has(c))expCfg.cats.delete(c);else expCfg.cats.add(c);saveCfg(expCfg);renderExpress()});
+  document.getElementById("build").onclick=()=>{readExpForm();saveCfg(expCfg);expResult=buildExpress(expCfg,pool,false);renderExpress()};
+  document.getElementById("reroll").onclick=()=>{readExpForm();saveCfg(expCfg);expResult=buildExpress(expCfg,pool,true);renderExpress()};
 }
 function renderDetail(m){
   const st=matchState(m),t=D.tournaments.find(x=>x.id===m._tab);
@@ -481,7 +526,7 @@ document.getElementById("theme").onclick=()=>{
   try{localStorage.setItem("lch-theme",next)}catch(e){}
 };
 document.getElementById("search").addEventListener("input",e=>{query=e.target.value.trim().toLowerCase();if((location.hash||"").indexOf("#m-")===0)location.hash=tab;else renderList()});
-document.getElementById("expbtn").onclick=()=>{expSel=null;location.hash="express"};
+document.getElementById("expbtn").onclick=()=>{expResult=null;location.hash="express"};
 window.addEventListener("hashchange",route);
 fetch("data.json",{cache:"no-store"}).then(r=>{if(!r.ok)throw new Error(r.status);return r.json()}).then(boot).catch(()=>{document.getElementById("view").innerHTML='<div class="empty">Не удалось загрузить данные. Обновите страницу.</div>'});
 </script>
