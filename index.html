@@ -4,67 +4,94 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Golos+Text:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=swap">
 <style>
-/* Layout: программка матчдня — вкладки турниров сверху, внутри по датам: полные карточки-«табло» для матчей с прогнозами и компактные строки расписания для будущих */
+/* Layout: спортивная программка — закреплённая шапка с эмблемой и таймером, вкладки турниров, лента карточек-«табло»; клик по матчу открывает его отдельную страницу по якорю */
 :root{
-  --bg:#eef1f4; --surface:#ffffff; --ink:#0f1b2d; --muted:#5b6778; --line:#d6dce4;
+  --bg:#eef1f4; --surface:#ffffff; --raise:#f7f9fb; --ink:#0f1b2d; --muted:#5b6778; --line:#d6dce4;
   --accent:#0b5cd5; --accent-soft:#e3ecfb; --pitch:#1d7a46; --pitch-soft:#e2f2e8;
   --turf:#1f7d4a; --turf-2:#22874f; --chalk:#f4fff8;
   --warn:#b8590f; --ai:#5b3fd1; --ai-soft:#eeeafc;
+  --live:#d81f3a; --live-soft:#fce4e8; --star:#e0a400;
   --display:"Oswald","Arial Narrow",sans-serif;
   --body:"Golos Text",system-ui,-apple-system,"Segoe UI",sans-serif;
   --mono:"JetBrains Mono",ui-monospace,Menlo,Consolas,monospace;
 }
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
-  --bg:#0b111b; --surface:#131c2a; --ink:#e7ecf3; --muted:#9aa6b7; --line:#243247;
+  --bg:#0b111b; --surface:#131c2a; --raise:#0f1826; --ink:#e7ecf3; --muted:#9aa6b7; --line:#243247;
   --accent:#5b9bff; --accent-soft:#16294a; --pitch:#4cc584; --pitch-soft:#12301f;
   --turf:#14532f; --turf-2:#175c34; --chalk:#e6fbef;
-  --warn:#f0a35e; --ai:#a893ff; --ai-soft:#221c42; color-scheme:dark}}
+  --warn:#f0a35e; --ai:#a893ff; --ai-soft:#221c42;
+  --live:#ff5a72; --live-soft:#331016; --star:#f0c23c; color-scheme:dark}}
 :root[data-theme="dark"]{
-  --bg:#0b111b; --surface:#131c2a; --ink:#e7ecf3; --muted:#9aa6b7; --line:#243247;
+  --bg:#0b111b; --surface:#131c2a; --raise:#0f1826; --ink:#e7ecf3; --muted:#9aa6b7; --line:#243247;
   --accent:#5b9bff; --accent-soft:#16294a; --pitch:#4cc584; --pitch-soft:#12301f;
   --turf:#14532f; --turf-2:#175c34; --chalk:#e6fbef;
-  --warn:#f0a35e; --ai:#a893ff; --ai-soft:#221c42; color-scheme:dark}
+  --warn:#f0a35e; --ai:#a893ff; --ai-soft:#221c42;
+  --live:#ff5a72; --live-soft:#331016; --star:#f0c23c; color-scheme:dark}
 *{box-sizing:border-box}
 body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.5}
-.wrap{max-width:900px;margin:0 auto;padding-block:28px 56px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));display:flex;flex-direction:column;gap:20px}
-header{display:flex;flex-direction:column;gap:10px}
-.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
-h1{font-family:var(--display);font-weight:700;font-size:clamp(34px,7vw,54px);line-height:1;margin:0;text-transform:uppercase;letter-spacing:.01em;text-wrap:balance}
-h1 span{color:var(--accent)}
-.lede{color:var(--muted);max-width:64ch;margin:0}
-body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--bg);z-index:30}
-.tabs{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;display:flex;gap:4px;overflow-x:auto;border-bottom:1px solid var(--line);scrollbar-width:thin;background:var(--bg);padding-top:8px}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--bg);z-index:60}
+.wrap{max-width:900px;margin:0 auto;padding-block:0 56px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+/* шапка */
+.hero{display:flex;flex-direction:column;gap:14px;padding-block:22px 16px}
+.hero-top{display:flex;align-items:center;gap:12px}
+.emblem{flex:none;width:46px;height:46px}
+.hero-ttl{display:flex;flex-direction:column;gap:1px;min-width:0;flex:1}
+.hero-ttl .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.hero-ttl h1{font-family:var(--display);font-weight:700;font-size:clamp(26px,6vw,40px);line-height:.95;margin:0;text-transform:uppercase;letter-spacing:.01em}
+.theme-btn{flex:none;width:40px;height:40px;border-radius:10px;border:1px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer;font-size:18px;display:grid;place-items:center}
+.countdown{display:flex;align-items:center;gap:12px;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px 14px;flex-wrap:wrap}
+.cd-badge{font-family:var(--mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;padding:3px 8px;border-radius:6px;background:var(--accent-soft);color:var(--accent);white-space:nowrap}
+.cd-badge.live{background:var(--live-soft);color:var(--live)}
+.cd-match{font-family:var(--display);font-weight:600;font-size:16px;text-transform:uppercase;min-width:0;flex:1;line-height:1.1}
+.cd-time{font-family:var(--mono);font-weight:700;font-size:20px;font-variant-numeric:tabular-nums;white-space:nowrap}
+.cd-time.live{color:var(--live)}
+.search{position:relative;display:flex;align-items:center}
+.search input{width:100%;font:inherit;font-size:15px;padding:10px 14px 10px 38px;border:1px solid var(--line);border-radius:10px;background:var(--surface);color:var(--ink)}
+.search svg{position:absolute;left:12px;width:18px;height:18px;color:var(--muted);pointer-events:none}
+/* навигация */
+.tabs{position:sticky;top:env(safe-area-inset-top,0px);z-index:50;display:flex;gap:4px;overflow-x:auto;border-bottom:1px solid var(--line);scrollbar-width:thin;background:var(--bg);padding-top:6px}
 .tab{font:inherit;font-family:var(--display);font-weight:600;font-size:16px;text-transform:uppercase;letter-spacing:.02em;border:0;background:none;color:var(--muted);padding:10px 12px 9px;cursor:pointer;border-bottom:3px solid transparent;white-space:nowrap;display:flex;gap:6px;align-items:center}
 .tab[aria-selected="true"]{color:var(--ink);border-bottom-color:var(--accent)}
 .tab .c{font-family:var(--mono);font-size:11px;font-weight:500;background:var(--line);color:var(--ink);border-radius:999px;padding:1px 7px}
-.tab .live{width:7px;height:7px;border-radius:50%;background:var(--pitch)}
-.controls{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
-.controls .lbl{font-size:13px;color:var(--muted);margin-right:4px}
-.chip{font:inherit;font-size:13px;border:1px solid var(--line);background:var(--surface);color:var(--ink);padding:6px 12px;border-radius:999px;cursor:pointer}
+.tab .live{width:7px;height:7px;border-radius:50%;background:var(--live);box-shadow:0 0 0 0 var(--live);animation:pulse 1.6s infinite}
+@keyframes pulse{0%{box-shadow:0 0 0 0 color-mix(in srgb,var(--live) 60%,transparent)}70%{box-shadow:0 0 0 6px transparent}100%{box-shadow:0 0 0 0 transparent}}
+.controls{display:flex;flex-wrap:wrap;gap:8px;align-items:center;padding-top:14px}
+.controls .lbl{font-size:12px;color:var(--muted);margin-right:2px}
+.chip{font:inherit;font-size:13px;border:1px solid var(--line);background:var(--surface);color:var(--ink);padding:5px 11px;border-radius:999px;cursor:pointer}
 .chip[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
-button:focus-visible,a:focus-visible,summary:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
-.roundline{font-size:13px;color:var(--muted)}
-.day{display:flex;align-items:baseline;gap:12px;margin-top:8px}
+.chip.sep{margin-left:auto}
+button:focus-visible,a:focus-visible,summary:focus-visible,input:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.roundline{font-size:13px;color:var(--muted);padding-top:14px}
+.day{display:flex;align-items:baseline;gap:12px;margin-top:10px}
 .day h2{font-family:var(--display);font-weight:600;font-size:21px;margin:0;text-transform:uppercase}
-.day .today{font-family:var(--mono);font-size:11px;background:var(--pitch);color:var(--surface);padding:2px 7px;border-radius:3px;letter-spacing:.06em}
+.day .today{font-family:var(--mono);font-size:11px;background:var(--pitch);color:#fff;padding:2px 7px;border-radius:3px;letter-spacing:.06em}
 .day .rule{flex:1;height:1px;background:var(--line)}
 .day .n{font-family:var(--mono);font-size:12px;color:var(--muted)}
-.stack{display:flex;flex-direction:column;gap:16px}
-.match{background:var(--surface);border:1px solid var(--line);border-radius:10px;overflow:hidden}
-.board{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:12px;padding:18px 18px 12px}
-.team{font-family:var(--display);font-weight:600;font-size:clamp(19px,4.2vw,26px);line-height:1.1;text-transform:uppercase;min-width:0;overflow-wrap:anywhere}
-.team.away{text-align:right}
-.mid{display:flex;flex-direction:column;align-items:center;gap:2px}
-.time{font-family:var(--mono);font-weight:700;font-size:18px;background:var(--ink);color:var(--bg);padding:3px 10px;border-radius:4px}
-.venue{font-size:12px;color:var(--muted);text-align:center}
+.stack{display:flex;flex-direction:column;gap:16px;margin-top:12px}
+/* карточка */
+.match{background:var(--surface);border:1px solid var(--line);border-radius:12px;overflow:hidden;position:relative}
+.match.live{border-color:var(--live)}
+.livetag{position:absolute;top:10px;left:50%;transform:translateX(-50%);z-index:2;font-family:var(--mono);font-size:10px;font-weight:700;letter-spacing:.08em;background:var(--live);color:#fff;padding:2px 9px;border-radius:999px;display:flex;align-items:center;gap:5px}
+.livetag::before{content:"";width:6px;height:6px;border-radius:50%;background:#fff;animation:pulse 1.6s infinite}
+.star{position:absolute;top:8px;right:8px;z-index:2;width:30px;height:30px;border-radius:8px;border:0;background:transparent;color:var(--muted);cursor:pointer;font-size:17px;line-height:1}
+.star.on{color:var(--star)}
+.board{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:10px;padding:18px 16px 12px;text-decoration:none;color:inherit}
+.side-t{display:flex;flex-direction:column;align-items:center;gap:7px;min-width:0}
+.badge{width:44px;height:44px;border-radius:50%;display:grid;place-items:center;font-family:var(--display);font-weight:700;font-size:15px;letter-spacing:.02em;flex:none}
+.team{font-family:var(--display);font-weight:600;font-size:clamp(15px,3.4vw,19px);line-height:1.05;text-transform:uppercase;text-align:center;overflow-wrap:anywhere}
+.mid{display:flex;flex-direction:column;align-items:center;gap:3px}
+.time{font-family:var(--mono);font-weight:700;font-size:17px;background:var(--ink);color:var(--bg);padding:3px 10px;border-radius:4px}
+.time.live{background:var(--live);color:#fff}
+.venue{font-size:11px;color:var(--muted);text-align:center;max-width:16ch}
+.open-hint{font-family:var(--mono);font-size:11px;color:var(--accent);text-align:center;padding:0 0 8px}
 .odds{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
 .odd{padding:8px 10px;display:flex;justify-content:space-between;align-items:baseline;gap:6px;font-variant-numeric:tabular-nums}
 .odd+.odd{border-left:1px solid var(--line)}
 .odd b{font-family:var(--mono);font-size:12px;color:var(--muted);font-weight:500}
 .odd span{font-family:var(--mono);font-weight:700;font-size:16px}
 .odd.fav span{color:var(--pitch)}
-.body{padding:14px 18px 18px;display:flex;flex-direction:column;gap:14px}
-.context{margin:0;color:var(--muted);font-size:14px;max-width:72ch}
+.cbody{padding:14px 16px 16px;display:flex;flex-direction:column;gap:13px}
+.context{margin:0;color:var(--muted);font-size:14px}
 .lean{display:flex;flex-direction:column;gap:6px}
 .lean-top{display:flex;justify-content:space-between;font-size:12px;color:var(--muted);gap:8px;flex-wrap:wrap}
 .bar{display:flex;height:10px;border-radius:5px;overflow:hidden;background:var(--line)}
@@ -74,117 +101,127 @@ button:focus-visible,a:focus-visible,summary:focus-visible{outline:2px solid var
 .legend em{font-style:normal;display:inline-flex;align-items:center;gap:5px}
 .legend em::before{content:"";width:9px;height:9px;border-radius:2px;background:var(--c)}
 details{border:1px solid var(--line);border-radius:8px}
-summary{cursor:pointer;padding:10px 12px;font-weight:600;font-size:14px;list-style:none;display:flex;justify-content:space-between;gap:8px}
+summary{cursor:pointer;padding:10px 12px;font-weight:600;font-size:14px;list-style:none;display:flex;justify-content:space-between;gap:8px;align-items:center}
 summary::-webkit-details-marker{display:none}
 summary::after{content:"+";font-family:var(--mono);color:var(--muted)}
-details[open] summary::after{content:"–"}
+details[open]>summary::after{content:"–"}
 .tips{list-style:none;margin:0;padding:0 12px 6px;display:flex;flex-direction:column}
 .tip{display:grid;grid-template-columns:auto 1fr auto;gap:10px;align-items:baseline;padding:8px 0;border-top:1px solid var(--line);font-size:14px}
 .tip .src{font-weight:600;white-space:nowrap}
-.tip a,.lsrc a{color:var(--ink);text-decoration:none;border-bottom:1px solid var(--line)}
-.tip a:hover,.lsrc a:hover{border-color:var(--accent);color:var(--accent)}
+.tip a,.lsrc a,.newsitem a{color:var(--ink);text-decoration:none;border-bottom:1px solid var(--line)}
+.tip a:hover,.lsrc a:hover,.newsitem a:hover{border-color:var(--accent);color:var(--accent)}
 .tip .pick{min-width:0}
 .tip .k{font-family:var(--mono);font-size:13px;color:var(--muted);font-variant-numeric:tabular-nums}
-.tag{font-family:var(--mono);font-size:10px;letter-spacing:.06em;padding:1px 6px;border-radius:3px;margin-left:6px;vertical-align:1px}
-.tag.ru{background:var(--accent-soft);color:var(--accent)}
-.tag.eu{background:var(--pitch-soft);color:var(--pitch)}
-/* составы */
+.tagr{font-family:var(--mono);font-size:10px;letter-spacing:.06em;padding:1px 6px;border-radius:3px;margin-left:6px;vertical-align:1px}
+.tagr.ru{background:var(--accent-soft);color:var(--accent)}
+.tagr.eu{background:var(--pitch-soft);color:var(--pitch)}
+.news{list-style:none;margin:0;padding:2px 12px 8px;display:flex;flex-direction:column}
+.newsitem{display:grid;grid-template-columns:auto 1fr;gap:10px;align-items:baseline;padding:9px 0;border-top:1px solid var(--line)}
+.newsitem::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--warn);transform:translateY(-2px)}
+.newsitem a{font-weight:500;border:0}
+.newsitem .nsrc{display:block;font-family:var(--mono);font-size:11px;color:var(--muted);margin-top:2px}
+summary .badge2{font-family:var(--mono);font-size:10px;letter-spacing:.06em;color:var(--warn);background:color-mix(in srgb,var(--warn) 16%,transparent);padding:1px 7px;border-radius:999px;margin-left:8px;font-weight:700}
 .lineups{padding:4px 12px 12px;display:flex;flex-direction:column;gap:10px}
 .pitches{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 .side{display:flex;flex-direction:column;gap:8px;min-width:0}
 .side-head{display:flex;justify-content:space-between;align-items:baseline;gap:8px;flex-wrap:wrap}
-.side-head b{font-family:var(--display);font-weight:600;text-transform:uppercase;font-size:16px}
-.side-head span{font-family:var(--mono);font-size:12px;color:var(--muted)}
+.side-head b{font-family:var(--display);font-weight:600;text-transform:uppercase;font-size:15px}
+.side-head span{font-family:var(--mono);font-size:11px;color:var(--muted)}
 .pitch{background:repeating-linear-gradient(0deg,var(--turf) 0 28px,var(--turf-2) 28px 56px);border-radius:8px;padding:12px 6px;display:flex;flex-direction:column-reverse;gap:10px;position:relative;border:2px solid color-mix(in srgb,var(--chalk) 35%,transparent)}
 .pitch::before{content:"";position:absolute;left:30%;right:30%;bottom:0;height:12%;border:2px solid color-mix(in srgb,var(--chalk) 35%,transparent);border-bottom:0}
-.row{display:flex;justify-content:space-around;gap:4px;position:relative}
+.prow{display:flex;justify-content:space-around;gap:4px}
 .pl{display:flex;flex-direction:column;align-items:center;gap:3px;min-width:0;flex:1}
 .pl i{width:12px;height:12px;border-radius:50%;background:var(--chalk);box-shadow:0 0 0 2px color-mix(in srgb,var(--ink) 25%,transparent)}
-.away .pl i{background:var(--accent)}
-.pl span{font-size:11.5px;line-height:1.15;color:var(--chalk);text-align:center;overflow-wrap:anywhere;font-weight:500}
+.side.away .pl i{background:var(--accent)}
+.pl span{font-size:11px;line-height:1.15;color:var(--chalk);text-align:center;overflow-wrap:anywhere;font-weight:500}
 .absent{font-size:13px;color:var(--muted);display:flex;flex-direction:column;gap:2px}
 .absent b{color:var(--ink);font-weight:600}
 .lsrc{font-size:12px;color:var(--muted)}
-/* новости */
-.news{list-style:none;margin:0;padding:2px 12px 8px;display:flex;flex-direction:column}
-.newsitem{display:grid;grid-template-columns:auto 1fr;gap:10px;align-items:baseline;padding:9px 0;border-top:1px solid var(--line)}
-.newsitem::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--warn);transform:translateY(-2px)}
-.newsitem a{color:var(--ink);text-decoration:none;font-weight:500}
-.newsitem a:hover{color:var(--accent)}
-.newsitem .nsrc{display:block;font-family:var(--mono);font-size:11px;color:var(--muted);margin-top:2px;letter-spacing:.02em}
-summary .badge{font-family:var(--mono);font-size:10px;letter-spacing:.06em;color:var(--warn);background:color-mix(in srgb,var(--warn) 16%,transparent);padding:1px 7px;border-radius:999px;margin-left:8px;font-weight:700}
-/* ИИ */
 .ai{background:var(--ai-soft);border-radius:8px;padding:14px;display:flex;flex-direction:column;gap:8px}
 .ai-head{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
 .ai-label{font-family:var(--mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--ai);font-weight:700}
 .score{font-family:var(--display);font-weight:700;font-size:22px;color:var(--ink)}
-.ai p{margin:0;font-size:14.5px;max-width:72ch}
+.ai p{margin:0;font-size:14.5px}
 .ai .bet{font-size:13.5px}
 .ai .bet b{color:var(--ai)}
 .conf{display:inline-flex;gap:3px;vertical-align:middle;margin-left:6px}
 .conf i{width:14px;height:5px;border-radius:2px;background:var(--line)}
 .conf i.on{background:var(--ai)}
 /* расписание */
-.fixtures{background:var(--surface);border:1px solid var(--line);border-radius:10px;overflow:hidden}
-.fx{display:grid;grid-template-columns:64px 1fr auto 1fr;gap:10px;align-items:center;padding:11px 16px;border-top:1px solid var(--line)}
+.fixtures{background:var(--surface);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.fx{display:grid;grid-template-columns:58px 1fr auto 1fr auto;gap:10px;align-items:center;padding:11px 14px;border-top:1px solid var(--line);text-decoration:none;color:inherit}
 .fx:first-child{border-top:0}
+.fx:hover{background:var(--raise)}
 .fx .t{font-family:var(--mono);font-weight:700;font-size:14px;font-variant-numeric:tabular-nums}
 .fx .h{text-align:right;font-weight:600;min-width:0;overflow-wrap:anywhere}
 .fx .a{font-weight:600;min-width:0;overflow-wrap:anywhere}
 .fx .vs{font-family:var(--mono);font-size:12px;color:var(--muted)}
-.pending{font-size:13px;color:var(--muted);padding:10px 16px;background:color-mix(in srgb,var(--line) 35%,var(--surface));border-top:1px solid var(--line)}
-.note{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:16px 18px;font-size:14px;color:var(--muted);display:flex;flex-direction:column;gap:8px}
-.note h3{font-family:var(--display);font-weight:600;font-size:18px;color:var(--ink);margin:0;text-transform:uppercase}
-.note p{margin:0;max-width:72ch}
-.empty{padding:28px;text-align:center;color:var(--muted);background:var(--surface);border:1px dashed var(--line);border-radius:10px}
-footer{font-size:12px;color:var(--muted);text-align:center}
+.fx .st{font-size:15px;color:var(--muted)}
+.fx .st.on{color:var(--star)}
+.pending{font-size:13px;color:var(--muted);padding:10px 14px;background:var(--raise);border-top:1px solid var(--line)}
+.note{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:16px;font-size:14px;color:var(--muted);display:flex;flex-direction:column;gap:8px;margin-top:18px}
+.note h3{font-family:var(--display);font-weight:600;font-size:17px;color:var(--ink);margin:0;text-transform:uppercase}
+.note p{margin:0}
+.empty{padding:28px;text-align:center;color:var(--muted);background:var(--surface);border:1px dashed var(--line);border-radius:12px;margin-top:14px}
+footer{font-size:12px;color:var(--muted);text-align:center;padding-top:18px}
+/* страница матча */
+.detail{padding-block:18px 0}
+.back{display:inline-flex;align-items:center;gap:6px;font:inherit;font-size:14px;font-weight:600;color:var(--accent);background:none;border:0;cursor:pointer;padding:6px 0;margin-bottom:6px}
+.share{display:flex;gap:8px;align-items:center;flex-wrap:wrap;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:10px 12px;margin-top:14px;font-size:13px}
+.share code{font-family:var(--mono);font-size:12px;color:var(--muted);overflow-wrap:anywhere;flex:1;min-width:0}
+.share button{font:inherit;font-size:13px;border:1px solid var(--line);background:var(--raise);color:var(--ink);border-radius:8px;padding:6px 12px;cursor:pointer;white-space:nowrap}
+.detail-head{display:flex;flex-direction:column;gap:2px;margin:4px 0 2px}
+.detail-head .lg{font-family:var(--mono);font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.05em}
 @media (max-width:560px){
-  .board{grid-template-columns:1fr;text-align:left;gap:6px}
-  .team.away{text-align:left}
-  .mid{flex-direction:row;gap:10px;order:-1;justify-content:flex-start}
+  .board{grid-template-columns:1fr auto 1fr;padding:16px 10px 10px}
+  .team{font-size:13px}
+  .badge{width:38px;height:38px;font-size:13px}
   .tip{grid-template-columns:1fr auto}
   .tip .src{grid-column:1/-1}
   .pitches{grid-template-columns:1fr}
-  .fx{grid-template-columns:52px 1fr;row-gap:2px}
+  .fx{grid-template-columns:50px 1fr auto;row-gap:2px}
   .fx .h{text-align:left;grid-column:2}
   .fx .vs{display:none}
   .fx .a{grid-column:2}
   .fx .t{grid-row:1/3}
+  .fx .st{grid-row:1/3;grid-column:3}
 }
 @media (prefers-reduced-motion:no-preference){
-.match{transition:border-color .2s,transform .2s}.match:hover{border-color:var(--muted)}
-#list>*{animation:fu .4s cubic-bezier(.2,.7,.2,1) both}
-#list>*:nth-child(2){animation-delay:.04s}#list>*:nth-child(3){animation-delay:.08s}#list>*:nth-child(4){animation-delay:.12s}#list>*:nth-child(n+5){animation-delay:.15s}
-@keyframes fu{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
-.tab{transition:color .15s,border-color .15s}
-summary{transition:background .15s}summary:hover{background:color-mix(in srgb,var(--line) 32%,transparent)}
-.newsitem a,.tip a,.chip{transition:color .15s,background .15s,border-color .15s}
+  .match,.fx{transition:border-color .2s,background .2s}
+  #view>*{animation:fu .4s cubic-bezier(.2,.7,.2,1) both}
+  #view>*:nth-child(2){animation-delay:.03s}#view>*:nth-child(3){animation-delay:.06s}#view>*:nth-child(4){animation-delay:.09s}#view>*:nth-child(n+5){animation-delay:.12s}
+  @keyframes fu{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+  .tab,.chip,.newsitem a,.tip a{transition:color .15s,background .15s,border-color .15s}
+  summary:hover{background:color-mix(in srgb,var(--line) 32%,transparent)}
 }
 </style>
 
 <div class="wrap">
-  <header>
-    <div class="eyebrow" id="eyebrow">Футбол Европы · прогнозы и составы</div>
-    <h1 id="h1">Матчи <span>сегодня</span></h1>
-    <p class="lede">Лига чемпионов и топ-5 лиг Европы. К каждому матчу дня — прогнозы с русскоязычных и европейских сайтов, предполагаемые составы и мнение ИИ. Будущие туры показаны расписанием: прогнозы и составы появляются в день игры. Время московское.</p>
-  </header>
-
-  <nav class="tabs" role="tablist" aria-label="Турниры" id="tabs"></nav>
-
-  <div class="controls" role="group" aria-label="Фильтр источников">
-    <span class="lbl">Источники прогнозов:</span>
-    <button class="chip" id="f-all" data-f="all" aria-pressed="true">Все</button>
-    <button class="chip" id="f-ru" data-f="ru" aria-pressed="false">Рунет</button>
-    <button class="chip" id="f-eu" data-f="eu" aria-pressed="false">Европа</button>
+  <div class="hero">
+    <div class="hero-top">
+      <svg class="emblem" viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="22" fill="var(--ink)"/><path d="M24 9l4.5 3.3-1.7 5.3h-5.6l-1.7-5.3L24 9zm-10.6 7.7l5.2.6 1.7 5.3-3.4 4.5-5-1.7.1-5.5 1.4-3.2zm21.2 0l1.4 3.2.1 5.5-5 1.7-3.4-4.5 1.7-5.3 5.2-.6zM24 27.5l4.4 3.2-1.7 5.2h-5.4l-1.7-5.2L24 27.5z" fill="var(--pitch)"/></svg>
+      <div class="hero-ttl">
+        <span class="eyebrow" id="eyebrow">Футбол Европы · прогнозы, составы, новости</span>
+        <h1>Прогнозы на футбол</h1>
+      </div>
+      <button class="theme-btn" id="theme" title="Сменить тему" aria-label="Сменить тему">◐</button>
+    </div>
+    <div class="countdown" id="countdown" hidden></div>
+    <div class="search">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4-4"/></svg>
+      <input id="search" type="search" placeholder="Поиск команды…" autocomplete="off" aria-label="Поиск команды">
+    </div>
   </div>
 
-  <main id="list" class="stack"><div class="empty">Загружаю матчи…</div></main>
+  <nav class="tabs" role="tablist" aria-label="Турниры" id="tabs"></nav>
+  <div class="controls" id="controls"></div>
+
+  <main id="view"><div class="empty">Загружаю матчи…</div></main>
 
   <section class="note">
-    <h3>Как читать страницу</h3>
-    <p>Полоса «Куда склоняются эксперты» показывает, сколько прогнозов ставят на победу хозяев, ничью или гостей. Прогнозы только на голы и угловые в полосу не входят, но есть в списке.</p>
-    <p>П1 / Х / П2 — победа хозяев, ничья, победа гостей. Ф1(−1) — хозяева выигрывают с разницей в 2+ мяча. ТБ / ТМ — тотал больше / меньше. ОЗ — обе забьют.</p>
-    <p>Составы предполагаемые: официальные стартовые появляются примерно за час до начала. Мнение ИИ — аналитика по собранным фактам, а не гарантия результата.</p>
+    <h3>Как читать</h3>
+    <p>Полоса «Куда склоняются эксперты» — доля прогнозов на победу хозяев, ничью или гостей. П1/Х/П2 — победа хозяев, ничья, победа гостей. Ф1(−1) — хозяева с разницей в 2+ мяча. ТБ/ТМ — тотал больше/меньше. ОЗ — обе забьют.</p>
+    <p>Составы предполагаемые; официальные выходят примерно за час до начала. Мнение ИИ — аналитика по собранным фактам, не гарантия результата. 18+.</p>
   </section>
 
   <footer id="foot">18+ · Ставки связаны с риском потери денег</footer>
@@ -194,102 +231,186 @@ summary{transition:background .15s}summary:hover{background:color-mix(in srgb,va
 const esc=s=>String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 const DAYS=["воскресенье","понедельник","вторник","среда","четверг","пятница","суббота"];
 const MON=["января","февраля","марта","апреля","мая","июня","июля","августа","сентября","октября","ноября","декабря"];
-const dLabel=s=>{const d=new Date(s+"T12:00:00");return `${DAYS[d.getDay()]}, ${d.getDate()} ${MON[d.getMonth()]}`};
-let D=null, tab=null, filter="all";
+const dLabel=s=>{const d=new Date(s+"T12:00:00");return DAYS[d.getDay()]+", "+d.getDate()+" "+MON[d.getMonth()]};
+const inst=m=>new Date(m.date+"T"+(m.time||"00:00")+":00+03:00").getTime();
+const LIVE_MS=115*60*1000;
+function matchState(m){const n=Date.now(),k=inst(m);if(n>=k&&n<k+LIVE_MS)return"live";if(n>=k+LIVE_MS)return"done";return"soon"}
+const TR={а:"a",б:"b",в:"v",г:"g",д:"d",е:"e",ё:"e",ж:"zh",з:"z",и:"i",й:"y",к:"k",л:"l",м:"m",н:"n",о:"o",п:"p",р:"r",с:"s",т:"t",у:"u",ф:"f",х:"h",ц:"c",ч:"ch",ш:"sh",щ:"sch",ъ:"",ы:"y",ь:"",э:"e",ю:"yu",я:"ya"};
+const slug=s=>String(s).toLowerCase().split("").map(c=>TR[c]!==undefined?TR[c]:/[a-z0-9]/.test(c)?c:"-").join("").replace(/-+/g,"-").replace(/^-|-$/g,"");
+let CLUB=[["псж","#004170"],["барселон","#a50044"],["реал","#00529f"],["ливерпул","#c8102e"],["манчестер сити","#6cabdd"],["манчестер юнайт","#da020e"],["атлетико","#272e61"],["арсенал","#ef0107"],["челси","#034694"],["тоттенхэм","#132257"],["бавария","#dc052d"],["боруссия","#fde100"],["наполи","#12a0d7"],["интер","#0068a8"],["милан","#fb090b"],["ювентус","#1a1a1a"],["рома","#8e1111"],["лацио","#87d8f7"],["аталанта","#1d1d1b"],["порту","#00428c"],["псв","#ed1c24"],["фенербахче","#1a3160"],["славия","#d7142a"],["сабах","#1b63b0"],["вильярреал","#ffe667"],["штутгарт","#e32219"],["буде","#ffd200"],["аек","#f8c300"],["марсель","#2faee0"],["лион","#da001a"],["лилль","#e01e13"],["монако","#e51b22"],["байер","#e32221"],["лейпциг","#dd0741"],["севилья","#d8010a"],["бетис","#00954c"]];
+function clubColor(name){const low=String(name).toLowerCase();for(const[k,v]of CLUB)if(low.includes(k))return v;let h=0;for(const c of low)h=(h*31+c.charCodeAt(0))%360;return "hsl("+h+" 52% 42%)"}
+function hexLum(c){if(c[0]!=="#")return .5;const n=c.length===4?c.slice(1).split("").map(x=>x+x).join(""):c.slice(1);const r=parseInt(n.slice(0,2),16),g=parseInt(n.slice(2,4),16),b=parseInt(n.slice(4,6),16);return (0.299*r+0.587*g+0.114*b)/255}
+function initials(name){const w=String(name).replace(/[«»"().]/g,"").trim().split(/\s+/);if(w.length>=2)return (w[0][0]+w[1][0]).toUpperCase();const s=w[0]||"";return s.length<=3?s.toUpperCase():s.slice(0,2).toUpperCase()}
+function badge(name){const bg=clubColor(name),fg=hexLum(bg)>0.6?"#111":"#fff";return '<span class="badge" style="background:'+bg+';color:'+fg+'">'+esc(initials(name))+'</span>'}
+
+let D=null,tab=null,filter="all",dateFilter="all",query="",favs=new Set();
 try{filter=localStorage.getItem("lch-filter")||"all"}catch(e){}
+try{favs=new Set(JSON.parse(localStorage.getItem("lch-favs")||"[]"))}catch(e){}
+function saveFavs(){try{localStorage.setItem("lch-favs",JSON.stringify([...favs]))}catch(e){}}
+const isFav=m=>favs.has(m.home)||favs.has(m.away);
 
 function lineupSide(s,name,cls){
-  if(!s) return "";
-  const rows=s.xi.map(r=>`<div class="row">${r.map(p=>`<div class="pl"><i></i><span>${esc(p)}</span></div>`).join("")}</div>`).join("");
-  return `<div class="side ${cls}">
-    <div class="side-head"><b>${esc(name)}</b><span>${esc(s.formation)}${s.coach?" · "+esc(s.coach):""}</span></div>
-    <div class="pitch" role="img" aria-label="Состав ${esc(name)}">${rows}</div>
-    <div class="absent">${s.out.length?`<span><b>Не сыграют:</b> ${esc(s.out.join(", "))}</span>`:`<span><b>Не сыграют:</b> потерь нет</span>`}
-    ${s.doubt.length?`<span><b>Под вопросом:</b> ${esc(s.doubt.join(", "))}</span>`:""}</div>
-  </div>`;
+  if(!s)return"";
+  const rows=(s.xi||[]).map(r=>'<div class="prow">'+r.map(p=>'<div class="pl"><i></i><span>'+esc(p)+'</span></div>').join("")+'</div>').join("");
+  return '<div class="side '+cls+'"><div class="side-head"><b>'+esc(name)+'</b><span>'+esc(s.formation||"")+(s.coach?" · "+esc(s.coach):"")+'</span></div>'
+    +'<div class="pitch" role="img" aria-label="Состав '+esc(name)+'">'+rows+'</div>'
+    +'<div class="absent"><span><b>Не сыграют:</b> '+(s.out&&s.out.length?esc(s.out.join(", ")):"потерь нет")+'</span>'
+    +(s.doubt&&s.doubt.length?'<span><b>Под вопросом:</b> '+esc(s.doubt.join(", "))+'</span>':"")+'</div></div>';
 }
-function card(m){
+function cardInner(m,open){
   const tips=(m.tips||[]).filter(t=>filter==="all"||t.reg===filter);
   const cnt={"1":0,"X":0,"2":0};tips.forEach(t=>{if(t.lean)cnt[t.lean]++});
-  const tot=cnt[1]+cnt.X+cnt[2], pct=k=>tot?Math.round(cnt[k]/tot*100):0;
-  const o=m.odds||[null,null,null], valid=o.filter(x=>x!=null), fav=valid.length?o.indexOf(Math.min(...valid)):-1;
-  const conf=m.ai?[1,2,3,4,5].map(i=>`<i class="${i<=m.ai.conf?"on":""}"></i>`).join(""):"";
-  return `<article class="match">
-    <div class="board">
-      <div class="team">${esc(m.home)}</div>
-      <div class="mid"><div class="time">${esc(m.time)}</div>${m.venue?`<div class="venue">${esc(m.venue)}</div>`:""}</div>
-      <div class="team away">${esc(m.away)}</div>
-    </div>
-    <div class="odds">${["П1","Х","П2"].map((l,i)=>`<div class="odd${i===fav?" fav":""}"><b>${l}</b><span>${o[i]==null?"—":Number(o[i]).toFixed(2)}</span></div>`).join("")}</div>
-    <div class="body">
-      ${m.context?`<p class="context">${esc(m.context)}</p>`:""}
-      <div class="lean">
-        <div class="lean-top"><span>Куда склоняются эксперты</span><span>${tot} из ${tips.length} прогнозов на исход</span></div>
-        <div class="bar" role="img" aria-label="Хозяева ${pct(1)}%, ничья ${pct("X")}%, гости ${pct(2)}%">
-          <i class="h" style="width:${pct(1)}%"></i><i class="d" style="width:${pct("X")}%"></i><i class="a" style="width:${pct(2)}%"></i></div>
-        <div class="legend"><em style="--c:var(--pitch)">${esc(m.home)} · ${cnt[1]}</em><em style="--c:var(--muted)">Ничья · ${cnt.X}</em><em style="--c:var(--accent)">${esc(m.away)} · ${cnt[2]}</em></div>
-      </div>
-      ${(m.news&&m.news.length)?`<details open>
-        <summary>Новости матча<span class="badge">${m.news.length}</span></summary>
-        <ul class="news">${m.news.map(nw=>`<li class="newsitem"><div><a href="${esc(nw.u)}" target="_blank" rel="noopener">${esc(nw.t)}</a><span class="nsrc">${esc(nw.s)}</span></div></li>`).join("")}</ul>
-      </details>`:""}
-      ${m.lineups?`<details>
-        <summary>Предполагаемые составы</summary>
-        <div class="lineups">
-          <div class="pitches">${lineupSide(m.lineups.home,m.home,"home")}${lineupSide(m.lineups.away,m.away,"away")}</div>
-          ${m.lineups.source?`<div class="lsrc">Источник: <a href="${esc(m.lineups.source.url)}" target="_blank" rel="noopener">${esc(m.lineups.source.name)}</a></div>`:""}
-        </div></details>`:""}
-      <details>
-        <summary>Все прогнозы (${tips.length})</summary>
-        <ul class="tips">${tips.map(t=>`<li class="tip">
-          <span class="src"><a href="${esc(t.url)}" target="_blank" rel="noopener">${esc(t.src)}</a><span class="tag ${t.reg}">${t.reg==="ru"?"РУ":"EU"}</span></span>
-          <span class="pick">${esc(t.pick)}</span><span class="k">${t.k?"кф "+esc(t.k):""}</span></li>`).join("")||'<li class="tip"><span class="pick">Нет прогнозов из этой группы</span></li>'}</ul>
-      </details>
-      ${m.ai?`<div class="ai">
-        <div class="ai-head"><span class="ai-label">Мнение ИИ</span><span class="score">${esc(m.ai.score)}</span></div>
-        <p>${esc(m.ai.text)}</p>
-        <div class="bet">Мой выбор: <b>${esc(m.ai.bet)}</b> <span style="color:var(--muted)">· уверенность</span><span class="conf" aria-label="Уверенность ${m.ai.conf} из 5">${conf}</span></div>
-      </div>`:""}
-    </div>
-  </article>`;
+  const tot=cnt[1]+cnt.X+cnt[2],pct=k=>tot?Math.round(cnt[k]/tot*100):0;
+  const o=m.odds||[null,null,null],valid=o.filter(x=>x!=null),fav=valid.length?o.indexOf(Math.min(...valid)):-1;
+  const op=open?" open":"";
+  let h='<div class="odds">'+["П1","Х","П2"].map((l,i)=>'<div class="odd'+(i===fav?" fav":"")+'"><b>'+l+'</b><span>'+(o[i]==null?"—":Number(o[i]).toFixed(2))+'</span></div>').join("")+'</div><div class="cbody">';
+  if(m.context)h+='<p class="context">'+esc(m.context)+'</p>';
+  h+='<div class="lean"><div class="lean-top"><span>Куда склоняются эксперты</span><span>'+tot+' из '+tips.length+' прогнозов на исход</span></div>'
+    +'<div class="bar" role="img" aria-label="Хозяева '+pct(1)+'%, ничья '+pct("X")+'%, гости '+pct(2)+'%"><i class="h" style="width:'+pct(1)+'%"></i><i class="d" style="width:'+pct("X")+'%"></i><i class="a" style="width:'+pct(2)+'%"></i></div>'
+    +'<div class="legend"><em style="--c:var(--pitch)">'+esc(m.home)+' · '+cnt[1]+'</em><em style="--c:var(--muted)">Ничья · '+cnt.X+'</em><em style="--c:var(--accent)">'+esc(m.away)+' · '+cnt[2]+'</em></div></div>';
+  if(m.news&&m.news.length)h+='<details'+op+'><summary>Новости матча<span class="badge2">'+m.news.length+'</span></summary><ul class="news">'+m.news.map(nw=>'<li class="newsitem"><div><a href="'+esc(nw.u)+'" target="_blank" rel="noopener">'+esc(nw.t)+'</a><span class="nsrc">'+esc(nw.s)+'</span></div></li>').join("")+'</ul></details>';
+  if(m.lineups)h+='<details'+op+'><summary>Предполагаемые составы</summary><div class="lineups"><div class="pitches">'+lineupSide(m.lineups.home,m.home,"home")+lineupSide(m.lineups.away,m.away,"away")+'</div>'+(m.lineups.source?'<div class="lsrc">Источник: <a href="'+esc(m.lineups.source.url)+'" target="_blank" rel="noopener">'+esc(m.lineups.source.name)+'</a></div>':"")+'</div></details>';
+  h+='<details'+op+'><summary>Все прогнозы ('+tips.length+')</summary><ul class="tips">'+(tips.map(t=>'<li class="tip"><span class="src"><a href="'+esc(t.url)+'" target="_blank" rel="noopener">'+esc(t.src)+'</a><span class="tagr '+t.reg+'">'+(t.reg==="ru"?"РУ":"EU")+'</span></span><span class="pick">'+esc(t.pick)+'</span><span class="k">'+(t.k?"кф "+esc(t.k):"")+'</span></li>').join("")||'<li class="tip"><span class="pick">Нет прогнозов из этой группы</span></li>')+'</ul></details>';
+  if(m.ai){const conf=[1,2,3,4,5].map(i=>'<i class="'+(i<=m.ai.conf?"on":"")+'"></i>').join("");
+    h+='<div class="ai"><div class="ai-head"><span class="ai-label">Мнение ИИ</span><span class="score">'+esc(m.ai.score)+'</span></div><p>'+esc(m.ai.text)+'</p><div class="bet">Выбор: <b>'+esc(m.ai.bet)+'</b> <span style="color:var(--muted)">· уверенность</span><span class="conf" aria-label="Уверенность '+m.ai.conf+' из 5">'+conf+'</span></div></div>';}
+  return h+'</div>';
 }
-function fixtures(ms){
-  return `<div class="fixtures">${ms.map(m=>`<div class="fx"><span class="t">${esc(m.time)}</span><span class="h">${esc(m.home)}</span><span class="vs">—</span><span class="a">${esc(m.away)}</span></div>`).join("")}
-  <div class="pending">Прогнозы, составы и мнение ИИ появятся в день матча.</div></div>`;
+function boardHead(m,st,asLink){
+  const t='<div class="mid"><div class="time'+(st==="live"?" live":"")+'">'+(st==="live"?"LIVE":st==="done"?"итог":esc(m.time))+'</div>'+(m.venue?'<div class="venue">'+esc(m.venue)+'</div>':"")+'</div>';
+  const inner='<div class="side-t">'+badge(m.home)+'<span class="team">'+esc(m.home)+'</span></div>'+t+'<div class="side-t">'+badge(m.away)+'<span class="team">'+esc(m.away)+'</span></div>';
+  return asLink?'<a class="board" href="#m-'+m._id+'">'+inner+'</a>':'<div class="board">'+inner+'</div>';
 }
-function hasToday(t){return t.matches.some(m=>m.date===D.today)}
+function card(m){
+  const st=matchState(m);
+  return '<article class="match'+(st==="live"?" live":"")+'" id="card-'+m._id+'">'
+    +(st==="live"?'<span class="livetag">идёт сейчас</span>':"")
+    +'<button class="star'+(isFav(m)?" on":"")+'" data-fav="'+m._id+'" title="В избранное" aria-label="В избранное">'+(isFav(m)?"★":"☆")+'</button>'
+    +boardHead(m,st,true)
+    +'<div class="open-hint">Открыть страницу матча →</div>'
+    +cardInner(m,false)+'</article>';
+}
+function fixtureRow(m){
+  const st=matchState(m);
+  return '<a class="fx" href="#m-'+m._id+'"><span class="t">'+(st==="live"?"LIVE":esc(m.time))+'</span><span class="h">'+esc(m.home)+'</span><span class="vs">—</span><span class="a">'+esc(m.away)+'</span><span class="st'+(isFav(m)?" on":"")+'" data-fav="'+m._id+'" role="button" tabindex="0" aria-label="В избранное">'+(isFav(m)?"★":"☆")+'</span></a>';
+}
+
+function allMatches(){const a=[];D.tournaments.forEach(t=>t.matches.forEach(m=>a.push(m)));return a}
+function nextMatch(){const n=Date.now();return allMatches().filter(m=>inst(m)>n).sort((a,b)=>inst(a)-inst(b))[0]||null}
+function liveMatches(){return allMatches().filter(m=>matchState(m)==="live")}
+
+function renderCountdown(){
+  const el=document.getElementById("countdown");
+  const lv=liveMatches();
+  if(lv.length){const m=lv[0];el.hidden=false;el.innerHTML='<span class="cd-badge live">идёт сейчас</span><span class="cd-match">'+esc(m.home)+' — '+esc(m.away)+'</span><a class="cd-time live" href="#m-'+m._id+'" style="text-decoration:none">LIVE'+(lv.length>1?" +"+(lv.length-1):"")+'</a>';return}
+  const m=nextMatch();
+  if(!m){el.hidden=true;return}
+  const diff=inst(m)-Date.now();
+  const hh=Math.floor(diff/3600000),mm=Math.floor(diff%3600000/60000),ss=Math.floor(diff%60000/1000);
+  const pad=x=>String(x).padStart(2,"0");
+  const t=hh>=24?Math.floor(hh/24)+" д "+(hh%24)+" ч":pad(hh)+":"+pad(mm)+":"+pad(ss);
+  el.hidden=false;
+  el.innerHTML='<span class="cd-badge">до матча</span><a class="cd-match" href="#m-'+m._id+'" style="color:inherit;text-decoration:none">'+esc(m.home)+' — '+esc(m.away)+'</a><span class="cd-time">'+t+'</span>';
+}
+
 function renderTabs(){
-  document.getElementById("tabs").innerHTML=D.tournaments.map(t=>`<button class="tab" role="tab" id="tab-${t.id}" data-id="${t.id}" aria-selected="${t.id===tab}">${hasToday(t)?'<i class="live" title="Есть матчи сегодня"></i>':""}${esc(t.short||t.name)}<span class="c">${t.matches.length}</span></button>`).join("");
-  document.querySelectorAll(".tab").forEach(b=>b.onclick=()=>{tab=b.dataset.id;try{location.hash=tab}catch(e){}render();b.scrollIntoView({inline:"center",block:"nearest"})});
+  const liveByT={};liveMatches().forEach(m=>liveByT[m._tab]=1);
+  const todayByT={};D.tournaments.forEach(t=>{if(t.matches.some(m=>m.date===D.today))todayByT[t.id]=1});
+  document.getElementById("tabs").innerHTML=D.tournaments.map(t=>'<button class="tab" role="tab" id="tab-'+t.id+'" data-id="'+t.id+'" aria-selected="'+(t.id===tab)+'">'+(liveByT[t.id]?'<i class="live"></i>':(todayByT[t.id]?'<i class="live" style="background:var(--pitch);animation:none"></i>':""))+esc(t.short||t.name)+'<span class="c">'+t.matches.length+'</span></button>').join("");
+  document.querySelectorAll(".tab").forEach(b=>b.onclick=()=>{location.hash=b.dataset.id});
 }
-function render(){
-  renderTabs();
-  document.querySelectorAll(".chip").forEach(b=>b.setAttribute("aria-pressed",b.dataset.f===filter));
+function renderControls(){
   const t=D.tournaments.find(x=>x.id===tab);
-  const ms=[...t.matches].sort((a,b)=>(a.date+a.time).localeCompare(b.date+b.time));
+  const dates=[...new Set(t.matches.map(m=>m.date))].sort();
+  let h='<span class="lbl">Источники:</span>'
+   +'<button class="chip" data-f="all" aria-pressed="'+(filter==="all")+'">Все</button>'
+   +'<button class="chip" data-f="ru" aria-pressed="'+(filter==="ru")+'">Рунет</button>'
+   +'<button class="chip" data-f="eu" aria-pressed="'+(filter==="eu")+'">Европа</button>';
+  if(dates.length>1){h+='<span class="chip sep" style="pointer-events:none;background:none;border:0;color:var(--muted)">Дата:</span><button class="chip" data-d="all" aria-pressed="'+(dateFilter==="all")+'">Все</button>'+dates.map(d=>{const dd=new Date(d+"T12:00:00");return '<button class="chip" data-d="'+d+'" aria-pressed="'+(dateFilter===d)+'">'+(d===D.today?"сегодня":dd.getDate()+" "+MON[dd.getMonth()].slice(0,3))+'</button>'}).join("")}
+  const ctl=document.getElementById("controls");ctl.innerHTML=h;
+  ctl.querySelectorAll("[data-f]").forEach(b=>b.onclick=()=>{filter=b.dataset.f;try{localStorage.setItem("lch-filter",filter)}catch(e){}renderList()});
+  ctl.querySelectorAll("[data-d]").forEach(b=>b.onclick=()=>{dateFilter=b.dataset.d;renderList()});
+}
+function renderList(){
+  renderControls();
+  const t=D.tournaments.find(x=>x.id===tab);
+  let ms=[...t.matches];
+  if(dateFilter!=="all")ms=ms.filter(m=>m.date===dateFilter);
+  if(query)ms=ms.filter(m=>(m.home+" "+m.away).toLowerCase().includes(query));
+  ms.sort((a,b)=>(a.date+a.time).localeCompare(b.date+b.time));
   const dates=[...new Set(ms.map(m=>m.date))];
-  let html=`<div class="roundline">${esc(t.name)} · ${esc(t.round||"")}</div>`;
-  if(!ms.length) html+=`<div class="empty">В ближайшие дни матчей нет.</div>`;
+  let html='<div class="roundline">'+esc(t.name)+' · '+esc(t.round||"")+'</div>';
+  if(!ms.length)html+='<div class="empty">'+(query?"Ничего не найдено по запросу «"+esc(query)+"».":"Матчей нет.")+'</div>';
   dates.forEach(d=>{
-    const day=ms.filter(m=>m.date===d), full=day.filter(m=>m.status==="full"), fx=day.filter(m=>m.status!=="full");
-    html+=`<div class="day"><h2>${dLabel(d)}</h2>${d===D.today?'<span class="today">СЕГОДНЯ</span>':""}<span class="rule"></span><span class="n">матчей: ${day.length}</span></div>`;
-    if(full.length) html+=full.map(card).join("");
-    if(fx.length) html+=fixtures(fx);
+    let day=ms.filter(m=>m.date===d);
+    day.sort((a,b)=>(isFav(b)-isFav(a))||(a.time+a.home).localeCompare(b.time+b.home));
+    const full=day.filter(m=>m.status==="full"),fx=day.filter(m=>m.status!=="full");
+    html+='<div class="day"><h2>'+dLabel(d)+'</h2>'+(d===D.today?'<span class="today">СЕГОДНЯ</span>':"")+'<span class="rule"></span><span class="n">матчей: '+day.length+'</span></div><div class="stack">';
+    html+=full.map(card).join("");
+    if(fx.length)html+='<div class="fixtures">'+fx.map(fixtureRow).join("")+'<div class="pending">Прогнозы, составы и новости появятся в день матча.</div></div>';
+    html+='</div>';
   });
-  document.getElementById("list").innerHTML=html;
+  const v=document.getElementById("view");v.innerHTML=html;
+  bindFavs(v);
+}
+function renderDetail(m){
+  const st=matchState(m),t=D.tournaments.find(x=>x.id===m._tab);
+  const url=location.origin+location.pathname+"#m-"+m._id;
+  const v=document.getElementById("view");
+  v.innerHTML='<div class="detail"><button class="back" id="back">← Все матчи</button>'
+    +'<div class="detail-head"><span class="lg">'+esc(t.name)+' · '+esc(t.round||"")+' · '+dLabel(m.date)+'</span></div>'
+    +'<article class="match'+(st==="live"?" live":"")+'">'+(st==="live"?'<span class="livetag">идёт сейчас</span>':"")
+    +'<button class="star'+(isFav(m)?" on":"")+'" data-fav="'+m._id+'" title="В избранное" aria-label="В избранное">'+(isFav(m)?"★":"☆")+'</button>'
+    +boardHead(m,st,false)+cardInner(m,true)+'</article>'
+    +'<div class="share"><span>Ссылка на матч:</span><code>'+esc(url)+'</code><button id="copy">Копировать</button></div></div>';
+  document.getElementById("back").onclick=()=>{location.hash=m._tab};
+  const cp=document.getElementById("copy");
+  cp.onclick=()=>{try{navigator.clipboard.writeText(url).then(()=>{cp.textContent="Скопировано ✓";setTimeout(()=>cp.textContent="Копировать",1600)},()=>fallbackCopy(url,cp))}catch(e){fallbackCopy(url,cp)}};
+  bindFavs(v);
+}
+function fallbackCopy(url,btn){const r=document.createRange();r.selectNodeContents(btn.parentNode.querySelector("code"));const s=getSelection();s.removeAllRanges();s.addRange(r);btn.textContent="Выделено — Ctrl+C";setTimeout(()=>btn.textContent="Копировать",2200)}
+function bindFavs(root){
+  root.querySelectorAll("[data-fav]").forEach(el=>{
+    const h=ev=>{ev.preventDefault();ev.stopPropagation();const m=byId[el.dataset.fav];if(!m)return;const key=favs.has(m.home)&&favs.has(m.away)?null:null;
+      // переключаем обе команды как пару: если хоть одна в избранном — убираем обе, иначе добавляем обе
+      if(isFav(m)){favs.delete(m.home);favs.delete(m.away)}else{favs.add(m.home);favs.add(m.away)}
+      saveFavs();route()};
+    el.addEventListener("click",h);
+    if(el.tagName!=="BUTTON")el.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key===" ")h(e)});
+  });
+}
+
+let byId={};
+function route(){
+  const h=(location.hash||"").replace(/^#/,"");
+  if(h.indexOf("m-")===0){const m=byId[h.slice(2)];if(m){tab=m._tab;renderTabs();renderCountdown();renderDetail(m);scrollTo({top:0,behavior:"instant"in document.documentElement.style?"instant":"auto"});return}}
+  const ids=D.tournaments.map(t=>t.id);
+  if(ids.includes(h))tab=h;
+  else if(!tab)tab=(D.tournaments.find(t=>t.matches.some(m=>m.date===D.today))||D.tournaments[0]).id;
+  renderTabs();renderCountdown();renderList();
+  const at=document.getElementById("tab-"+tab);if(at)at.scrollIntoView({inline:"center",block:"nearest"});
 }
 function boot(data){
-  D=data;
-  const ids=D.tournaments.map(t=>t.id), h=(location.hash||"").slice(1);
-  tab=ids.includes(h)?h:(D.tournaments.find(hasToday)||D.tournaments[0]).id;
-  const todayN=D.tournaments.reduce((n,t)=>n+t.matches.filter(m=>m.date===D.today).length,0);
-  document.getElementById("eyebrow").textContent=`Футбол Европы · ${dLabel(D.today)}`;
-  document.getElementById("h1").innerHTML=todayN?`${todayN} ${todayN%10===1&&todayN!==11?"матч":(todayN%10>=2&&todayN%10<=4&&(todayN<12||todayN>14))?"матча":"матчей"} <span>сегодня</span>`:`Ближайшие <span>матчи</span>`;
+  D=data;byId={};
+  D.tournaments.forEach(t=>t.matches.forEach((m,i)=>{m._tab=t.id;let s=slug(m.home)+"-"+slug(m.away);if(byId[s])s+="-"+i;m._id=s;byId[s]=m;}));
+  const todayN=allMatches().filter(m=>m.date===D.today).length;
+  document.getElementById("eyebrow").textContent="Футбол Европы · "+dLabel(D.today);
   const up=new Date(D.updated);
-  document.getElementById("foot").textContent=`Обновлено ${up.getDate()} ${MON[up.getMonth()]} в ${String(up.getHours()).padStart(2,"0")}:${String(up.getMinutes()).padStart(2,"0")} · 18+ · Ставки связаны с риском потери денег`;
-  render();
+  document.getElementById("foot").textContent="Обновлено "+up.getDate()+" "+MON[up.getMonth()]+" в "+String(up.getHours()).padStart(2,"0")+":"+String(up.getMinutes()).padStart(2,"0")+" · 18+ · Ставки связаны с риском потери денег";
+  route();
+  clearInterval(window._tick);
+  window._tick=setInterval(()=>{renderCountdown();if((location.hash||"").indexOf("#m-")!==0&&!query){/* лёгкое обновление лайв-состояний раз в минуту */}},1000);
+  window._tick2=setInterval(()=>{const h=location.hash||"";renderTabs();if(h.indexOf("#m-")!==0)renderList();},60000);
 }
-document.querySelectorAll(".chip").forEach(b=>b.addEventListener("click",()=>{filter=b.dataset.f;try{localStorage.setItem("lch-filter",filter)}catch(e){}render()}));
-fetch("data.json",{cache:"no-store"}).then(r=>{if(!r.ok)throw new Error(r.status);return r.json()}).then(boot)
-  .catch(()=>{document.getElementById("list").innerHTML='<div class="empty">Не удалось загрузить данные. Обновите страницу.</div>'});
+// тема
+(function(){try{const s=localStorage.getItem("lch-theme");if(s)document.documentElement.setAttribute("data-theme",s)}catch(e){}})();
+document.getElementById("theme").onclick=()=>{
+  const cur=document.documentElement.getAttribute("data-theme");
+  const dark=cur?cur==="dark":matchMedia("(prefers-color-scheme: dark)").matches;
+  const next=dark?"light":"dark";
+  document.documentElement.setAttribute("data-theme",next);
+  try{localStorage.setItem("lch-theme",next)}catch(e){}
+};
+document.getElementById("search").addEventListener("input",e=>{query=e.target.value.trim().toLowerCase();if((location.hash||"").indexOf("#m-")===0)location.hash=tab;else renderList()});
+window.addEventListener("hashchange",route);
+fetch("data.json",{cache:"no-store"}).then(r=>{if(!r.ok)throw new Error(r.status);return r.json()}).then(boot).catch(()=>{document.getElementById("view").innerHTML='<div class="empty">Не удалось загрузить данные. Обновите страницу.</div>'});
 </script>
