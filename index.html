@@ -83,7 +83,8 @@ button:focus-visible,a:focus-visible,summary:focus-visible,input:focus-visible{o
 .time{font-family:var(--mono);font-weight:700;font-size:17px;background:var(--ink);color:var(--bg);padding:3px 10px;border-radius:4px}
 .time.live{background:var(--live);color:#fff}
 .venue{font-size:11px;color:var(--muted);text-align:center;max-width:16ch}
-.open-hint{font-family:var(--mono);font-size:11px;color:var(--accent);text-align:center;padding:0 0 8px}
+.open-hint{display:block;font-family:var(--mono);font-size:12px;color:var(--accent);text-align:center;text-decoration:none;padding:9px;border-top:1px dashed var(--line);cursor:pointer}
+.open-hint:hover{background:var(--raise)}
 .odds{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
 .odd{padding:8px 10px;display:flex;justify-content:space-between;align-items:baseline;gap:6px;font-variant-numeric:tabular-nums}
 .odd+.odd{border-left:1px solid var(--line)}
@@ -285,7 +286,7 @@ function card(m){
     +(st==="live"?'<span class="livetag">идёт сейчас</span>':"")
     +'<button class="star'+(isFav(m)?" on":"")+'" data-fav="'+m._id+'" title="В избранное" aria-label="В избранное">'+(isFav(m)?"★":"☆")+'</button>'
     +boardHead(m,st,true)
-    +'<div class="open-hint">Открыть страницу матча →</div>'
+    +'<a class="open-hint" href="#m-'+m._id+'">Открыть страницу матча →</a>'
     +cardInner(m,false)+'</article>';
 }
 function fixtureRow(m){
