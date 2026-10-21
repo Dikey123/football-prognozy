@@ -81,6 +81,8 @@ def main():
 
     client = OpenAI()
     added = 0
+    attempted = 0
+    first_error = None
     for t in data.get("tournaments", []):
         for m in t.get("matches", []):
             if m.get("status") != "full":
@@ -88,6 +90,7 @@ def main():
             k = mkey(m)
             if k in matches and not FORCE:
                 continue
+            attempted += 1
             try:
                 r = client.chat.completions.create(
                     model=MODEL,
@@ -110,13 +113,31 @@ def main():
                 added += 1
                 print("OK  ", k, "→", matches[k]["bet"])
             except Exception as ex:
-                print("SKIP", k, ex)
+                if first_error is None:
+                    first_error = ex
+                print("SKIP", k, repr(ex))
+
+    print(f"Итог: попыток {attempted}, успешно {added}, всего в файле {len(matches)}")
+
+    # Если пытались, но не получили НИ ОДНОГО мнения и писать нечего — падаем с ясной
+    # причиной (job станет красным) и НЕ публикуем пустой файл.
+    if added == 0 and attempted > 0 and not matches:
+        sys.exit(
+            "Ни одно мнение не сгенерировано — все вызовы OpenAI упали.\n"
+            f"Первая ошибка: {first_error!r}\n"
+            "Частые причины: на аккаунте OpenAI нет кредитов / не настроен биллинг, "
+            "либо OPENAI_API_KEY неверный. Проверь platform.openai.com/account/billing."
+        )
+
+    if not matches:
+        print("Нет мнений для записи — файл не меняю.")
+        return
 
     out = {"generated": datetime.datetime.utcnow().isoformat(timespec="seconds") + "Z",
            "matches": matches}
     with open(OUT_FILE, "w", encoding="utf-8") as f:
         json.dump(out, f, ensure_ascii=False, indent=2)
-    print(f"Готово: добавлено {added}, всего {len(matches)} → {OUT_FILE}")
+    print(f"Записан {OUT_FILE}: добавлено {added}, всего {len(matches)}")
 
 if __name__ == "__main__":
     main()
