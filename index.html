@@ -1,33 +1,35 @@
 <script src="https://telegram.org/js/telegram-web-app.js"></script><script>try{var _tg=window.Telegram&&window.Telegram.WebApp;if(_tg){_tg.ready();_tg.expand();if(_tg.disableVerticalSwipes)_tg.disableVerticalSwipes();document.documentElement.classList.add('in-telegram')}}catch(e){}</script>
-<title>Прогнозы на футбол</title>
+<title>Капер ИИ — прогнозы на футбол</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Golos+Text:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Rubik:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=swap">
 <style>
 /* Layout: спортивная программка — закреплённая шапка с эмблемой и таймером, вкладки турниров, лента карточек-«табло»; клик по матчу открывает его отдельную страницу по якорю */
 :root{
-  --bg:#eef1f4; --surface:#ffffff; --raise:#f7f9fb; --ink:#0f1b2d; --muted:#5b6778; --line:#d6dce4;
-  --accent:#0b5cd5; --accent-soft:#e3ecfb; --pitch:#1d7a46; --pitch-soft:#e2f2e8;
+  --bg:#f5f7f6; --surface:#ffffff; --raise:#eef1ee; --ink:#121a15; --muted:#5a685e; --line:#dde3dd;
+  --accent:#0a9d4e; --accent-soft:#dcf5e6; --pitch:#0a9d4e; --pitch-soft:#dcf5e6;
   --turf:#1f7d4a; --turf-2:#22874f; --chalk:#f4fff8;
-  --warn:#b8590f; --ai:#5b3fd1; --ai-soft:#eeeafc;
-  --live:#d81f3a; --live-soft:#fce4e8; --star:#e0a400;
-  --display:"Oswald","Arial Narrow",sans-serif;
-  --body:"Golos Text",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --warn:#b8730a; --ai:#4a56cf; --ai-soft:#e7e9fb;
+  --live:#d62f2f; --live-soft:#fbe3e3; --star:#c77700;
+  --on-accent:#ffffff;
+  --display:"Rubik",system-ui,sans-serif;
+  --body:"Inter",system-ui,-apple-system,"Segoe UI",sans-serif;
   --mono:"JetBrains Mono",ui-monospace,Menlo,Consolas,monospace;
 }
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
-  --bg:#0b111b; --surface:#131c2a; --raise:#0f1826; --ink:#e7ecf3; --muted:#9aa6b7; --line:#243247;
-  --accent:#5b9bff; --accent-soft:#16294a; --pitch:#4cc584; --pitch-soft:#12301f;
-  --turf:#14532f; --turf-2:#175c34; --chalk:#e6fbef;
-  --warn:#f0a35e; --ai:#a893ff; --ai-soft:#221c42;
-  --live:#ff5a72; --live-soft:#331016; --star:#f0c23c; color-scheme:dark}}
+  --bg:#0c1016; --surface:#141a22; --raise:#1d2630; --ink:#eaf0f4; --muted:#93a0ad; --line:#2a3440;
+  --accent:#36e08a; --accent-soft:#143a28; --pitch:#36e08a; --pitch-soft:#143a28;
+  --turf:#0f3b22; --turf-2:#123f26; --chalk:#e6fbef;
+  --warn:#ffbb3d; --ai:#8ea0ff; --ai-soft:#1b2140;
+  --live:#ff5a5a; --live-soft:#331016; --star:#ffbb3d; --on-accent:#06220f; color-scheme:dark}}
 :root[data-theme="dark"]{
-  --bg:#0b111b; --surface:#131c2a; --raise:#0f1826; --ink:#e7ecf3; --muted:#9aa6b7; --line:#243247;
-  --accent:#5b9bff; --accent-soft:#16294a; --pitch:#4cc584; --pitch-soft:#12301f;
-  --turf:#14532f; --turf-2:#175c34; --chalk:#e6fbef;
-  --warn:#f0a35e; --ai:#a893ff; --ai-soft:#221c42;
-  --live:#ff5a72; --live-soft:#331016; --star:#f0c23c; color-scheme:dark}
+  --bg:#0c1016; --surface:#141a22; --raise:#1d2630; --ink:#eaf0f4; --muted:#93a0ad; --line:#2a3440;
+  --accent:#36e08a; --accent-soft:#143a28; --pitch:#36e08a; --pitch-soft:#143a28;
+  --turf:#0f3b22; --turf-2:#123f26; --chalk:#e6fbef;
+  --warn:#ffbb3d; --ai:#8ea0ff; --ai-soft:#1b2140;
+  --live:#ff5a5a; --live-soft:#331016; --star:#ffbb3d; --on-accent:#06220f; color-scheme:dark}
 *{box-sizing:border-box}
 body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.5}
 body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--bg);z-index:60}
@@ -50,8 +52,8 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .search input{width:100%;font:inherit;font-size:15px;padding:10px 14px 10px 38px;border:1px solid var(--line);border-radius:10px;background:var(--surface);color:var(--ink)}
 .search svg{position:absolute;left:12px;width:18px;height:18px;color:var(--muted);pointer-events:none}
 .hero-btns{display:flex;gap:8px;flex-wrap:wrap}
-.exp-btn{flex:1;min-width:150px;font:inherit;font-weight:600;font-size:14px;font-family:var(--display);letter-spacing:.03em;text-transform:uppercase;color:#fff;background:linear-gradient(90deg,var(--accent),var(--ai));border:0;border-radius:12px;padding:13px;cursor:pointer}
-.exp-btn.alt{background:linear-gradient(90deg,var(--pitch),var(--accent))}
+.exp-btn{flex:1;min-width:150px;font:inherit;font-weight:600;font-size:14px;font-family:var(--display);letter-spacing:.03em;text-transform:uppercase;color:var(--on-accent);background:var(--accent);border:0;border-radius:12px;padding:13px;cursor:pointer}
+.exp-btn.alt{background:var(--ai);color:#fff}
 .exp-btn:hover{filter:brightness(1.08)}
 .exp{display:flex;flex-direction:column;gap:14px;margin-top:6px}
 .exp-head p{margin:4px 0 0;color:var(--muted);font-size:14px}
@@ -84,7 +86,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .exp-num input{width:68px;font:inherit;font-size:15px;padding:8px 10px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink);font-variant-numeric:tabular-nums}
 .exp-num .row span{font-size:13px;color:var(--muted)}
 .exp-go{display:flex;gap:8px;flex-wrap:wrap}
-.exp-go .primary{background:linear-gradient(90deg,var(--accent),var(--ai));color:#fff;border:0;font-weight:600;padding:10px 18px;border-radius:999px;cursor:pointer;font:inherit;font-size:14px}
+.exp-go .primary{background:var(--accent);color:var(--on-accent);border:0;font-weight:600;padding:10px 18px;border-radius:999px;cursor:pointer;font:inherit;font-size:14px}
 .exp-warn{font-size:13px;color:var(--warn);background:color-mix(in srgb,var(--warn) 13%,transparent);border-radius:8px;padding:11px 13px}
 .exp-status{font-size:12px;color:var(--muted);font-family:var(--mono)}
 .paywall{background:var(--surface);border:1px solid var(--ai);border-radius:14px;padding:22px 18px;display:flex;flex-direction:column;align-items:center;gap:12px;text-align:center}
@@ -97,7 +99,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .pw-num{display:flex;align-items:center;gap:10px;flex-wrap:wrap;justify-content:center}
 .pw-num b{font-family:var(--mono);font-size:21px;color:var(--ai);letter-spacing:.02em}
 .pw-num button{font:inherit;font-size:13px;border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:8px;padding:6px 12px;cursor:pointer}
-.paywall .primary{background:linear-gradient(90deg,var(--accent),var(--ai));color:#fff;border:0;font-weight:600;padding:12px 22px;border-radius:999px;cursor:pointer;font:inherit;font-size:15px}
+.paywall .primary{background:var(--accent);color:var(--on-accent);border:0;font-weight:600;padding:12px 22px;border-radius:999px;cursor:pointer;font:inherit;font-size:15px}
 .pw-note{font-size:12px!important;color:var(--muted)}
 /* рейтинг прогнозистов */
 .rate{display:flex;flex-direction:column;gap:12px}
@@ -171,7 +173,7 @@ button:focus-visible,a:focus-visible,summary:focus-visible,input:focus-visible{o
 .lean-top{display:flex;justify-content:space-between;font-size:12px;color:var(--muted);gap:8px;flex-wrap:wrap}
 .bar{display:flex;height:10px;border-radius:5px;overflow:hidden;background:var(--line)}
 .bar i{display:block;height:100%}
-.bar .h{background:var(--pitch)} .bar .d{background:var(--muted)} .bar .a{background:var(--accent)}
+.bar .h{background:var(--pitch)} .bar .d{background:var(--muted)} .bar .a{background:var(--ai)}
 .legend{display:flex;gap:14px;font-size:12px;color:var(--muted);flex-wrap:wrap}
 .legend em{font-style:normal;display:inline-flex;align-items:center;gap:5px}
 .legend em::before{content:"";width:9px;height:9px;border-radius:2px;background:var(--c)}
@@ -188,7 +190,7 @@ details[open]>summary::after{content:"–"}
 .tip .pick{min-width:0}
 .tip .k{font-family:var(--mono);font-size:13px;color:var(--muted);font-variant-numeric:tabular-nums}
 .tagr{font-family:var(--mono);font-size:10px;letter-spacing:.06em;padding:1px 6px;border-radius:3px;margin-left:6px;vertical-align:1px}
-.tagr.ru{background:var(--accent-soft);color:var(--accent)}
+.tagr.ru{background:var(--ai-soft);color:var(--ai)}
 .tagr.eu{background:var(--pitch-soft);color:var(--pitch)}
 .news{list-style:none;margin:0;padding:2px 12px 8px;display:flex;flex-direction:column}
 .newsitem{display:grid;grid-template-columns:auto 1fr;gap:10px;align-items:baseline;padding:9px 0;border-top:1px solid var(--line)}
@@ -273,10 +275,10 @@ footer{font-size:12px;color:var(--muted);text-align:center;padding-top:18px}
 <div class="wrap">
   <div class="hero">
     <div class="hero-top">
-      <svg class="emblem" viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="22" fill="var(--ink)"/><path d="M24 9l4.5 3.3-1.7 5.3h-5.6l-1.7-5.3L24 9zm-10.6 7.7l5.2.6 1.7 5.3-3.4 4.5-5-1.7.1-5.5 1.4-3.2zm21.2 0l1.4 3.2.1 5.5-5 1.7-3.4-4.5 1.7-5.3 5.2-.6zM24 27.5l4.4 3.2-1.7 5.2h-5.4l-1.7-5.2L24 27.5z" fill="var(--pitch)"/></svg>
+      <svg class="emblem" viewBox="0 0 96 96" aria-hidden="true"><circle cx="48" cy="48" r="42" fill="none" stroke="#1b7a46" stroke-width="4.5"/><g fill="none" stroke="#27b36a" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"><path d="M48 18 L76.5 38.7 L65.6 72.3 L30.4 72.3 L19.5 38.7 Z"/><path d="M48 48 L48 18 M48 48 L76.5 38.7 M48 48 L65.6 72.3 M48 48 L30.4 72.3 M48 48 L19.5 38.7"/></g><g fill="#36e08a"><circle cx="48" cy="18" r="5"/><circle cx="76.5" cy="38.7" r="5"/><circle cx="65.6" cy="72.3" r="5"/><circle cx="30.4" cy="72.3" r="5"/><circle cx="19.5" cy="38.7" r="5"/></g><circle cx="48" cy="48" r="7.5" fill="#36e08a"/><circle cx="48" cy="48" r="3" fill="var(--bg)"/></svg>
       <div class="hero-ttl">
         <span class="eyebrow" id="eyebrow">Футбол Европы · прогнозы, составы, новости</span>
-        <h1>Прогнозы на футбол</h1>
+        <h1>Капер ИИ</h1>
       </div>
       <button class="theme-btn" id="theme" title="Сменить тему" aria-label="Сменить тему">◐</button>
     </div>
@@ -346,7 +348,7 @@ function cardInner(m,open){
   if(m.context)h+='<p class="context">'+esc(m.context)+'</p>';
   h+='<div class="lean"><div class="lean-top"><span>Куда склоняются эксперты</span><span>'+tot+' из '+tips.length+' прогнозов на исход</span></div>'
     +'<div class="bar" role="img" aria-label="Хозяева '+pct(1)+'%, ничья '+pct("X")+'%, гости '+pct(2)+'%"><i class="h" style="width:'+pct(1)+'%"></i><i class="d" style="width:'+pct("X")+'%"></i><i class="a" style="width:'+pct(2)+'%"></i></div>'
-    +'<div class="legend"><em style="--c:var(--pitch)">'+esc(m.home)+' · '+cnt[1]+'</em><em style="--c:var(--muted)">Ничья · '+cnt.X+'</em><em style="--c:var(--accent)">'+esc(m.away)+' · '+cnt[2]+'</em></div></div>';
+    +'<div class="legend"><em style="--c:var(--pitch)">'+esc(m.home)+' · '+cnt[1]+'</em><em style="--c:var(--muted)">Ничья · '+cnt.X+'</em><em style="--c:var(--ai)">'+esc(m.away)+' · '+cnt[2]+'</em></div></div>';
   if(m.news&&m.news.length)h+='<details'+op+'><summary>Новости матча<span class="badge2">'+m.news.length+'</span></summary><ul class="news">'+m.news.map(nw=>'<li class="newsitem"><div><a href="'+esc(nw.u)+'" target="_blank" rel="noopener">'+esc(nw.t)+'</a><span class="nsrc">'+esc(nw.s)+'</span></div></li>').join("")+'</ul></details>';
   if(m.lineups)h+='<details'+op+'><summary>Предполагаемые составы</summary><div class="lineups"><div class="pitches">'+lineupSide(m.lineups.home,m.home,"home")+lineupSide(m.lineups.away,m.away,"away")+'</div>'+(m.lineups.source?'<div class="lsrc">Источник: <a href="'+esc(m.lineups.source.url)+'" target="_blank" rel="noopener">'+esc(m.lineups.source.name)+'</a></div>':"")+'</div></details>';
   h+='<details'+op+'><summary>Все прогнозы ('+tips.length+')</summary><ul class="tips">'+(tips.map(t=>'<li class="tip"><span class="src"><a href="'+esc(t.url)+'" target="_blank" rel="noopener">'+esc(t.src)+'</a><span class="tagr '+t.reg+'">'+(t.reg==="ru"?"РУ":"EU")+'</span></span><span class="pick">'+esc(t.pick)+'</span><span class="k">'+(t.k?"кф "+esc(t.k):"")+'</span></li>').join("")||'<li class="tip"><span class="pick">Нет прогнозов из этой группы</span></li>')+'</ul></details>';
@@ -595,13 +597,17 @@ function boot(data){
   window._tick2=setInterval(()=>{const h=location.hash||"";renderTabs();if(h.indexOf("#m-")!==0)renderList();else{const m=byId[h.slice(2)];if(m)renderDetail(m)}tickCd()},60000);
 }
 // тема
+// синхронизируем цвет шапки и фона Telegram с темой приложения (Mini App)
+function tgSync(){try{var tg=window.Telegram&&window.Telegram.WebApp;if(!tg)return;var bg=getComputedStyle(document.documentElement).getPropertyValue('--bg').trim()||'#0c1016';if(tg.setBackgroundColor)tg.setBackgroundColor(bg);if(tg.setHeaderColor)tg.setHeaderColor(bg)}catch(e){}}
 (function(){try{const s=localStorage.getItem("lch-theme");if(s)document.documentElement.setAttribute("data-theme",s)}catch(e){}})();
+tgSync();
 document.getElementById("theme").onclick=()=>{
   const cur=document.documentElement.getAttribute("data-theme");
   const dark=cur?cur==="dark":matchMedia("(prefers-color-scheme: dark)").matches;
   const next=dark?"light":"dark";
   document.documentElement.setAttribute("data-theme",next);
   try{localStorage.setItem("lch-theme",next)}catch(e){}
+  tgSync();
 };
 document.getElementById("search").addEventListener("input",e=>{query=e.target.value.trim().toLowerCase();if((location.hash||"").indexOf("#m-")===0)location.hash=tab;else renderList()});
 document.getElementById("expbtn").onclick=()=>{expResult=null;location.hash="express"};
