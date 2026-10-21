@@ -1,3 +1,0 @@
-updated=83 added=7 finished_scores=0 unmapped=0  DRY=True
-DRY RUN — запись не выполнялась
-==== DONE5
