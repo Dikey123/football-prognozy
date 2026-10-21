@@ -1,68 +1,222 @@
-/home/runner/work/football-prognozy/football-prognozy/probe.py:59: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
-  print("PROBE", datetime.datetime.utcnow().isoformat(), "key_set:", bool(KEY))
-PROBE 2026-10-21T16:48:58.541343 key_set: True
+ALL-LEAGUES status 200
+total leagues: 127
+  id=      42  ccode= INT  Champions League
+  id=      73  ccode= INT  Europa League
+  id=     525  ccode= INT  AFC Champions League Elite
+  id=   10622  ccode= INT  AFC Champions League Elite Qualification
+  id=    9469  ccode= INT  AFC Champions League Two
+  id=     526  ccode= INT  CAF Champions League
+  id=   10619  ccode= INT  CAF Champions League Qualification
+  id=   11011  ccode= INT  CAF Women's Champions League
+  id=   10611  ccode= INT  Champions League Qualification
+  id=   10613  ccode= INT  Europa League Qualification
+  id=    9375  ccode= INT  Women's Champions League
+  id=   10612  ccode= INT  Women's Champions League Qualification
 
-==== /football-get-all-leagues
-STATUS 200  len=23261
-{"status":"success","response":{"leagues":[{"id":42,"name":"Champions League","localizedName":"Champions League","ccode":"INT","logo":"https://images.fotmob.com/image_resources/logo/leaguelogo/dark/42.png"},{"id":73,"name":"Europa League","localizedName":"Europa League","ccode":"INT","logo":"https://images.fotmob.com/image_resources/logo/leaguelogo/dark/73.png"},{"id":9470,"name":"AFC Challenge League","localizedName":"AFC Challenge League","ccode":"INT","logo":"https://images.fotmob.com/image_resources/logo/leaguelogo/dark/9470.png"},{"id":525,"name":"AFC Champions League Elite","localizedName":"AFC Champions League Elite","ccode":"INT","logo":"https://images.fotmob.com/image_resources/logo/leaguelogo/dark/525.png"},{"id":10622,"name":"AFC Champions League Elite Qualification","localizedName":"AFC Champions League Elite Qualification","ccode":"INT","logo":"https://images.fotmob.com/image_resources/logo/leaguelogo/dark/10622.png"},{"id":9469,"name":"AFC Champions League Two","localizedName":"AFC Champions League Two","ccode":"INT","logo":"https://images.fotmob.com/image_resources/logo/leaguelogo/dark/9469.png"},{"id":10511,"name":"AFC Summer Olympics Qualification (Women)","localizedName":"AFC Summer Olympics Qualification (Women)","ccode":"INT","logo":"https://images.fotmob.com/image_resources/logo/leaguelogo/dark/10511.png"},{"id":9841,"name":"AFC U20 Asian Cup","localizedName":"AFC U20 Asian Cup","ccode":"INT","logo":"https://images.fotmob.com/image_resources/logo/leaguelogo/dark/9841.png"},{"id":9571,"name":"AFC U23 Asian Cup","localizedName":"AFC U23 Asian Cup","ccode":"INT","logo":"https://images.fotmob.com/image_resources/logo/leaguelogo/dark/9571.png"},{"id":289,"name":"Africa Cup of Nations","localizedName":"Africa Cup of Nations","ccode":"INT","logo":"https://images.fotmob.com/image_resources/logo/leaguelogo/dark/289.png"},{"id":10608,"name":"Africa Cup of Nations Qualification","localizedName":"Africa Cup of Nations Qualification","ccode":"INT","logo":"https://images.fotmob.com/image_resources/logo/leaguelogo/dark/10608.png"},{"id":10508,"name":"African Football League","localizedName":"African Football League","ccode":"INT","logo":"https://images.fot
+MATCHES-BY-DATE 20261021 status 200 len 85171
+  matches: 137
+    leagueId=1000001181: Harju Jalgpallikool - Flora Tallinn
+    leagueId=1000001415: Londrina - Cuiabá
+    leagueId=1000001457: Como U19 - Manchester United U19
+    leagueId=1000001499: INAC Kobe Leonessa - JEF Ladies
+    leagueId=1000001501: Trekvogels - De Graafschap
+    leagueId=1000001576: Al Jeel - Al-Jandal
+    leagueId=1000001589: Tigres FC - Real Cundinamarca
+    leagueId=1000001595: Celtic - Heart of Midlothian
+    leagueId=1000001644: Chivas - Necaxa
+    leagueId=1000001660: Vasco da Gama - Boca Juniors
+    leagueId=1000001671: Dome FC - Sisaket United
+    leagueId=1000001696: Deportivo Pereira - Chicó FC
+    leagueId=1000001752: The Panthers - USM Alger
+    leagueId=177: Zlaté Moravce - Komárno
+    leagueId=203: Sogndal - Raufoss
+    leagueId=242: Vanløse IF - Nykøbing FC
+    leagueId=330: AEK Larnaca - Akritas Chlorakas
+    leagueId=333: Åsane (W) - Arna-Bjørnar (W)
+    leagueId=52: PK-35 - FF Jaro
+    leagueId=87: Levante - Athletic Club
+    leagueId=8978: Warrenpoint Town - Crusaders
+    leagueId=8983: Bali United FC - Garudayaksa FC
+    leagueId=9136: Fukushima United - Giravanz Kitakyushu
+    leagueId=919793: Aalesund 2 - Nardo
+    leagueId=921414: Kolbotn (W) - Åsane (W)
+    leagueId=937875: Avispa Fukuoka - Gamba Osaka
+    leagueId=938215: Montedio Yamagata - Hokkaido Consadole Sapporo
+    leagueId=938220: Gillingham - Port Vale
+    leagueId=938628: Deportivo Malacateco - Comunicaciones FC
+    leagueId=938792: Terrassa - Girona B
+    leagueId=941109: Whyteleafe - Burgess Hill Town
+    leagueId=941116: Avro - Ashton United
+    leagueId=941118: Frome Town - Gloucester City
+    leagueId=942125: Chivas (W) - Necaxa (W)
+    leagueId=943009: Ghazl Al Mahalla - Al Ittihad Alexandria
+    leagueId=943230: FC Porto - PSV Eindhoven
+    leagueId=943324: Burnley FC Women (W) - Aston Villa (W)
+    leagueId=943487: 15 de Agosto - Simba SC
+    leagueId=944404: Yangon United - Taguig
+    leagueId=944406: Kasuka - Shan United
+    leagueId=946196: Colo Colo - Puerto Montt
+    leagueId=949004: CD Marathón - Alianza FC
+  SAMPLE MATCH: {"id": 6106287, "leagueId": 943230, "time": "20.10.2026 21:00", "home": {"id": 9773, "score": 0, "name": "FC Porto", "longName": "FC Porto"}, "away": {"id": 8640, "score": 1, "name": "PSV Eindhoven", "longName": "PSV Eindhoven"}, "eliminatedTeamId": null, "statusId": 6, "tournamentStage": "3", "status": {"utcTime": "2026-10-20T19:00:00.000Z", "halfs": {"firstHalfStarted": "20.10.2026 21:01:02", "secondHalfStarted": "20.10.2026 22:02:18"}, "periodLength": 45, "finished": true, "started": true, "cancelled": false, "awarded": false, "scoreStr": "0 - 1", "reason": {"short": "FT", "shortKey": "fulltime_short", "long": "Full-Time", "longKey": "finished"}}, "timeTS": 1792522800000}
 
-==== /football-get-all-popular-leagues
-HTTP 404: {"message":"Endpoint '\/football-get-all-popular-leagues' does not exist"}
+MATCHES-BY-DATE 20261025 status 200 len 251759
+  matches: 530
+    leagueId=1000001175: 1st ranked Group C - 2nd ranked Group D
+    leagueId=1000001177: Ferroviária - Maringá
+    leagueId=1000001180: Ogre United - Auda
+    leagueId=1000001181: Nõmme JK Kalju - Flora Tallinn
+    leagueId=1000001196: Crown Legacy FC - Columbus Crew 2
+    leagueId=1000001212: Nacional - Sportivo Trinidense
+    leagueId=1000001214: Kruger United - AmaZulu FC
+    leagueId=1000001235: Rangers - Cobreloa
+    leagueId=1000001249: GV San José - Blooming
+    leagueId=1000001250: LDU de Quito - CSD Macará
+    leagueId=1000001251: Leones del Norte - Libertad
+    leagueId=1000001253: Orense - Delfín
+    leagueId=1000001407: Mirassol - São Paulo
+    leagueId=1000001415: Avaí - Botafogo SP
+    leagueId=1000001465: Watford - Durham Women FC
+    leagueId=1000001471: Prachuap FC - Bangkok United
+    leagueId=1000001497: Wellington Phoenix - Melbourne Victory
+    leagueId=1000001499: Omiya Ardija Ventus - Cerezo Osaka Sakai
+    leagueId=1000001509: Eupen - Beerschot
+    leagueId=1000001513: Middlesbrough U21 - Tottenham Hotspur U21
+    leagueId=1000001573: Slavia Prague B - SK Prostějov
+    leagueId=1000001589: Boca Juniors de Cali - Internacional FC de Palmira
+    leagueId=1000001595: Aberdeen - Spartans FC
+    leagueId=1000001612: OFK Beograd - FK Crvena Zvezda
+    leagueId=1000001616: Kanchanaburi Power - Chainat FC
+    leagueId=1000001618: Hapoel Petah Tikva - Beitar Jerusalem
+    leagueId=1000001644: León - Toluca
+    leagueId=1000001661: O'Higgins - Cobresal
+    leagueId=1000001678: Wellington Phoenix - Central Coast Mariners
+    leagueId=1000001681: Cusco FC - Sporting Cristal
+    leagueId=1000001691: Monagas SC - Academia Puerto Cabello
+    leagueId=1000001696: América de Cali - Cúcuta
+    leagueId=1000001712: Cosmos - Chattanooga Red Wolves SC
+    leagueId=1000001715: Paykan - Malavan
+    leagueId=1000001729: Talleres - Defensa y Justicia
+    leagueId=1000001737: Seongnam FC - Suwon Samsung Bluewings
+    leagueId=1000001739: Yverdon - Kriens
+    leagueId=1000001750: Pendikspor - Kayserispor
+    leagueId=1000001752: CR Bélouizdad - AS Douanes
+    leagueId=1000001798: GAIS - IFK Göteborg
+    leagueId=1000001810: Churchill Brothers - Punjab FC
+    leagueId=10289: SC Heerenveen (W) - AZ Alkmaar (W)
+    leagueId=10308: Gamla Upsala (W) - BK Häcken B (W)
+    leagueId=10713: KäPa - RoPS
+    leagueId=118: Syunik - BKMA
+    leagueId=146: Eintracht Braunschweig - Hannover 96
+    leagueId=168: Norrby - IFK Norrköping
+    leagueId=185: AVS Futebol SAD - Tondela
+    leagueId=197: Odra Opole - Pogoń Siedlce
+    leagueId=203: Strømmen - Strømsgodset
+    leagueId=208: TSV Havelse - Saarbrücken
+    leagueId=212: Vasas Budapest - Paksi SE
+    leagueId=228: Banga Gargzdai - FA Šiauliai
+    leagueId=229: FC Differdange 03 - F91 Dudelange
+    leagueId=249: Arsimi - FK Bregalnica Štip
+    leagueId=250: 07 Vestur - B68 Toftir
+    leagueId=252: Osijek - Rudeš
+    leagueId=260: FC Dinamo City - Egnatia
+    leagueId=262: Imisli FK - Shamakhi FK
+    leagueId=461: FC Jurong - Tampines Rovers FC
+    leagueId=47: Crystal Palace - Newcastle United
+    leagueId=52: FF Jaro - PK-35
+    leagueId=522: Ashanti Gold - Asante Kotoko SC
+    leagueId=53: Monaco - Lille
+    leagueId=54: Hoffenheim - Bayer Leverkusen
+    leagueId=540: AGMK - Kokand 1912
+    leagueId=55: Inter - Fiorentina
+    leagueId=59: Viking - Tromsø
+    leagueId=61: Gil Vicente - FC Porto
+    leagueId=63: FC Rostov - Lokomotiv Moscow
+    leagueId=71: Konyaspor - Gençlerbirliği
+    leagueId=87: Atlético Madrid - Deportivo A Coruña
+    leagueId=8935: Avia Świdnik - Znicz Pruszków
+    leagueId=8972: Loudoun United FC - Brooklyn
+    leagueId=8983: Arema - Dewa United FC
+    leagueId=9088: Da Nẵng - Ha Nội FC
+    leagueId=9089: AIK (W) - FC Rosengård (W)
+    leagueId=9117: Aqvital FC Csákvár - Mezőkövesd SE
+    leagueId=913550: Columbus Crew - Toronto FC
+    leagueId=9136: Gainare Tottori - Kochi United SC
+    leagueId=916553: Ferro Carril Oeste - CA Chaco For Ever
+    leagueId=916561: Argentino de Merlo - Deportivo Merlo
+    leagueId=918043: Karlbergs BK - Umeå
+    leagueId=918053: Trelleborgs FF - Åtvidaberg
+    leagueId=919789: Træff - Arendal Fotball
+    leagueId=919791: Rana FK - Tromsdalen
+    leagueId=919796: Fauske/Sprint - Bossekop
+    leagueId=920228: Denver Summit FC (W) - Racing Louisville (W)
+    leagueId=920267: Wuxi Wugo - Shaanxi Union
+    leagueId=9227: Crystal Palace (W) - Chelsea (W)
+    leagueId=922739: FC Altai Oskemen - FC Yelimay
+    leagueId=922761: Plaza Colonia - Tacuarembo FC
+    leagueId=923169: Arsenal Dzerzhinsk - Dnyapro Mogilev
+    leagueId=935487: FC Midtjylland - Lyngby
+    leagueId=936918: Komárno - Trenčín
+    leagueId=936986: Zimbru - FC Bălți
+    leagueId=937276: ADO Den Haag - SC Heerenveen
+    leagueId=937650: Hibernian - Celtic
+    leagueId=937875: Nagoya Grampus - Yokohama F.Marinos
+    leagueId=937879: Śląsk Wrocław - Wieczysta Kraków
+    leagueId=937880: Thun - Lugano
+    leagueId=937988: Genk - Standard Liège
+    leagueId=938005: OL Lyonnes (W) - Marseille (W)
+    leagueId=938182: Hradec Králové - Jablonec
+    leagueId=938190: Puntarenas FC - Inter San Carlos
+    leagueId=938215: Albirex Niigata - Vegalta Sendai
+    leagueId=938366: Sturm Graz - Ried
+    leagueId=938422: FC Chelyabinsk - Ural
+    leagueId=938428: FCV Farul Constanța - Oțelul Galați
+    leagueId=938628: Club Xelajú - CSD Municipal
+    leagueId=938638: Nykøbing FC - Thisted
+    leagueId=938653: Almería - Real Oviedo
+    leagueId=938777: Deportivo de A Coruña (W) - Deportivo Alavés (W)
+    leagueId=938778: Cultural Leonesa - Pontevedra
+    leagueId=938779: Marino Luanco - Real Oviedo B
+    leagueId=938783: Alcorcón - UD Ibiza
+    leagueId=938792: Girona B - Náxara
+    leagueId=938793: Murcia B - Lorca Deportiva
+    leagueId=938794: Sevilla Atletico - Tenerife B
+    leagueId=938796: Getafe B - CS Puertollano
+    leagueId=938854: Brooklyn FC (W) - Tampa Bay Sun FC (W)
+    leagueId=939530: Tapatío - Atlético Morelia
+    leagueId=939688: OB Q (W) - ASA Aarhus (W)
+    leagueId=940431: Chornomorets Odesa - Karpaty
+    leagueId=940449: BSG Chemie Leipzig - Hertha Berlin II
+    leagueId=940450: Oberhausen - Wattenscheid
+    leagueId=940451: VfB Eichstätt - 1860 München
+    leagueId=940452: 1. FC Phönix Lübeck - SV Atlas Delmenhorst
+    leagueId=940469: Ulm - Homburg
+    leagueId=940873: Borac Banja Luka - Sloga Doboj
+    leagueId=941071: Olympiacos - Kalamata
+    leagueId=941168: CD Plaza Amador - Alianza FC
+    leagueId=941466: Fuerte San Francisco - Atletico Balboa
+    leagueId=941508: CD Choloma - Genesis FC
+    leagueId=941726: Palermo - Carrarese
+    leagueId=942063: Karmiotissa - Apollon Limassol
+    leagueId=942122: Chindia Târgoviște - CSM Olimpia Satu Mare
+    leagueId=942125: Atlético de San Luis (W) - CF América (W)
+    leagueId=942146: Lazio (W) - Como Women (W)
+    leagueId=942844: Renate - AlbinoLeffe
+    leagueId=942846: Forlì - Pianese
+    leagueId=942850: AD Marco 09 - AD Fafe
+    leagueId=942851: CF Os Belenenses - Sporting Covilhã
+    leagueId=942852: Monopoli - Audace Cerignola
+    leagueId=942853: Juventud de las Piedras - Club Atletico Peñarol
+    leagueId=943368: Abia Warriors - Niger Tornadoes
+    leagueId=943389: Ghaz Al-Shamal SC - Naft Maysan
+    leagueId=943487: RS Berkane - Star Sport Academy
+    leagueId=945430: Anagennisi Karditsas - PAOK Thessaloniki B
+    leagueId=945694: HJK - KuPS
+    leagueId=948410: Auckland FC B - Birkenhead United
+    leagueId=949116: Sydney Olympic - Bayswater City
+    leagueId=949117: Wollongong Wolves - South Hobart
+    leagueId=949728: San Martín de Formosa - Club Cipolletti
+    leagueId=949731: Argentino Monte Maíz - Kimberley
+    leagueId=9676: TSG 1899 Hoffenheim (W) - Mainz 05 (W)
+  SAMPLE MATCH: {"id": 5795489, "leagueId": 47, "time": "25.10.2026 15:00", "home": {"id": 9826, "score": 0, "name": "Crystal Palace", "longName": "Crystal Palace"}, "away": {"id": 10261, "score": 0, "name": "Newcastle United", "shortName": "Newcastle", "longName": "Newcastle United"}, "eliminatedTeamId": null, "statusId": 1, "tournamentStage": "8", "status": {"utcTime": "2026-10-25T14:00:00.000Z", "halfs": {"firstHalfStarted": "25.10.2026 15:00:00"}, "periodLength": 45, "started": false, "cancelled": false, "finished": false}, "timeTS": 1792936800000}
 
-==== /football-get-popular-leagues
-HTTP 404: {"message":"Endpoint '\/football-get-popular-leagues' does not exist"}
-
-==== /football-popular-leagues
-STATUS 200  len=1574
-{"status":"success","response":{"popular":[{"id":47,"name":"Premier League","localizedName":"Premier League","ccode":"ENG","logo":"https://images.fotmob.com/image_resources/logo/leaguelogo/dark/47.png"},{"id":42,"name":"Champions League","localizedName":"Champions League","ccode":"INT","logo":"https://images.fotmob.com/image_resources/logo/leaguelogo/dark/42.png"},{"id":87,"name":"LaLiga","localizedName":"LaLiga","ccode":"ESP","logo":"https://images.fotmob.com/image_resources/logo/leaguelogo/dark/87.png"},{"id":77,"name":"World Cup","localizedName":"FIFA World Cup","ccode":"INT","logo":"https://images.fotmob.com/image_resources/logo/leaguelogo/dark/77.png"},{"id":54,"name":"Bundesliga","localizedName":"Bundesliga","ccode":"GER","logo":"https://images.fotmob.com/image_resources/logo/leaguelogo/dark/54.png"},{"id":73,"name":"Europa League","localizedName":"Europa League","ccode":"INT","logo":"https://images.fotmob.com/image_resources/logo/leaguelogo/dark/73.png"},{"id":53,"name":"Ligue 1","localizedName":"Ligue 1","ccode":"FRA","logo":"https://images.fotmob.com/image_resources/logo/leaguelogo/dark/53.png"},{"id":55,"name":"Serie A","localizedName":"Serie A","ccode":"ITA","logo":"https://images.fotmob.com/image_resources/logo/leaguelogo/dark/55.png"},{"id":138,"name":"Copa del Rey","localizedName":"Copa del Rey","ccode":"ESP","logo":"https://images.fotmob.com/image_resources/logo/leaguelogo/dark/138.png"},{"id":132,"name":"FA Cup","localizedName":"FA Cup","ccode":"ENG","logo":"https://images.fotmob.com/image_resources/logo/leaguelogo/dark/132.png"}]}}
-
-==== /football-leagues
-HTTP 404: {"message":"Endpoint '\/football-leagues' does not exist"}
-
-==== /football-get-all-countries
-STATUS 200  len=5764
-{"status":"success","response":{"countries":[{"ccode":"ALB","name":"Albania","localizedName":"Albania"},{"ccode":"ALG","name":"Algeria","localizedName":"Algeria"},{"ccode":"ARG","name":"Argentina","localizedName":"Argentina"},{"ccode":"ARM","name":"Armenia","localizedName":"Armenia"},{"ccode":"AUS","name":"Australia","localizedName":"Australia"},{"ccode":"AUT","name":"Austria","localizedName":"Austria"},{"ccode":"AZE","name":"Azerbaijan","localizedName":"Azerbaijan"},{"ccode":"BAN","name":"Bangladesh","localizedName":"Bangladesh"},{"ccode":"BLR","name":"Belarus","localizedName":"Belarus"},{"ccode":"BEL","name":"Belgium","localizedName":"Belgium"},{"ccode":"BOL","name":"Bolivia","localizedName":"Bolivia"},{"ccode":"BIH","name":"Bosnia-Herzegovina","localizedName":"Bosnia-Herzegovina"},{"ccode":"BRA","name":"Brazil","localizedName":"Brazil"},{"ccode":"BUL","name":"Bulgaria","localizedName":"Bulgaria"},{"ccode":"CAN","name":"Canada","localizedName":"Canada"},{"ccode":"CHI","name":"Chile","localizedName":"Chile"},{"ccode":"CHN","name":"China","localizedName":"China"},{"ccode":"COL","name":"Colombia","localizedName":"Colombia"},{"ccode":"CRC","name":"Costa Rica","localizedName":"Costa Rica"},{"ccode":"CRO","name":"Croatia","localizedName":"Croatia"},{"ccode":"CYP","name":"Cyprus","localizedName":"Cyprus"},{"ccode":"CZE","name":"Czechia","localizedName":"Czech Republic"},{"ccode":"DEN","name":"Denmark","localizedName":"Denmark"},{"ccode":"ECU","name":"Ecuador","localizedName":"Ecuador"},{"ccode":"EGY","name":"Egypt","localizedName":"Egypt"},{"ccode":"SLV","name":"El Salvador","localizedName":"El Salvador"},{"ccode":"ENG","name":"England","localizedName":"England"},{"ccode":"EST","name":"Estonia","localizedName":"Estonia"},{"ccode":"FRO","name":"Faroe Islands","localizedName":"Faroe Islands"},{"ccode":"FIN","name":"Finland","localizedName":"Finland"},{"ccode":"FRA","name":"France","localizedName":"France"},{"ccode":"GEO","name":"Georgia","localizedName":"Georgia"},{"ccode":"GER","name":"Germany","localizedName":"Germany"},{"ccode":"GHA","name":"Ghana","localizedName":"Ghana"},{"ccode":"GRE","name":"Greece","localizedName":"Greece"},{"ccode":"GUA","name":"Guatemala","lo
-
-==== /football-get-countries
-HTTP 404: {"message":"Endpoint '\/football-get-countries' does not exist"}
-
-==== /football-get-matches-by-date?date=20261021
-STATUS 200  len=84999
-{"status":"success","response":{"matches":[{"id":6106287,"leagueId":943230,"time":"20.10.2026 21:00","home":{"id":9773,"score":0,"name":"FC Porto","longName":"FC Porto"},"away":{"id":8640,"score":1,"name":"PSV Eindhoven","longName":"PSV Eindhoven"},"eliminatedTeamId":null,"statusId":6,"tournamentStage":"3","status":{"utcTime":"2026-10-20T19:00:00.000Z","halfs":{"firstHalfStarted":"20.10.2026 21:01:02","secondHalfStarted":"20.10.2026 22:02:18"},"periodLength":45,"finished":true,"started":true,"cancelled":false,"awarded":false,"scoreStr":"0 - 1","reason":{"short":"FT","shortKey":"fulltime_short","long":"Full-Time","longKey":"finished"}},"timeTS":1792522800000},{"id":6106248,"leagueId":943230,"time":"20.10.2026 21:00","home":{"id":8650,"score":4,"name":"Liverpool","longName":"Liverpool"},"away":{"id":10205,"score":3,"name":"Villarreal","longName":"Villarreal"},"eliminatedTeamId":null,"statusId":6,"tournamentStage":"3","status":{"utcTime":"2026-10-20T19:00:00.000Z","halfs":{"firstHalfStarted":"20.10.2026 21:00:45","secondHalfStarted":"20.10.2026 22:04:13"},"periodLength":45,"finished":true,"started":true,"cancelled":false,"awarded":false,"scoreStr":"4 - 3","reason":{"short":"FT","shortKey":"fulltime_short","long":"Full-Time","longKey":"finished"}},"timeTS":1792522800000},{"id":6106257,"leagueId":943230,"time":"20.10.2026 21:00","home":{"id":8456,"score":5,"name":"Manchester City","shortName":"Man City","longName":"Manchester City"},"away":{"id":8563,"score":1,"name":"AEK Athens","longName":"AEK Athens"},"eliminatedTeamId":null,"statusId":6,"tournamentStage":"3","status":{"utcTime":"2026-10-20T19:00:00.000Z","halfs":{"firstHalfStarted":"20.10.2026 21:01:26","secondHalfStarted":"20.10.2026 22:03:38"},"periodLength":45,"finished":true,"started":true,"cancelled":false,"awarded":false,"scoreStr":"5 - 1","reason":{"short":"FT","shortKey":"fulltime_short","long":"Full-Time","longKey":"finished"}},"timeTS":1792522800000},{"id":6106234,"leagueId":943230,"time":"20.10.2026 21:00","home":{"id":9847,"score":4,"name":"Paris Saint-Germain","shortName":"PSG","longName":"Paris Saint-Germain"},"away":{"id":8634,"score":2,"name":"Barcelona","longName":"Barcelona"},"eliminatedTeamId":
-
-==== /football-get-all-matches-by-date?date=20261021
-HTTP 404: {"message":"Endpoint '\/football-get-all-matches-by-date' does not exist"}
-
-==== /football-get-matches-by-date?date=2026-10-21
-STATUS 200  len=63
-{"status":"failed","message":"Request Failed Please try Again"}
-
-==== /football-get-matches?date=20261021
-HTTP 404: {"message":"Endpoint '\/football-get-matches' does not exist"}
-
-==== /football-get-live-matches
-HTTP 404: {"message":"Endpoint '\/football-get-live-matches' does not exist"}
-
-==== /football-get-all-live-matches
-HTTP 404: {"message":"Endpoint '\/football-get-all-live-matches' does not exist"}
-
-==== /football-live-matches
-HTTP 404: {"message":"Endpoint '\/football-live-matches' does not exist"}
-
-==== /football-get-matches-by-league?leagueid=42
-HTTP 404: {"message":"Endpoint '\/football-get-matches-by-league' does not exist"}
-
-==== /football-get-all-matches-by-league?leagueid=42
-STATUS 200  len=99558
-{"status":"success","response":{"matches":[{"id":"4947178","pageUrl":"/matches/athletic-club-vs-arsenal/2pyul3#4947178","opponent":{"id":"8315","name":"Athletic Club","score":0},"home":{"id":"8315","name":"Athletic Club","score":0},"away":{"id":"9825","name":"Arsenal","score":2},"displayTournament":true,"notStarted":false,"tournament":{"stage":""},"status":{"utcTime":"2025-09-16T16:45:00Z","finished":true,"started":true,"cancelled":false,"awarded":false,"scoreStr":"0 - 2","reason":{"short":"FT","shortKey":"fulltime_short","long":"Full-Time","longKey":"finished"}}},{"id":"4947237","pageUrl":"/matches/union-stgilloise-vs-psv-eindhoven/2a7vhj#4947237","opponent":{"id":"8640","name":"PSV Eindhoven","score":1},"home":{"id":"8640","name":"PSV Eindhoven","score":1},"away":{"id":"7978","name":"Union St.Gilloise","score":3},"displayTournament":true,"notStarted":false,"tournament":{"stage":""},"status":{"utcTime":"2025-09-16T16:45:00Z","finished":true,"started":true,"cancelled":false,"awarded":false,"scoreStr":"1 - 3","reason":{"short":"FT","shortKey":"fulltime_short","long":"Full-Time","longKey":"finished"}}},{"id":"4947188","pageUrl":"/matches/qarabag-fk-vs-benfica/2ltzdd#4947188","opponent":{"id":"9772","name":"Benfica","score":2},"home":{"id":"9772","name":"Benfica","score":2},"away":{"id":"7981","name":"Qarabağ FK","score":3},"displayTournament":true,"notStarted":false,"tournament":{"stage":""},"status":{"utcTime":"2025-09-16T19:00:00Z","finished":true,"started":true,"cancelled":false,"awarded":false,"scoreStr":"2 - 3","reason":{"short":"FT","shortKey":"fulltime_short","long":"Full-Time","longKey":"finished"}}},{"id":"4947134","pageUrl":"/matches/borussia-dortmund-vs-juventus/378icc#4947134","opponent":{"id":"9885","name":"Juventus","score":4},"home":{"id":"9885","name":"Juventus","score":4},"away":{"id":"9789","name":"Dortmund","score":4},"displayTournament":true,"notStarted":false,"tournament":{"stage":""},"status":{"utcTime":"2025-09-16T19:00:00Z","finished":true,"started":true,"cancelled":false,"awarded":false,"scoreStr":"4 - 4","reason":{"short":"FT","shortKey":"fulltime_short","long":"Full-Time","longKey":"finished"}}},{"id":"4947120","pageUrl":"/matches/marsei
-
-==== /football-get-league-matches?leagueid=42
-HTTP 404: {"message":"Endpoint '\/football-get-league-matches' does not exist"}
-
-==== /football-league-detail?leagueid=42
-HTTP 404: {"message":"Endpoint '\/football-league-detail' does not exist"}
-
-==== /football-get-standings?leagueid=42
-HTTP 404: {"message":"Endpoint '\/football-get-standings' does not exist"}
-
-==== DONE
+==== DONE2
