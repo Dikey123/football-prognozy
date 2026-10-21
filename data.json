@@ -1,6 +1,6 @@
 {
- "updated": "2026-10-20T19:26:00+03:00",
- "today": "2026-10-20",
+ "updated": "2026-10-21T11:06:32+03:00",
+ "today": "2026-10-21",
  "tournaments": [
   {
    "id": "ucl",
@@ -9,1700 +9,469 @@
    "round": "Общий этап · 3-й тур",
    "matches": [
     {
-     "date": "2026-10-20",
+     "date": "2026-10-21",
      "time": "19:45",
-     "home": "Фенербахче",
-     "away": "Славия Прага",
-     "venue": "Шюкрю Сараджоглу, Стамбул",
+     "home": "Комо",
+     "away": "Манчестер Юнайтед",
+     "venue": "Стадио Синигалья, Комо",
      "odds": [
-      1.62,
-      4.63,
-      5.5
+      2.31,
+      3.97,
+      3.02
      ],
-     "context": "Обе команды без побед в ЛЧ: «Фенер» пропустил шесть от «Астон Виллы», «Славия» на нуле очков. Дома турки разгромно играют в чемпионате. У хозяев не сыграют Асенсио и защитник Мюльдюр.",
+     "context": "«Манчестер Юнайтед» в плохой форме: поражения от «Халла» и «Брайтона», вылет из Кубка лиги, минус в Мадриде. «Комо» дома забивает и уже обыгрывал «Лейпциг» 4:1.",
      "tips": [
       {
-       "src": "LiveSport.ru",
+       "src": "RatingBet",
        "reg": "ru",
-       "pick": "Ф1(−1)",
-       "k": "1.99",
+       "pick": "П1 (Комо)",
+       "k": "1.67",
        "lean": "1",
-       "url": "https://www.livesport.ru/tips/football/2026/10/20/fenerbahce-slavia-praha/"
-      },
-      {
-       "src": "Metaratings",
-       "reg": "ru",
-       "pick": "Ф1(−1)",
-       "k": "2.12",
-       "lean": "1",
-       "url": "https://metaratings.ru/prognozy/futbol/fenerbahche-slaviya-praga-prognoz-na-match-ligi-chempionov-20-oktyabrya-2026-goda/"
-      },
-      {
-       "src": "Ставка ТВ",
-       "reg": "ru",
-       "pick": "Ф1(−1.5)",
-       "k": "2.70",
-       "lean": "1",
-       "url": "https://stavka.tv/matches/soccer/20-10-2026-fenerbahce-istanbul-slavia-prague"
-      },
-      {
-       "src": "ВсеПроСпорт",
-       "reg": "ru",
-       "pick": "П1",
-       "k": "1.65",
-       "lean": "1",
-       "url": "https://www.vseprosport.ru/news/2026/10/19/fenerbahche-slavija-praga-prognoz-kf-1-65-i-stavki-na-match-ligi-chempionov-20-oktjabrja-2026-goda"
-      },
-      {
-       "src": "vprognoze",
-       "reg": "ru",
-       "pick": "П1",
-       "k": "1.70",
-       "lean": "1",
-       "url": "https://vprognoze.ru/topforecast/8198710-fenerbahche-slaviya-praga-2026-10-20.html"
-      },
-      {
-       "src": "UA-Футбол",
-       "reg": "ru",
-       "pick": "1Х + ОЗ",
-       "k": "1.94",
-       "lean": "1",
-       "url": "https://www.ua-football.com/predictions/champions-league/1792472110-fenerbahche-slaviya-praga-anons-i-prognoz-matcha-ligi-chempionov-na-20-10-2026.html"
-      },
-      {
-       "src": "Sport.ua",
-       "reg": "ru",
-       "pick": "Обе забьют",
-       "k": "1.60",
-       "lean": null,
-       "url": "https://sport.ua/news/917129-fenerbahche-slaviya-prognoz-i-anons-na-match-ligi-chempionov"
-      },
-      {
-       "src": "Last Word on Football",
-       "reg": "eu",
-       "pick": "Счёт 2:0",
-       "k": null,
-       "lean": "1",
-       "url": "https://lastwordonsports.com/football/2026/10/19/uefa-champions-league-predictions-barcelona-psg/"
-      },
-      {
-       "src": "RotoWire",
-       "reg": "eu",
-       "pick": "Ф1(−1.5)",
-       "k": null,
-       "lean": "1",
-       "url": "https://www.rotowire.com/soccer/article/champions-league-predictions-today-tuesday-oct-20-matchday-3-best-bets-picks-142323"
-      },
-      {
-       "src": "Covers",
-       "reg": "eu",
-       "pick": "П1 (рынок 58%)",
-       "k": null,
-       "lean": "1",
-       "url": "https://www.covers.com/soccer/champions-league-moneyline-picks-matchday-3-2026"
+       "url": "https://ratingbet.com/ru/prognoz/komo-manchester-yunaited-prognoz-na-match-21-oktyabrya-2026-goda/"
       }
      ],
      "ai": {
       "score": "2:1",
-      "conf": 3,
-      "text": "Провал в Бирмингеме выглядит разовым: дома «Фенербахче» намного опаснее, а «Славия» не забивала два матча подряд. Но разгром с форой −1.5 я бы не закладывал — без Асенсио у турок меньше вариантов в последней трети, а чехи организованы и наверняка забьют хотя бы со стандарта.",
-      "bet": "Победа «Фенербахче» (П1 ≈ 1.70)"
+      "conf": 2,
+      "text": "«МЮ» нестабилен и приезжает в слабой форме, а «Комо» дома уверенно забивает. Осторожно ставлю на то, что хозяева как минимум не проиграют.",
+      "bet": "«Комо» не проиграет (1Х) ≈ 1.67",
+      "pick": "1Х"
      },
-     "lineups": {
-      "source": {
-       "name": "Спорт-Экспресс",
-       "url": "https://www.sport-express.net/football/champions-league/news/fenerbahche-slaviya-startovye-sostavy-na-match-obschego-etapa-ligi-chempionov-20-oktyabrya-2026-2465180/"
-      },
-      "home": {
-       "formation": "4-2-3-1",
-       "coach": "Исмаил Картал",
-       "xi": [
-        [
-         "Эдерсон"
-        ],
-        [
-         "Семеду",
-         "Шкриньяр",
-         "Аке",
-         "Браун"
-        ],
-        [
-         "Канте",
-         "Гендузи"
-        ],
-        [
-         "Гринвуд",
-         "Айдын",
-         "Актюркоглу"
-        ],
-        [
-         "Муричи"
-        ]
-       ],
-       "out": [
-        "Мюльдюр (травма)",
-        "Асенсио (травма колена)",
-        "Остервольде (вне заявки)",
-        "Яндаш (вне заявки)"
-       ],
-       "doubt": []
-      },
-      "away": {
-       "formation": "3-4-2-1",
-       "coach": "Индржих Трпишовский",
-       "xi": [
-        [
-         "Маркович"
-        ],
-        [
-         "Н'Гессан",
-         "Зима",
-         "Влчек"
-        ],
-        [
-         "Кубяк",
-         "Новак",
-         "Мозес",
-         "Сулейман"
-        ],
-        [
-         "Провод",
-         "Аяоси"
-        ],
-        [
-         "Штурм"
-        ]
-       ],
-       "out": [
-        "Шранц",
-        "Халоупек",
-        "Юрасек",
-        "Питак",
-        "Уанда",
-        "Огбу (все — травмы)",
-        "Хоры (решение тренера)"
-       ],
-       "doubt": []
-      }
-     },
-     "status": "full",
-     "news": [
-      {
-       "t": "Официальные составы вышли: «Фенербахче» выпускает Муричи в атаке вместо Лукаку, а «Славия» выдвигает Штурма в нападение",
-       "s": "Спорт-Экспресс",
-       "u": "https://www.sport-express.net/football/champions-league/news/fenerbahche-slaviya-startovye-sostavy-na-match-obschego-etapa-ligi-chempionov-20-oktyabrya-2026-2465180/"
-      },
-      {
-       "t": "«Фенербахче» подходит к матчу после разгрома 0:6 от «Астон Виллы», в Турции резко критикуют команду",
-       "s": "AroundPrague",
-       "u": "https://aroundprague.cz/news/sport/sopernik-slavii-fenerbaxche-razgromlen-06-aston-villoj-v-turczii-kritikuyut-komandu"
-      },
-      {
-       "t": "«Фенербахче» даёт Лукаку последний шанс исправиться",
-       "s": "Евро-Футбол",
-       "u": "https://www.euro-football.ru/article/40/1006380437_fenerbahche_dast_posledniy_shans_lukaku_ispravitsya"
-      },
-      {
-       "t": "«Славия» без побед в еврокубках уже 17 матчей — серия тянется два года",
-       "s": "AroundPrague",
-       "u": "https://aroundprague.cz/news/sport/dva-goda-bez-pobed-slaviya-pyitaetsya-prervat-seriyu-v-evrokubkax"
-      }
-     ]
+     "status": "full"
     },
     {
-     "date": "2026-10-20",
+     "date": "2026-10-21",
      "time": "19:45",
-     "home": "Сабах",
-     "away": "Боруссия Дортмунд",
-     "venue": "Олимпийский стадион, Баку",
+     "home": "Лилль",
+     "away": "Галатасарай",
+     "venue": "Пьер-Моруа, Лилль",
      "odds": [
-      9,
-      6,
-      1.3
+      2.33,
+      3.81,
+      3.09
      ],
-     "context": "Дебютант ЛЧ из Азербайджана против «Боруссии», которая не может выиграть три матча подряд и проиграла «Буде-Глимту» 0:1. «Сабах» пропустил всего один мяч в пяти последних играх. У гостей нет Карецаса.",
+     "context": "Оба клуба проиграли два стартовых матча и обязаны играть на победу. У «Галатасарая» результативнее атака, у «Лилля» — домашние трибуны.",
      "tips": [
-      {
-       "src": "Metaratings",
-       "reg": "ru",
-       "pick": "ТМ 3.5 + П2",
-       "k": "1.82",
-       "lean": "2",
-       "url": "https://metaratings.ru/prognozy/futbol/sabah-borussiya-dortmund-prognoz-na-match-ligi-chempionov-20-oktyabrya-2026-goda/"
-      },
-      {
-       "src": "Ставка ТВ",
-       "reg": "ru",
-       "pick": "Ф1(+1.5)",
-       "k": "1.98",
-       "lean": "1",
-       "url": "https://stavka.tv/matches/soccer/20-10-2026-sabah-borussia-dortmund"
-      },
-      {
-       "src": "ВсеПроСпорт",
-       "reg": "ru",
-       "pick": "Ф2(−1.5)",
-       "k": "1.80",
-       "lean": "2",
-       "url": "https://www.vseprosport.kz/news/2026/10/18/sabah-borussija-dortmund-stavka-konstantina-ulanova-20-oktjabrja-2026-goda"
-      },
-      {
-       "src": "ВсеПроСпорт (ред.)",
-       "reg": "ru",
-       "pick": "ТМ 2.5",
-       "k": "2.85",
-       "lean": null,
-       "url": "https://www.vseprosport.ru/news/2026/10/19/sabah-baku-borussija-dortmund-prognoz-kf-3-15-i-stavki-na-match-ligi-chempionov-20-oktjabrja-2026-goda"
-      },
-      {
-       "src": "Legalbet",
-       "reg": "ru",
-       "pick": "ТМ 3.5",
-       "k": null,
-       "lean": null,
-       "url": "https://legalbet.kz/match-center/fk-sabah-borussia-dortmund-20-10-2026/"
-      },
-      {
-       "src": "Olimpbet Arena",
-       "reg": "ru",
-       "pick": "Ф1(+1.5)",
-       "k": "2.05",
-       "lean": "1",
-       "url": "https://arena.olimpbet.kz/tips/football/prognoz-na-match-3-go-tura-ligi-chempionov-sabah-borussiya-dortmund-hozyaeva-poboryutsya"
-      },
-      {
-       "src": "Sports Mole",
-       "reg": "eu",
-       "pick": "Счёт 1:2",
-       "k": null,
-       "lean": "2",
-       "url": "https://www.sportsmole.co.uk/football/sabah/champions-league/preview/sabah-vs-dortmund-prediction-team-news-lineups_607181.html"
-      },
-      {
-       "src": "Covers",
-       "reg": "eu",
-       "pick": "П2 (рынок 75%)",
-       "k": null,
-       "lean": "2",
-       "url": "https://www.covers.com/soccer/champions-league-moneyline-picks-matchday-3-2026"
-      }
-     ],
-     "ai": {
-      "score": "1:2",
-      "conf": 3,
-      "text": "«Боруссия» сильнее по классу, но сейчас в плохой форме и забивает мало. «Сабах» дома играет плотно и почти не пропускает. Самый вероятный сценарий — тяжёлая победа немцев с разницей в один мяч, поэтому фора хозяев +1.5 выглядит интереснее, чем крупная победа гостей.",
-      "bet": "Фора «Сабаха» (+1.5) ≈ 2.00"
-     },
-     "lineups": {
-      "source": {
-       "name": "LiveSport.ru",
-       "url": "https://www.livesport.ru/football/2026/10/20/squads-sabah-bdortmund/"
-      },
-      "home": {
-       "formation": "4-2-3-1",
-       "coach": "Вальдас Дамбраускас",
-       "xi": [
-        [
-         "Покатилов"
-        ],
-        [
-         "Зедадка",
-         "Сольве",
-         "Маккарти",
-         "Пухач"
-        ],
-        [
-         "Рахмоналиев",
-         "Лепиница"
-        ],
-        [
-         "Пэррис",
-         "Ду Кейрос",
-         "Симич"
-        ],
-        [
-         "Микелс"
-        ]
-       ],
-       "out": [],
-       "doubt": []
-      },
-      "away": {
-       "formation": "3-4-2-1",
-       "coach": "Нико Ковач",
-       "xi": [
-        [
-         "Кобель"
-        ],
-        [
-         "Антон",
-         "Шлоттербек",
-         "Бенсебаини"
-        ],
-        [
-         "Райерсон",
-         "Нмеча",
-         "Веерман",
-         "Свенссон"
-        ],
-        [
-         "Чуквуэмека",
-         "Фабиу Силва"
-        ],
-        [
-         "Гирасси"
-        ]
-       ],
-       "out": [
-        "Джан",
-        "Константелиас",
-        "Лерма",
-        "Карецас (все — травмы)"
-       ],
-       "doubt": []
-      }
-     },
-     "status": "full",
-     "news": [
-      {
-       "t": "Составы объявлены: у «Боруссии» в старте Фабиу Силва и Чуквуэмека, Джоуб Беллингем остался в запасе",
-       "s": "LiveSport.ru",
-       "u": "https://www.livesport.ru/football/2026/10/20/squads-sabah-bdortmund/"
-      },
-      {
-       "t": "«Боруссия» перед матчем с «Сабахом» продлила контракт с Нико Ковачем",
-       "s": "Media.az",
-       "u": "https://media.az/sports/borussiya-prodlila-kontrakt-s-glavnym-trenerom-pered-matchem-s-sabahom"
-      },
-      {
-       "t": "Ковач: «Мы явные фавориты, было бы неправильно утверждать обратное»",
-       "s": "İdman.biz",
-       "u": "https://www.idman.biz/ru/news/football/162250"
-      }
-     ]
-    },
-    {
-     "date": "2026-10-20",
-     "time": "22:00",
-     "home": "Рома",
-     "away": "Слован Братислава",
-     "venue": "Олимпико, Рим",
-     "odds": [
-      1.15,
-      8.8,
-      15
-     ],
-     "context": "«Рома» Гасперини набрала 1 очко и обидно уступила «Реалу». «Слован» без очков и пропустил девять мячей в двух матчах. В Серии А римляне пропустили всего три мяча за семь туров.",
-     "tips": [
-      {
-       "src": "LiveSport.ru",
-       "reg": "ru",
-       "pick": "ТБ 4",
-       "k": "2.25",
-       "lean": "1",
-       "url": "https://www.livesport.ru/tips/football/2026/10/20/roma-slovan-bratislava/"
-      },
-      {
-       "src": "Metaratings",
-       "reg": "ru",
-       "pick": "ТМ 3.5 + П1",
-       "k": "1.79",
-       "lean": "1",
-       "url": "https://metaratings.ru/prognozy/futbol/roma-slovan-bratislava-prognoz-na-match-ligi-chempionov-20-oktyabrya-2026-goda/"
-      },
-      {
-       "src": "Ставка ТВ",
-       "reg": "ru",
-       "pick": "Ф1(−2.5)",
-       "k": "2.13",
-       "lean": "1",
-       "url": "https://stavka.tv/matches/soccer/20-10-2026-roma-slovan-bratislava"
-      },
-      {
-       "src": "Sport.ua",
-       "reg": "ru",
-       "pick": "Ф1(−2)",
-       "k": "1.71",
-       "lean": "1",
-       "url": "https://sport.ua/news/917287-roma-slovan-prognoz-i-anons-na-match-ligi-chempionov"
-      },
-      {
-       "src": "Overbetting",
-       "reg": "ru",
-       "pick": "Сухая победа «Ромы»",
-       "k": "2.03",
-       "lean": "1",
-       "url": "https://overbetting.ru/tips/football/2026-10-20/roma-slovan/1125784/"
-      },
-      {
-       "src": "Overbetting",
-       "reg": "ru",
-       "pick": "ТМ 3.5",
-       "k": "2.28",
-       "lean": null,
-       "url": "https://overbetting.ru/tips/football/2026-10-20/roma-slovan/1125992/"
-      },
-      {
-       "src": "UA-Футбол",
-       "reg": "ru",
-       "pick": "«Слован» не забьёт",
-       "k": null,
-       "lean": "1",
-       "url": "https://www.ua-football.com/predictions/champions-league/1792443994-roma-slovan-anons-i-prognoz-matcha-ligi-chempionov-na-20-10-2026.html"
-      },
-      {
-       "src": "Covers",
-       "reg": "eu",
-       "pick": "П1 (рынок 84%)",
-       "k": null,
-       "lean": "1",
-       "url": "https://www.covers.com/soccer/champions-league-moneyline-picks-matchday-3-2026"
-      }
-     ],
-     "ai": {
-      "score": "3:0",
-      "conf": 4,
-      "text": "Самый предсказуемый матч дня. «Слован» слабее по всем линиям и без настоящего центрфорварда, «Рома» хорошо обороняется и дома обязана брать три очка. Вопрос только в счёте: Гасперини редко устраивает голевые шоу, поэтому ставлю на уверенную победу всухую.",
-      "bet": "Победа «Ромы» всухую ≈ 2.00"
-     },
-     "lineups": {
-      "source": {
-       "name": "Ставка ТВ",
-       "url": "https://stavka.tv/matches/soccer/20-10-2026-roma-slovan-bratislava"
-      },
-      "home": {
-       "formation": "3-4-2-1",
-       "coach": "Джан Пьеро Гасперини",
-       "xi": [
-        [
-         "Голлини"
-        ],
-        [
-         "Балерди",
-         "Н’Дика",
-         "Кулиеракис"
-        ],
-        [
-         "Лулли",
-         "Де Рон",
-         "Пизилли",
-         "Ренш"
-        ],
-        [
-         "Соуле",
-         "Мора"
-        ],
-        [
-         "Мален"
-        ]
-       ],
-       "out": [
-        "Кристанте",
-        "Коне",
-        "Свилар (все — травмы)"
-       ],
-       "doubt": [
-        "Дибала"
-       ]
-      },
-      "away": {
-       "formation": "4-2-3-1",
-       "coach": "Яя Туре",
-       "xi": [
-        [
-         "Такач"
-        ],
-        [
-         "Блэкман",
-         "Байрич",
-         "Маркович",
-         "Круз"
-        ],
-        [
-         "Мустафич",
-         "Покорны"
-        ],
-        [
-         "Барсегян",
-         "Мартинес",
-         "Камара"
-        ],
-        [
-         "Григер"
-        ]
-       ],
-       "out": [
-        "Медведев (вне заявки)",
-        "Кухаревич (вне заявки)"
-       ],
-       "doubt": [
-        "Шпорар",
-        "Черепкаи"
-       ]
-      }
-     },
-     "status": "full",
-     "news": [
-      {
-       "t": "Гасперини: восстановление Дибалы затягивается, его участие под вопросом",
-       "s": "SportandBets",
-       "u": "https://sportandbets.com/novosti/dibala_mozhet_sygrat_za_romu_v_matche_ligi_chempionov_protiv_slovana.html"
-      }
-     ]
-    },
-    {
-     "date": "2026-10-20",
-     "time": "22:00",
-     "home": "Порту",
-     "away": "ПСВ",
-     "venue": "Эштадиу ду Драгау, Порту",
-     "odds": [
-      1.63,
-      4.77,
-      5.18
-     ],
-     "context": "Обе команды без побед в ЛЧ. «Порту» выиграл все 8 матчей чемпионата Португалии и отдыхал шесть дней. ПСВ у Петера Боса в кризисе: травмы и всего один гол в двух турах ЛЧ.",
-     "tips": [
-      {
-       "src": "LiveSport.ru",
-       "reg": "ru",
-       "pick": "Прогноз за 1.86",
-       "k": "1.86",
-       "lean": null,
-       "url": "https://www.livesport.ru/tips/football/2026/10/20/porto-psv/"
-      },
-      {
-       "src": "Ставка ТВ",
-       "reg": "ru",
-       "pick": "Ф1(−1.5)",
-       "k": "2.63",
-       "lean": "1",
-       "url": "https://stavka.tv/matches/soccer/20-10-2026-porto-psv"
-      },
-      {
-       "src": "ВсеПроСпорт",
-       "reg": "ru",
-       "pick": "Ф1(−1) · ТМ 3.5",
-       "k": "1.88",
-       "lean": "1",
-       "url": "https://www.vseprosport.ru/news/2026/10/19/portu-psv-prognoz-kf-1-88-i-stavki-na-match-ligi-chempionov-20-oktjabrja-2026-goda"
-      },
-      {
-       "src": "vprognoze",
-       "reg": "ru",
-       "pick": "ТБ 3",
-       "k": "1.77",
-       "lean": null,
-       "url": "https://vprognoze.ru/topforecast/8198737-portu-psv-ejndhoven-2026-10-20.html"
-      },
-      {
-       "src": "Sport.ua",
-       "reg": "ru",
-       "pick": "П1",
-       "k": "1.64",
-       "lean": "1",
-       "url": "https://sport.ua/news/917289-portu-psv-prognoz-i-anons-na-match-ligi-chempionov"
-      },
-      {
-       "src": "UA-Футбол",
-       "reg": "ru",
-       "pick": "П1",
-       "k": "1.60",
-       "lean": "1",
-       "url": "https://www.ua-football.com/predictions/champions-league/1792423928-portu-psv-anons-i-prognoz-matcha-ligi-chempionov-na-20-10-2026.html"
-      },
-      {
-       "src": "Куш в спорте",
-       "reg": "ru",
-       "pick": "П1 (выбор игроков)",
-       "k": "1.71",
-       "lean": "1",
-       "url": "https://kushvsporte.ru/event/6981618-portu-psv"
-      },
-      {
-       "src": "Covers",
-       "reg": "eu",
-       "pick": "П1 (рынок 61%)",
-       "k": null,
-       "lean": "1",
-       "url": "https://www.covers.com/soccer/champions-league-moneyline-picks-matchday-3-2026"
-      }
-     ],
-     "ai": {
-      "score": "2:0",
-      "conf": 4,
-      "text": "Форма и календарь на стороне «Порту»: стабильная серия дома, свежие ноги и соперник с кадровыми проблемами, который почти не забивает. Сомнения в обороне португальцев есть, но ПСВ сейчас нечем их наказать.",
-      "bet": "Победа «Порту» (П1 ≈ 1.63)"
-     },
-     "lineups": {
-      "source": {
-       "name": "Ставка ТВ",
-       "url": "https://stavka.tv/matches/soccer/20-10-2026-porto-psv"
-      },
-      "home": {
-       "formation": "4-3-3",
-       "coach": "Франческо Фариоли",
-       "xi": [
-        [
-         "Д. Кошта"
-        ],
-        [
-         "Моура",
-         "Кивиор",
-         "Беднарек",
-         "Фернандеш"
-        ],
-        [
-         "Вейга",
-         "Фрохольдт",
-         "Варела"
-        ],
-        [
-         "Сайнс",
-         "Силва",
-         "Пепе"
-        ]
-       ],
-       "out": [
-        "Гомес (травма)",
-        "Соуса (травма)",
-        "Смоллинг",
-        "Прпич",
-        "Мек (вне заявки)"
-       ],
-       "doubt": []
-      },
-      "away": {
-       "formation": "4-2-3-1",
-       "coach": "Петер Бос",
-       "xi": [
-        [
-         "Коварж"
-        ],
-        [
-         "Костич",
-         "Обиспо",
-         "Гертрюйда",
-         "Дест"
-        ],
-        [
-         "Сано",
-         "Мауро Жуниор"
-        ],
-        [
-         "Бро Хансен",
-         "Сантос",
-         "Перишич"
-        ],
-        [
-         "Мейнанс"
-        ]
-       ],
-       "out": [
-        "Пепи",
-        "Ваннер",
-        "Ламмерс",
-        "Схаутен",
-        "Уаисса (травмы)",
-        "Плеа",
-        "Нагало (вне заявки)"
-       ],
-       "doubt": [
-        "Тиль"
-       ]
-      }
-     },
-     "status": "full",
-     "news": [
-      {
-       "t": "Фариоли: «Наш подход никогда не меняется — мы всегда хотим побеждать»",
-       "s": "FCPorto.su",
-       "u": "https://fcporto.su/2026/10/19/ru-a-nossa-abordagem-nunca-muda-queremos-sempre-ganhar/"
-      }
-     ]
-    },
-    {
-     "date": "2026-10-20",
-     "time": "22:00",
-     "home": "Ливерпуль",
-     "away": "Вильярреал",
-     "venue": "Энфилд, Ливерпуль",
-     "odds": [
-      1.49,
-      4.75,
-      6.2
-     ],
-     "context": "«Ливерпуль» Андони Ираолы выиграл оба матча, но пропускал в каждом (2:1 с «Атлетико», 6:3 с ЛАСКом). «Вильярреал» не выигрывает у английских клубов в ЛЧ уже 16 матчей. У хозяев не сыграют Фримпонг, Брэдли и Собослаи.",
-     "tips": [
-      {
-       "src": "LiveSport.ru",
-       "reg": "ru",
-       "pick": "ОЗ + ТБ 2.5",
-       "k": "1.88",
-       "lean": null,
-       "url": "https://www.livesport.ru/tips/football/2026/10/20/liverpool-villarrea1/"
-      },
-      {
-       "src": "Марафон (блог)",
-       "reg": "ru",
-       "pick": "П1 + ТБ 1.5",
-       "k": "1.61",
-       "lean": "1",
-       "url": "https://blog.marathonbet.ru/prognoz-liverpool-villarreal-20-10-2026/"
-      },
-      {
-       "src": "Ставка ТВ",
-       "reg": "ru",
-       "pick": "Ф1(−1.5)",
-       "k": "2.20",
-       "lean": "1",
-       "url": "https://stavka.tv/matches/soccer/20-10-2026-liverpool-villarreal"
-      },
-      {
-       "src": "Metaratings",
-       "reg": "ru",
-       "pick": "ТБ 3",
-       "k": "1.72",
-       "lean": null,
-       "url": "https://metaratings.ru/prognozy/futbol/liverpul-vilyarreal-prognoz-na-match-ligi-chempionov-20-oktyabrya-2026-goda/"
-      },
-      {
-       "src": "ВсеПроСпорт",
-       "reg": "ru",
-       "pick": "Ф1(−1)",
-       "k": "1.77",
-       "lean": "1",
-       "url": "https://www.vseprosport.ru/news/2026/10/19/liverpul-viljarreal-prognoz-kf-1-77-i-stavki-na-match-ligi-chempionov-20-oktjabrja-2026-goda"
-      },
-      {
-       "src": "Sport.ua",
-       "reg": "ru",
-       "pick": "П1",
-       "k": "1.55",
-       "lean": "1",
-       "url": "https://sport.ua/news/917149-liverpul-vilyarreal-prognoz-i-anons-na-match-ligi-chempionov"
-      },
-      {
-       "src": "William Hill",
-       "reg": "eu",
-       "pick": "П1 + 3+ гола · 3:1",
-       "k": "1.91",
-       "lean": "1",
-       "url": "https://news.williamhill.com/football/liverpool-vs-villarreal-prediction-champions-league-tips-2026/"
-      },
-      {
-       "src": "SportyTrader",
-       "reg": "eu",
-       "pick": "П1 + ТБ 3.5",
-       "k": null,
-       "lean": "1",
-       "url": "https://www.sportytrader.com/us/picks/liverpool-villarreal-380265/"
-      },
-      {
-       "src": "WinDrawWin",
-       "reg": "eu",
-       "pick": "П1 · счёт 3:1",
-       "k": null,
-       "lean": "1",
-       "url": "https://www.windrawwin.com/tips/champions-league/liverpool-v-villarreal/898340/"
-      },
-      {
-       "src": "MightyTips",
-       "reg": "eu",
-       "pick": "Обе забьют",
-       "k": null,
-       "lean": null,
-       "url": "https://www.mightytips.com/football-predictions/liverpool-vs-villarreal-prediction-20-10-2026/"
-      },
-      {
-       "src": "RotoWire",
-       "reg": "eu",
-       "pick": "ТБ 3.5",
-       "k": "2.30",
-       "lean": null,
-       "url": "https://www.rotowire.com/soccer/article/champions-league-predictions-today-tuesday-oct-20-matchday-3-best-bets-picks-142323"
-      },
-      {
-       "src": "Last Word on Football",
-       "reg": "eu",
-       "pick": "Счёт 4:2",
-       "k": null,
-       "lean": "1",
-       "url": "https://lastwordonsports.com/football/2026/10/19/uefa-champions-league-predictions-barcelona-psg/"
-      }
-     ],
-     "ai": {
-      "score": "3:1",
-      "conf": 4,
-      "text": "«Ливерпуль» на «Энфилде» в ЛЧ почти всегда выигрывает, а «Вильярреал» на выездах в турнире стабильно пропускает первым. При этом у хозяев дырявая оборона и сразу три важных потери, так что «сухаря» я не жду. Сходятся почти все источники: победа англичан и много голов.",
-      "bet": "Победа «Ливерпуля» + обе забьют ≈ 2.60"
-     },
-     "lineups": {
-      "source": {
-       "name": "Ставка ТВ",
-       "url": "https://stavka.tv/matches/soccer/20-10-2026-liverpool-villarreal"
-      },
-      "home": {
-       "formation": "4-2-3-1",
-       "coach": "Андони Ираола",
-       "xi": [
-        [
-         "Алиссон"
-        ],
-        [
-         "Араухо",
-         "Жаке",
-         "ван Дейк",
-         "Керкез"
-        ],
-        [
-         "Гравенберх",
-         "Мак Аллистер"
-        ],
-        [
-         "Гакпо",
-         "Вирц",
-         "Барколя"
-        ],
-        [
-         "Исак"
-        ]
-       ],
-       "out": [
-        "Брэдли",
-        "Экитике",
-        "Собослаи",
-        "Фримпонг",
-        "Леони (травмы)",
-        "Эндо",
-        "Кьеза (вне заявки)"
-       ],
-       "doubt": []
-      },
-      "away": {
-       "formation": "4-3-3",
-       "coach": "",
-       "xi": [
-        [
-         "Гулачи"
-        ],
-        [
-         "Моуриньо",
-         "Наварро",
-         "Вейга",
-         "Ромеро"
-        ],
-        [
-         "Гейе",
-         "Салиба",
-         "Комесанья"
-        ],
-        [
-         "Молейро",
-         "Морено",
-         "Микаутадзе"
-        ]
-       ],
-       "out": [
-        "Пепе (травма)",
-        "Бьюкенен (травма)"
-       ],
-       "doubt": []
-      }
-     },
-     "status": "full",
-     "news": [
-      {
-       "t": "Ираола: нужно показать такую же качественную игру, как против «Атлетико»",
-       "s": "LiveSport.ru",
-       "u": "https://www.livesport.ru/football/2026/10/20/iraola/"
-      },
-      {
-       "t": "Ираола намекнул на перестановки в составе «Ливерпуля»",
-       "s": "Террикон",
-       "u": "https://terrikon.com/posts/588168"
-      },
-      {
-       "t": "Для Ираолы матч с «Вильярреалом» будет особенным — он бывший тренер клуба",
-       "s": "SportandBets",
-       "u": "https://sportandbets.com/novosti/iraola_match_liverpulya_s_vilyarrealom_budet_osobennym.html"
-      }
-     ]
-    },
-    {
-     "date": "2026-10-20",
-     "time": "22:00",
-     "home": "Манчестер Сити",
-     "away": "АЕК Афины",
-     "venue": "Этихад, Манчестер",
-     "odds": [
-      1.09,
-      11,
-      23
-     ],
-     "context": "«Сити» Энцо Марески проиграл ПСЖ 2:4, но в АПЛ выиграл семь первых туров. Семеньо выбыл на два месяца, Холанд под вопросом. АЕК не проигрывает в Греции и регулярно забивает.",
-     "tips": [
-      {
-       "src": "LiveSport.ru",
-       "reg": "ru",
-       "pick": "Обе забьют",
-       "k": "2.00",
-       "lean": null,
-       "url": "https://www.livesport.ru/tips/football/2026/10/20/mcity-aek-athens/"
-      },
-      {
-       "src": "Metaratings",
-       "reg": "ru",
-       "pick": "Ф1(−2.5) · ТБ 3.5",
-       "k": null,
-       "lean": "1",
-       "url": "https://metaratings.ru/prognozy/futbol/manchester-siti-aek-afiny-prognoz-na-match-ligi-chempionov-20-oktyabrya-2026-goda/"
-      },
-      {
-       "src": "Ставка ТВ",
-       "reg": "ru",
-       "pick": "Ф2(+2.5)",
-       "k": "2.05",
-       "lean": "2",
-       "url": "https://stavka.tv/matches/soccer/20-10-2026-manchester-city-aek-athens"
-      },
-      {
-       "src": "Ставки-прогнозы",
-       "reg": "ru",
-       "pick": "Ф2(+3.5)",
-       "k": "1.47",
-       "lean": "2",
-       "url": "https://stavkiprognozy.ru/prognozy/football/liga-chempionov-uefa/sp_prognoz-manchester-siti-aek-20-oktyabrya-2026"
-      },
-      {
-       "src": "SportClan",
-       "reg": "ru",
-       "pick": "П1 + ТБ 1.5 в 1-м тайме",
-       "k": "2.07",
-       "lean": "1",
-       "url": "https://sportclan.ru/prognozy/stavki-na-match-manchester-siti-aek-20-oktjabrja/"
-      },
-      {
-       "src": "UA-Футбол",
-       "reg": "ru",
-       "pick": "ТБ 2.5 · 3:0",
-       "k": null,
-       "lean": "1",
-       "url": "https://www.ua-football.com/predictions/champions-league/1792431444-manchester-siti-aek-anons-i-prognoz-matcha-ligi-chempionov-na-20-10-2026.html"
-      },
-      {
-       "src": "101 Great Goals",
-       "reg": "eu",
-       "pick": "Счёт 3:0",
-       "k": null,
-       "lean": "1",
-       "url": "https://www.101greatgoals.com/football/champions-league/champions-league-predictions-schedule-standings-games/"
-      },
-      {
-       "src": "Covers",
-       "reg": "eu",
-       "pick": "П1 (рынок 89%)",
-       "k": null,
-       "lean": "1",
-       "url": "https://www.covers.com/soccer/champions-league-moneyline-picks-matchday-3-2026"
-      }
-     ],
-     "ai": {
-      "score": "3:1",
-      "conf": 3,
-      "text": "Исход почти не вызывает сомнений, интрига только в разнице. Ставить на П1 при коэффициенте 1.09 смысла мало. «Сити» после ротации и без Семеньо может не разгромить соперника, а АЕК умеет забивать — поэтому мне ближе «обе забьют», чем крупная фора хозяев.",
-      "bet": "Обе забьют ≈ 2.00"
-     },
-     "lineups": {
-      "source": {
-       "name": "Ставка ТВ",
-       "url": "https://stavka.tv/matches/soccer/20-10-2026-manchester-city-aek-athens"
-      },
-      "home": {
-       "formation": "4-2-3-1",
-       "coach": "Энцо Мареска",
-       "xi": [
-        [
-         "Доннарумма"
-        ],
-        [
-         "Льюис",
-         "Хусанов",
-         "Гвардиол",
-         "Аит-Нури"
-        ],
-        [
-         "Андерсон",
-         "Буадди"
-        ],
-        [
-         "Фоден",
-         "Шерки",
-         "Доку"
-        ],
-        [
-         "Холанд"
-        ]
-       ],
-       "out": [
-        "Семеньо (травма, ~2 месяца)"
-       ],
-       "doubt": [
-        "О’Райли",
-        "Холанд"
-       ]
-      },
-      "away": {
-       "formation": "4-4-2",
-       "coach": "Марко Николич",
-       "xi": [
-        [
-         "Бриньоли"
-        ],
-        [
-         "Рота",
-         "Мукуди",
-         "Релвас",
-         "Пилиос"
-        ],
-        [
-         "Майер",
-         "Марин",
-         "Виталис",
-         "Койта"
-        ],
-        [
-         "Варга",
-         "Зини"
-        ]
-       ],
-       "out": [
-        "Стракоша (травма)",
-        "Кутеса (вне заявки)"
-       ],
-       "doubt": []
-      }
-     },
-     "status": "full",
-     "news": [
-      {
-       "t": "Гвардиола поддержал клуб на фоне обвинений в финансовых нарушениях",
-       "s": "NV Спорт",
-       "u": "https://sport.nv.ua/football/manchester-siti-gvardiola-podderzhal-klub-posle-obvineniy-v-finansovyh-narusheniyah-50646050.html"
-      },
-      {
-       "t": "«Барселона» и «Реал» поборются за Холанда в случае вылета «Сити» из АПЛ",
-       "s": "SportandBets",
-       "u": "https://sportandbets.com/novosti/barselona_i_real_poboryutsya_za_erlinga_holanda_v_sluchae_vyleta_manchester_siti.html"
-      }
-     ]
-    },
-    {
-     "date": "2026-10-20",
-     "time": "22:00",
-     "home": "ПСЖ",
-     "away": "Барселона",
-     "venue": "Парк де Пренс, Париж",
-     "odds": [
-      2.43,
-      4.3,
-      2.45
-     ],
-     "context": "Главный матч дня: у обеих по 6 очков. ПСЖ выиграл шесть подряд и обыграл «Сити» 4:2. «Барселона» Флика выиграла все 11 матчей сезона и забивает больше всех в Европе. У ПСЖ нет Нуну Мендеша, у «Барсы» проблемы в обороне. В воротах ПСЖ — Матвей Сафонов.",
-     "tips": [
-      {
-       "src": "LiveSport.ru",
-       "reg": "ru",
-       "pick": "ТБ 4.5",
-       "k": "2.13",
-       "lean": null,
-       "url": "https://www.livesport.ru/tips/football/2026/10/20/parsaint-barcelona/"
-      },
-      {
-       "src": "Metaratings",
-       "reg": "ru",
-       "pick": "ТБ 3.5 · П1",
-       "k": "1.70",
-       "lean": "1",
-       "url": "https://metaratings.ru/prognozy/futbol/pszh-barselona-prognoz-na-match-ligi-chempionov-20-oktyabrya-2026-goda/"
-      },
-      {
-       "src": "Ставка ТВ",
-       "reg": "ru",
-       "pick": "П1",
-       "k": "2.43",
-       "lean": "1",
-       "url": "https://stavka.tv/matches/soccer/20-10-2026-paris-saint-germain-barcelona"
-      },
-      {
-       "src": "Марафон (блог)",
-       "reg": "ru",
-       "pick": "ТБ 4",
-       "k": "1.72",
-       "lean": null,
-       "url": "https://blog.marathonbet.ru/prognoz-psg-barcelona-20-10-2026/"
-      },
-      {
-       "src": "Стратегия",
-       "reg": "ru",
-       "pick": "Ф2(0)",
-       "k": null,
-       "lean": "2",
-       "url": "https://www.strategya.com/liga-chempionov-pszh-barselona-prognoz-na-tsentralnyy-match-20-oktyabrya-2026-goda/"
-      },
-      {
-       "src": "IronWin",
-       "reg": "ru",
-       "pick": "П1",
-       "k": "2.42",
-       "lean": "1",
-       "url": "https://ironwin.ru/prognozy/football/psg-barselona/"
-      },
-      {
-       "src": "Betteam",
-       "reg": "ru",
-       "pick": "ТБ 4.5",
-       "k": "2.20",
-       "lean": null,
-       "url": "https://betteam.pro/prognozy/futbol/liga-chempionov/psgh-barselona-20-10-2026-prognoz-i-stavki-na-match/24074308"
-      },
-      {
-       "src": "Goal.com",
-       "reg": "eu",
-       "pick": "ТБ 4.5 · 3:4",
-       "k": "2.15",
-       "lean": "2",
-       "url": "https://www.goal.com/en-za/betting/tips/psg-vs-barcelona-predictions-20-10-2026/A%3Abltd641e23f9189881e"
-      },
-      {
-       "src": "Covers",
-       "reg": "eu",
-       "pick": "П1 + ТБ 3.5",
-       "k": null,
-       "lean": "1",
-       "url": "https://www.covers.com/soccer/psg-vs-barcelona-predictions-picks-oct-20-2026"
-      },
-      {
-       "src": "Sportskeeda",
-       "reg": "eu",
-       "pick": "Ничья 2:2",
-       "k": null,
-       "lean": "X",
-       "url": "https://www.sportskeeda.com/football/paris-saint-germain-vs-barcelona-prediction-betting-tips-october-20th-2026"
-      },
-      {
-       "src": "Footballpredictions",
-       "reg": "eu",
-       "pick": "2:2 · ОЗ",
-       "k": null,
-       "lean": "X",
-       "url": "https://footballpredictions.com/footballpredictions/championsleaguepredictions/psg-vs-barcelona-prediction-20-10-2026/"
-      },
-      {
-       "src": "SportsGambler",
-       "reg": "eu",
-       "pick": "Азиатская фора на «Барсу»",
-       "k": null,
-       "lean": "2",
-       "url": "https://www.sportsgambler.com/betting-tips/football/psg-vs-barcelona-prediction-lineups-odds-2026-10-20/"
-      },
       {
        "src": "RatingBet",
-       "reg": "eu",
-       "pick": "Ф2(0)",
-       "k": "1.90",
-       "lean": "2",
-       "url": "https://ratingbet.com/predictions/psg-vs-barcelona-prediction-expert-analysis-possible-lineups-october-20-2026/"
-      },
-      {
-       "src": "Betfred",
-       "reg": "eu",
-       "pick": "ТБ 4.5",
-       "k": null,
-       "lean": null,
-       "url": "https://insights.betfred.com/football/champions-league/psg-vs-barcelona-prediction-betting-tips-tuesday-20-october-2026/"
-      },
-      {
-       "src": "RotoWire",
-       "reg": "eu",
-       "pick": "Х2 + ОЗ",
-       "k": "1.88",
-       "lean": "2",
-       "url": "https://www.rotowire.com/soccer/article/champions-league-predictions-today-tuesday-oct-20-matchday-3-best-bets-picks-142323"
-      }
-     ],
-     "ai": {
-      "score": "2:2",
-      "conf": 2,
-      "text": "Эксперты разделились почти поровну, и это честно отражает матч: букмекеры не видят фаворита. В одном сходятся все — будет много голов. ПСЖ отдыхал перед игрой, «Барселона» играет третий выезд за восемь дней, зато у неё самая сильная атака сезона. Угадывать исход здесь — лотерея; надёжнее ставить на голы с обеих сторон.",
-      "bet": "Обе забьют + ТБ 2.5 ≈ 1.50"
-     },
-     "lineups": {
-      "source": {
-       "name": "Ставка ТВ",
-       "url": "https://stavka.tv/matches/soccer/20-10-2026-paris-saint-germain-barcelona"
-      },
-      "home": {
-       "formation": "4-3-3",
-       "coach": "Луис Энрике",
-       "xi": [
-        [
-         "Сафонов"
-        ],
-        [
-         "Хакими",
-         "Маркиньос",
-         "Пачо",
-         "Динь"
-        ],
-        [
-         "Невеш",
-         "Витинья",
-         "Руис"
-        ],
-        [
-         "Дуэ",
-         "Дембеле",
-         "Кварацхелия"
-        ]
-       ],
-       "out": [
-        "Нуну Мендеш (бедро)",
-        "Лонгони (травма)"
-       ],
-       "doubt": [
-        "Аклиуш",
-        "Маюлу"
-       ]
-      },
-      "away": {
-       "formation": "4-2-3-1",
-       "coach": "Ханси Флик",
-       "xi": [
-        [
-         "Ж. Гарсия"
-        ],
-        [
-         "Канселу",
-         "Кубарси",
-         "Ж. Мартин",
-         "Эспарт"
-        ],
-        [
-         "Родри",
-         "Педри"
-        ],
-        [
-         "Ямаль",
-         "Ф. Лопес",
-         "Гордон"
-        ],
-        [
-         "Рафинья"
-        ]
-       ],
-       "out": [
-        "Кристенсен",
-        "Э. Гарсия",
-        "Кунде",
-        "Бардагжи (все — травмы)"
-       ],
-       "doubt": [
-        "Жезус"
-       ]
-      }
-     },
-     "status": "full",
-     "news": [
-      {
-       "t": "«ПСЖ» внёс Матвея Сафонова в заявку на матч с «Барселоной»",
-       "s": "Legalbet",
-       "u": "https://legalbet.ru/news/62020102-426169-safonov-voshel-v-zayavku-pszh-na-match-ligi-chempi/"
-      },
-      {
-       "t": "Афиша тура: непобедимая «Барселона» едет в гости к двукратному чемпиону ПСЖ",
-       "s": "МЕТА",
-       "u": "https://meta.ua/news/sports/glavnaya-afisha-oseni-v-lch-nepobedimaya-barselona-edet-v-gosti-k-dvukratnomu-chempionu-pszh-1392692/"
-      }
-     ]
-    },
-    {
-     "date": "2026-10-20",
-     "time": "22:00",
-     "home": "Наполи",
-     "away": "Буде-Глимт",
-     "venue": "Диего Армандо Марадона, Неаполь",
-     "odds": [
-      1.62,
-      4.1,
-      5
-     ],
-     "context": "«Наполи» проиграл оба матча (0:1 «Арсеналу», 1:3 «Вильярреалу») и в Серии А только девятый. «Буде-Глимт» выиграл четыре из пяти последних, включая 1:0 с «Боруссией». Очных встреч не было.",
-     "tips": [
-      {
-       "src": "LiveSport.ru",
        "reg": "ru",
-       "pick": "Х2",
-       "k": "2.25",
-       "lean": "2",
-       "url": "https://www.livesport.ru/tips/football/2026/10/20/napoli-bodoe-glimt/"
-      },
-      {
-       "src": "Metaratings",
-       "reg": "ru",
-       "pick": "ТМ 3.5 · П1",
-       "k": "1.61",
+       "pick": "П1 (Лилль)",
+       "k": "1.62",
        "lean": "1",
-       "url": "https://metaratings.ru/prognozy/futbol/napoli-budyo-glimt-prognoz-na-match-ligi-chempionov-20-oktyabrya-2026-goda/"
-      },
-      {
-       "src": "Бомбардир",
-       "reg": "ru",
-       "pick": "Ф1(−1)",
-       "k": "1.95",
-       "lean": "1",
-       "url": "https://bombardir.ru/prognozy/831728-liga-chempionov-shansy-napoli-i-bude-glimt-na-pobedu-v-matche-3-go-tura"
-      },
-      {
-       "src": "Sport.ua",
-       "reg": "ru",
-       "pick": "П1",
-       "k": "1.58",
-       "lean": "1",
-       "url": "https://sport.ua/news/917288-napoli-bude-glimt-prognoz-i-anons-na-match-ligi-chempionov"
-      },
-      {
-       "src": "Куш в спорте",
-       "reg": "ru",
-       "pick": "Ф2(+1)",
-       "k": "1.88",
-       "lean": "2",
-       "url": "https://kushvsporte.ru/bloga-bet/futbol/234270-ekspress-na-matchi-ligi-chempionov-20-oktyabrya"
-      },
-      {
-       "src": "ВсеПроСпорт",
-       "reg": "ru",
-       "pick": "Обе забьют",
-       "k": "1.60",
-       "lean": null,
-       "url": "https://www.vseprosport.ru/news/2026/10/19/napoli-bude-glimt-prognoz-kf-1-80-i-stavki-na-match-ligi-chempionov-20-oktjabrja-2026-goda"
-      },
-      {
-       "src": "Ставки-прогнозы",
-       "reg": "ru",
-       "pick": "П1",
-       "k": "1.64",
-       "lean": "1",
-       "url": "https://stavkiprognozy.ru/prognozy/football/liga-chempionov-uefa/sp_prognoz-napoli-budye-glimt-20-oktyabrya-2026"
-      },
-      {
-       "src": "UA-Футбол",
-       "reg": "ru",
-       "pick": "Ничья 2:2",
-       "k": null,
-       "lean": "X",
-       "url": "https://www.ua-football.com/predictions/champions-league/1792479868-napoli-bude-glimt-anons-i-prognoz-matcha-ligi-chempionov-na-20-10-2026.html"
-      },
-      {
-       "src": "Tips.gg",
-       "reg": "eu",
-       "pick": "П1 + ТМ 2.5",
-       "k": null,
-       "lean": "1",
-       "url": "https://tips.gg/ru/article/napoli-vs-bodo-glimt-20-10-2026/"
-      },
-      {
-       "src": "Covers",
-       "reg": "eu",
-       "pick": "Ничья",
-       "k": null,
-       "lean": "X",
-       "url": "https://www.covers.com/soccer/champions-league-moneyline-picks-matchday-3-2026"
+       "url": "https://ratingbet.com/ru/prognoz/lill-galatasarai-prognoz-na-match-21-oktyabrya-2026-goda/"
       }
      ],
      "ai": {
       "score": "1:1",
       "conf": 2,
-      "text": "На бумаге фаворит «Наполи», но на поле сейчас всё наоборот: хозяева нервничают и плохо реализуют моменты, а норвежцы уверены в себе и забивают почти в каждом матче. Коэффициент 1.62 на «Наполи» кажется заниженным. Я бы смотрел на то, что гости не проиграют.",
-      "bet": "«Буде-Глимт» не проиграет (Х2) ≈ 2.25"
+      "text": "Обе команды в сложном положении и будут раскрываться. У «Галатасарая» сильная атака, «Лилль» дома тоже создаёт. Жду голы с обеих сторон.",
+      "bet": "Обе забьют",
+      "pick": "ОЗ да"
      },
-     "lineups": {
-      "source": {
-       "name": "Ставка ТВ",
-       "url": "https://stavka.tv/matches/soccer/20-10-2026-napoli-bodo-glimt"
-      },
-      "home": {
-       "formation": "3-4-2-1",
-       "coach": "Массимилиано Аллегри",
-       "xi": [
-        [
-         "Милинкович-Савич"
-        ],
-        [
-         "Ррахмани",
-         "Марин",
-         "Бадьяшиль"
-        ],
-        [
-         "Ди Лоренцо",
-         "Де Брейне",
-         "Лоботка",
-         "Спинаццола"
-        ],
-        [
-         "Политано",
-         "Мактоминей"
-        ],
-        [
-         "Хойлунд"
-        ]
-       ],
-       "out": [
-        "Буонджорно",
-        "Фавазули",
-        "Вергара",
-        "Нерес (все — травмы)"
-       ],
-       "doubt": [
-        "А. Сантос"
-       ]
-      },
-      "away": {
-       "formation": "4-3-3",
-       "coach": "Кьетиль Кнутсен",
-       "xi": [
-        [
-         "Хайкин"
-        ],
-        [
-         "Сьоволд",
-         "Гундерсен",
-         "Бьортуфт",
-         "Бьоркан"
-        ],
-        [
-         "Салтнес",
-         "Берг",
-         "Брунстад-Фет"
-        ],
-        [
-         "Мвука",
-         "Хельмерсен",
-         "Хеуге"
-        ]
-       ],
-       "out": [
-        "Рииснес",
-        "Эвьен",
-        "Миккельсен (все — травмы)"
-       ],
-       "doubt": [
-        "Бломберг"
-       ]
-      }
-     },
-     "status": "full",
-     "news": [
-      {
-       "t": "Клуб опроверг слухи: Аллегри останется в «Наполи», несмотря на кризис",
-       "s": "Ставки-прогнозы",
-       "u": "https://stavkiprognozy.ru/novosti/football/massimiliano_allegri_ne_pokinet_napoli_nesmotrya_na_slukhi_ob_otstavke"
-      },
-      {
-       "t": "Аллегри предупредил «Наполи» об опасности «Будё-Глимта»",
-       "s": "Евро-Футбол",
-       "u": "https://www.euro-football.ru/article/45/1006388130_allegri_predupredil_napoli_ob_opasnosti_bude-glimta"
-      }
-     ]
+     "status": "full"
     },
     {
-     "date": "2026-10-20",
+     "date": "2026-10-21",
      "time": "22:00",
-     "home": "Штутгарт",
-     "away": "Атлетико Мадрид",
-     "venue": "МХП-Арена, Штутгарт",
+     "home": "Астон Вилла",
+     "away": "Викинг",
+     "venue": "Вилла Парк, Бирмингем",
      "odds": [
-      3.33,
-      3.95,
-      2.17
+      null,
+      null,
+      null
      ],
-     "context": "«Штутгарт» набрал 6 очков, но в выходные проиграл «Гамбургу» 0:1. «Атлетико» Симеоне выиграл шесть матчей подряд с общим счётом 14:2. Против: в выездных матчах ЛЧ у немецких клубов мадридцы проиграли пять раз подряд. Под вопросом Сёрлот.",
+     "context": "«Астон Вилла» дома — явный фаворит против норвежского «Викинга». Англичане в прошлом туре крупно обыгрывали соперников.",
+     "tips": [],
+     "ai": {
+      "score": "3:0",
+      "conf": 4,
+      "text": "Огромная разница в классе, «Вилла» дома обязана побеждать уверенно. Главный вопрос — счёт, а не исход.",
+      "bet": "Победа «Астон Виллы» (П1)",
+      "pick": "П1"
+     },
+     "status": "full"
+    },
+    {
+     "date": "2026-10-21",
+     "time": "22:00",
+     "home": "Брюгге",
+     "away": "Ланс",
+     "venue": "Ян Брейдел, Брюгге",
+     "odds": [
+      2.05,
+      4.25,
+      3.44
+     ],
+     "context": "«Брюгге» дома силён и сенсационно обыграл «Интер» в Милане 4:3, но оборона порой подводит. «Ланс» умеет цепляться за результат.",
      "tips": [
       {
-       "src": "LiveSport.ru",
+       "src": "RatingBet",
        "reg": "ru",
-       "pick": "П2",
-       "k": "2.14",
-       "lean": "2",
-       "url": "https://www.livesport.ru/tips/football/2026/10/20/stuttgart-atletico/"
-      },
-      {
-       "src": "Бомбардир",
-       "reg": "ru",
-       "pick": "П2",
-       "k": "2.08",
-       "lean": "2",
-       "url": "https://bombardir.ru/prognozy/831731-shtutgart-ndash-atletiko-kto-pobedit-v-matche-3-tura-ligi-chempionov-20262027"
-      },
+       "pick": "Победа «Брюгге»",
+       "k": "2.05",
+       "lean": "1",
+       "url": "https://ratingbet.com/ru/prognoz/bryugge-lans-prognoz-na-match-21-oktyabrya-2026-goda/"
+      }
+     ],
+     "ai": {
+      "score": "2:1",
+      "conf": 3,
+      "text": "«Брюгге» дома забивает много и мало пропускает, но «Ланс» своё создаст. Склоняюсь к победе хозяев с голами у обеих команд.",
+      "bet": "Победа «Брюгге»",
+      "pick": "П1"
+     },
+     "status": "full"
+    },
+    {
+     "date": "2026-10-21",
+     "time": "22:00",
+     "home": "Бавария",
+     "away": "Арсенал",
+     "venue": "Альянц Арена, Мюнхен",
+     "odds": [
+      null,
+      null,
+      null
+     ],
+     "context": "Центральный матч тура. «Бавария» не проигрывает 6 матчей и забила 25 голов, но на выезде уже цепляла ничьи. «Арсенал» выиграл 5 из 6 и мало пропускает; в прошлом сезоне обыграл «Баварию» 3:1.",
+     "tips": [
       {
        "src": "Metaratings",
        "reg": "ru",
-       "pick": "П2 · Ф2(0)",
-       "k": "2.15",
-       "lean": "2",
-       "url": "https://metaratings.ru/prognozy/futbol/shtutgart-atletiko-madrid-prognoz-na-match-ligi-chempionov-20-oktyabrya-2026-goda/"
+       "pick": "Х2 (Арсенал не проиграет)",
+       "k": "1.80",
+       "lean": "X",
+       "url": "https://metaratings.ru/prognozy/futbol/bavariya-arsenal-prognoz-na-match-ligi-chempionov-21-oktyabrya-2026-goda/"
+      },
+      {
+       "src": "LiveSport.ru",
+       "reg": "ru",
+       "pick": "Ставка дня за 1.79",
+       "k": "1.79",
+       "lean": null,
+       "url": "https://www.livesport.ru/tips/football/2026/10/21/bayern-arsenal/"
+      }
+     ],
+     "ai": {
+      "score": "2:2",
+      "conf": 2,
+      "text": "Явного фаворита нет: мощная домашняя «Бавария» против лучшей обороны «Арсенала». Такие матчи часто идут с голами с обеих сторон — на это и ставлю.",
+      "bet": "Обе забьют",
+      "pick": "ОЗ да"
+     },
+     "status": "full"
+    },
+    {
+     "date": "2026-10-21",
+     "time": "22:00",
+     "home": "Интер",
+     "away": "Шахтёр",
+     "venue": "Сан-Сиро, Милан",
+     "odds": [
+      null,
+      null,
+      null
+     ],
+     "context": "«Интер» дома обязан брать очки после двух поражений на старте, а «Шахтёр» приехал с большими кадровыми потерями (нет Л. Мартинеса, Павара; у гостей — ряд травм и игроков вне заявки).",
+     "tips": [
+      {
+       "src": "Ставка ТВ",
+       "reg": "ru",
+       "pick": "Ф1(−2.5)",
+       "k": "2.27",
+       "lean": "1",
+       "url": "https://stavka.tv/matches/soccer/21-10-2026-inter-milano-shakhtar-donetsk"
+      },
+      {
+       "src": "Ставка ТВ",
+       "reg": "ru",
+       "pick": "ТБ 3.5",
+       "k": "1.69",
+       "lean": null,
+       "url": "https://stavka.tv/matches/soccer/21-10-2026-inter-milano-shakhtar-donetsk"
+      },
+      {
+       "src": "Ставка ТВ",
+       "reg": "ru",
+       "pick": "Обе забьют",
+       "k": "1.66",
+       "lean": null,
+       "url": "https://stavka.tv/matches/soccer/21-10-2026-inter-milano-shakhtar-donetsk"
       },
       {
        "src": "ВсеПроСпорт",
        "reg": "ru",
-       "pick": "П2",
-       "k": "2.12",
-       "lean": "2",
-       "url": "https://www.vseprosport.ru/news/2026/10/19/shtutgart-atletiko-prognoz-kf-2-12-i-stavki-na-match-ligi-chempionov-20-oktjabrja-2026-goda"
-      },
-      {
-       "src": "Sport.ua",
-       "reg": "ru",
-       "pick": "П2",
-       "k": "2.00",
-       "lean": "2",
-       "url": "https://sport.ua/news/917286-shtutgart-atletiko-prognoz-i-anons-na-match-ligi-chempionov"
-      },
-      {
-       "src": "Online-bookmakers",
-       "reg": "ru",
-       "pick": "П2",
-       "k": "2.12",
-       "lean": "2",
-       "url": "https://online-bookmakers.com/ru/prognozy/shtutgart-atletiko-madrid-2026-10-20/"
-      },
-      {
-       "src": "Ставки-прогнозы",
-       "reg": "ru",
-       "pick": "П1",
-       "k": "3.17",
+       "pick": "Победа «Интера»",
+       "k": "1.96",
        "lean": "1",
-       "url": "https://stavkiprognozy.ru/prognozy/football/liga-chempionov-uefa/sp_prognoz-shtutgart-atletiko-madrid-20-oktyabrya-2026"
-      },
-      {
-       "src": "SportsbookReview",
-       "reg": "eu",
-       "pick": "П2",
-       "k": "2.15",
-       "lean": "2",
-       "url": "https://www.sportsbookreview.com/picks/soccer/champions-league-predictions-picks-best-bets-matchweek-3-2026/"
-      },
-      {
-       "src": "RotoWire",
-       "reg": "eu",
-       "pick": "П1",
-       "k": null,
-       "lean": "1",
-       "url": "https://www.rotowire.com/soccer/article/champions-league-predictions-today-tuesday-oct-20-matchday-3-best-bets-picks-142323"
-      },
-      {
-       "src": "Covers",
-       "reg": "eu",
-       "pick": "Ничья",
-       "k": null,
-       "lean": "X",
-       "url": "https://www.covers.com/soccer/champions-league-moneyline-picks-matchday-3-2026"
+       "url": "https://www.vseprosport.ru/news/2026/10/20/inter-shahter-prognoz-kf-1-96-i-stavki-na-match-ligi-chempionov-21-oktjabrja-2026-goda"
       }
      ],
      "ai": {
-      "score": "1:2",
-      "conf": 3,
-      "text": "Большинство за «Атлетико», и это логично: серия из шести побед и почти непробиваемая оборона против «Штутгарта», который только что проиграл дома в Бундеслиге. Но выездная статистика мадридцев в Германии тревожит, поэтому безопаснее вариант с подстраховкой на ничью.",
-      "bet": "Фора «Атлетико» (0) ≈ 1.60"
+      "score": "3:1",
+      "conf": 4,
+      "text": "«Интер» мотивирован и дома сильнее, «Шахтёр» ослаблен травмами. Жду уверенную победу хозяев, хотя гости способны разок ответить.",
+      "bet": "Победа «Интера» (П1)",
+      "pick": "П1"
      },
+     "status": "full",
      "lineups": {
       "source": {
        "name": "Ставка ТВ",
-       "url": "https://stavka.tv/matches/soccer/20-10-2026-stuttgart-atletico-madrid"
+       "url": "https://stavka.tv/matches/soccer/21-10-2026-inter-milano-shakhtar-donetsk"
       },
       "home": {
-       "formation": "4-2-3-1",
-       "coach": "Себастьян Хёнесс",
+       "formation": "3-5-2",
+       "coach": "",
        "xi": [
         [
-         "Бредлов"
+         "Х. Мартинес"
         ],
         [
-         "Вагноман",
-         "Ельч",
-         "Шабо",
-         "Хендрикс"
+         "Биссек",
+         "Аканджи",
+         "Бастони"
         ],
         [
-         "Каразор",
-         "Штиллер"
+         "Диуф",
+         "Барелла",
+         "Чалханоглу",
+         "Зелиньски",
+         "Димарко"
         ],
         [
-         "Левелинг",
-         "Ундав",
-         "Эль-Ханнус"
-        ],
-        [
-         "Демирович"
+         "Тюрам",
+         "Эспозито"
         ]
        ],
        "out": [
-        "Нартей",
-        "Аль-Дахиль",
-        "Томас (травмы)",
-        "Загаду",
-        "Стергиу",
-        "Диль",
-        "Дрляча (вне заявки)"
+        "Стоунз",
+        "Джонс",
+        "Л. Мартинес",
+        "Павар (травмы)"
+       ],
+       "doubt": []
+      },
+      "away": {
+       "formation": "4-1-4-1",
+       "coach": "",
+       "xi": [
+        [
+         "Ризнык"
+        ],
+        [
+         "Тобиас",
+         "Бондарь",
+         "Матвиенко",
+         "П. Энрике"
+        ],
+        [
+         "Очеретько"
+        ],
+        [
+         "А. Сантана",
+         "Педриньо",
+         "М. Гомес",
+         "Ньюэртон"
+        ],
+        [
+         "Элиас"
+        ]
+       ],
+       "out": [
+        "Азаров",
+        "Грам",
+        "М. Сантос (травмы)",
+        "Твардовский",
+        "Маттурро (вне заявки)"
+       ],
+       "doubt": []
+      }
+     }
+    },
+    {
+     "date": "2026-10-21",
+     "time": "22:00",
+     "home": "Реал Мадрид",
+     "away": "Лейпциг",
+     "venue": "Сантьяго Бернабеу, Мадрид",
+     "odds": [
+      null,
+      null,
+      null
+     ],
+     "context": "«Реал» с Мбаппе и Винисиусом дома — большой фаворит против нестабильного «Лейпцига», который крупно проигрывал «Комо» 1:4. У мадридцев нет Родриго, Менди и Асенсио.",
+     "tips": [
+      {
+       "src": "Ставка ТВ",
+       "reg": "ru",
+       "pick": "Ф1(−2.5)",
+       "k": "2.20",
+       "lean": "1",
+       "url": "https://stavka.tv/matches/soccer/21-10-2026-real-madrid-leipzig"
+      },
+      {
+       "src": "Ставка ТВ",
+       "reg": "ru",
+       "pick": "ТБ 4.5",
+       "k": "2.08",
+       "lean": null,
+       "url": "https://stavka.tv/matches/soccer/21-10-2026-real-madrid-leipzig"
+      },
+      {
+       "src": "Ставка ТВ",
+       "reg": "ru",
+       "pick": "Обе забьют",
+       "k": "1.48",
+       "lean": null,
+       "url": "https://stavka.tv/matches/soccer/21-10-2026-real-madrid-leipzig"
+      },
+      {
+       "src": "Ставка ТВ",
+       "reg": "ru",
+       "pick": "Ф2(+2.5) Лейпциг",
+       "k": "1.59",
+       "lean": "2",
+       "url": "https://stavka.tv/matches/soccer/21-10-2026-real-madrid-leipzig"
+      }
+     ],
+     "ai": {
+      "score": "3:1",
+      "conf": 4,
+      "text": "Дома «Реал» с таким составом атаки должен решать вопрос, но «Лейпциг» наверняка огрызнётся — матч может быть результативным. Основа — победа хозяев.",
+      "bet": "Победа «Реала» (П1)",
+      "pick": "П1"
+     },
+     "status": "full",
+     "lineups": {
+      "source": {
+       "name": "Ставка ТВ",
+       "url": "https://stavka.tv/matches/soccer/21-10-2026-real-madrid-leipzig"
+      },
+      "home": {
+       "formation": "4-2-3-1",
+       "coach": "Жозе Моуринью",
+       "xi": [
+        [
+         "Куртуа"
+        ],
+        [
+         "Думфрис",
+         "Конате",
+         "Рюдигер",
+         "Кукурелья"
+        ],
+        [
+         "Тчуамени",
+         "Вальверде"
+        ],
+        [
+         "Диоманде",
+         "Беллингем",
+         "Винисиус"
+        ],
+        [
+         "Мбаппе"
+        ]
+       ],
+       "out": [
+        "Родриго",
+        "Менди",
+        "Асенсио (травмы)"
        ],
        "doubt": [
-        "Миттельштадт"
+        "Милитао"
        ]
       },
       "away": {
        "formation": "4-2-3-1",
-       "coach": "Диего Симеоне",
+       "coach": "Мартин Демикелис",
        "xi": [
         [
-         "Облак"
+         "Вандевордт"
         ],
         [
-         "Пубиль",
-         "Ле Норман",
-         "Ганцко",
-         "Гримальдо"
+         "Баку",
+         "Орбан",
+         "Лукеба",
+         "Раум"
         ],
         [
-         "Льоренте",
-         "Барриос"
+         "Эль-Айнауи",
+         "Бандзузи"
         ],
         [
-         "Дж. Симеоне",
-         "Баэна",
-         "Лукман"
+         "Груда",
+         "Нкунку",
+         "Нуса"
         ],
         [
-         "Альварес"
+         "Ромуло"
         ]
        ],
        "out": [
-        "Коке (травма)",
-        "Ромеро (травма)"
+        "Уэдраого",
+        "Гиу (травмы)"
        ],
        "doubt": [
-        "Кардосо",
-        "Сёрлот"
+        "Баумгартнер"
        ]
       }
+     }
+    },
+    {
+     "date": "2026-10-21",
+     "time": "22:00",
+     "home": "Бетис",
+     "away": "Фейеноорд",
+     "venue": "Бенито Вильямарин, Севилья",
+     "odds": [
+      null,
+      null,
+      null
+     ],
+     "context": "«Бетис» дома неуступчив, но «Фейеноорд» в атаке опасен — обыграл «Комо» 3:2. Очная встреча обещает быть открытой.",
+     "tips": [],
+     "ai": {
+      "score": "2:1",
+      "conf": 3,
+      "text": "«Бетис» силён на своём поле, а у «Фейеноорда» хорошая атака. Осторожный вариант — хозяева не проиграют.",
+      "bet": "«Бетис» не проиграет (1Х)",
+      "pick": "1Х"
      },
-     "status": "full",
-     "news": [
+     "status": "full"
+    },
+    {
+     "date": "2026-10-21",
+     "time": "22:00",
+     "home": "Спортинг",
+     "away": "ЛАСК",
+     "venue": "Жозе Алваладе, Лиссабон",
+     "odds": [
+      1.2,
+      8.75,
+      14.6
+     ],
+     "context": "«Спортинг» уверенно начал турнир (3:1 «Галатасарай», 2:0 «Ланс»), а ЛАСК проиграл три из четырёх матчей и крупно горел «Ливерпулю» 3:6.",
+     "tips": [
       {
-       "t": "Симеоне: нас ждёт тяжёлый матч против физически крепкой команды",
-       "s": "LiveSport.ru",
-       "u": "https://www.livesport.ru/football/2026/10/20/simeone/"
+       "src": "RatingBet",
+       "reg": "ru",
+       "pick": "Ф1(−1.5) Спортинг",
+       "k": "1.64",
+       "lean": "1",
+       "url": "https://ratingbet.com/ru/prognoz/sporting-lask-prognoz-na-match-21-oktyabrya-2026-goda/"
       }
-     ]
+     ],
+     "ai": {
+      "score": "3:0",
+      "conf": 5,
+      "text": "Коэффициент на хозяев ниже 1.20 — разница в классе огромна. Вопрос только в том, с каким счётом победит «Спортинг».",
+      "bet": "Победа «Спортинга» (П1)",
+      "pick": "П1"
+     },
+     "status": "full"
     }
    ]
   },
