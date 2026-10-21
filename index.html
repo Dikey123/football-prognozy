@@ -454,7 +454,7 @@ function saveCfg(c){try{localStorage.setItem("lch-exp",JSON.stringify({cats:[...
 function dayStr(){const d=new Date();return d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate()}
 function loadUse(){let u;try{u=JSON.parse(localStorage.getItem("lch-use")||"null")}catch(e){}if(!u)u={d:dayStr(),n:0,paid:0};if(u.d!==dayStr())u={d:dayStr(),n:0,paid:u.paid||0};return u}
 function saveUse(){try{localStorage.setItem("lch-use",JSON.stringify(expUse))}catch(e){}}
-function unlocked(){return expUse&&expUse.paid>Date.now()}
+function unlocked(){return true}/*paywall off*/
 const FREE_LIMIT=3;
 function buildExpress(cfg,pool,rand){
   const allowed=pool.filter(c=>cfg.cats.has(c.mk));
@@ -499,7 +499,7 @@ function renderExpress(){
      +'<div class="exp-num"><label>Количество событий</label><div class="row"><span>от</span><input id="exp-nmin" type="number" min="2" max="8" value="'+expCfg.nmin+'"><span>до</span><input id="exp-nmax" type="number" min="2" max="8" value="'+expCfg.nmax+'"></div></div>'
    +'</div>'
    +'<div class="exp-go"><button class="primary" id="build">Собрать экспресс</button><button class="chip" id="reroll">🎲 Другой вариант</button></div>'
-   +'<div class="exp-status">'+(unlocked()?'✅ Полный доступ активен (куплен на сегодня)':('Бесплатно осталось сегодня: '+Math.max(0,FREE_LIMIT-expUse.n)+' из '+FREE_LIMIT))+'</div>'
+   +'<div class="exp-status">'+'Конструктор экспресса — бесплатно и без ограничений'+'</div>'
    +'</div>';
   if(locked){
     h+='<div class="paywall"><div class="pw-ic">🔒</div><h3>Лимит бесплатных экспрессов исчерпан</h3><p>Вы собрали '+FREE_LIMIT+' бесплатных экспресса сегодня. Полный доступ к конструктору — <b>100 ₽ на 1 день</b>.</p><div class="pw-pay"><span>Оплата по СБП на номер:</span><div class="pw-num"><b>8 965 456 24 91</b><button id="pwcopy">Копировать</button></div></div><button class="primary" id="pwpaid">Я оплатил — открыть на день</button><p class="pw-note">После оплаты нажмите кнопку — доступ к конструктору откроется на 24 часа.</p></div>';
