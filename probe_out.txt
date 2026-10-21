@@ -1,222 +1,82 @@
-ALL-LEAGUES status 200
-total leagues: 127
-  id=      42  ccode= INT  Champions League
-  id=      73  ccode= INT  Europa League
-  id=     525  ccode= INT  AFC Champions League Elite
-  id=   10622  ccode= INT  AFC Champions League Elite Qualification
-  id=    9469  ccode= INT  AFC Champions League Two
-  id=     526  ccode= INT  CAF Champions League
-  id=   10619  ccode= INT  CAF Champions League Qualification
-  id=   11011  ccode= INT  CAF Women's Champions League
-  id=   10611  ccode= INT  Champions League Qualification
-  id=   10613  ccode= INT  Europa League Qualification
-  id=    9375  ccode= INT  Women's Champions League
-  id=   10612  ccode= INT  Women's Champions League Qualification
+=== TEAM NAMES (англ) по лигам (на 9 дней вперёд) ===
 
-MATCHES-BY-DATE 20261021 status 200 len 85171
-  matches: 137
-    leagueId=1000001181: Harju Jalgpallikool - Flora Tallinn
-    leagueId=1000001415: Londrina - Cuiabá
-    leagueId=1000001457: Como U19 - Manchester United U19
-    leagueId=1000001499: INAC Kobe Leonessa - JEF Ladies
-    leagueId=1000001501: Trekvogels - De Graafschap
-    leagueId=1000001576: Al Jeel - Al-Jandal
-    leagueId=1000001589: Tigres FC - Real Cundinamarca
-    leagueId=1000001595: Celtic - Heart of Midlothian
-    leagueId=1000001644: Chivas - Necaxa
-    leagueId=1000001660: Vasco da Gama - Boca Juniors
-    leagueId=1000001671: Dome FC - Sisaket United
-    leagueId=1000001696: Deportivo Pereira - Chicó FC
-    leagueId=1000001752: The Panthers - USM Alger
-    leagueId=177: Zlaté Moravce - Komárno
-    leagueId=203: Sogndal - Raufoss
-    leagueId=242: Vanløse IF - Nykøbing FC
-    leagueId=330: AEK Larnaca - Akritas Chlorakas
-    leagueId=333: Åsane (W) - Arna-Bjørnar (W)
-    leagueId=52: PK-35 - FF Jaro
-    leagueId=87: Levante - Athletic Club
-    leagueId=8978: Warrenpoint Town - Crusaders
-    leagueId=8983: Bali United FC - Garudayaksa FC
-    leagueId=9136: Fukushima United - Giravanz Kitakyushu
-    leagueId=919793: Aalesund 2 - Nardo
-    leagueId=921414: Kolbotn (W) - Åsane (W)
-    leagueId=937875: Avispa Fukuoka - Gamba Osaka
-    leagueId=938215: Montedio Yamagata - Hokkaido Consadole Sapporo
-    leagueId=938220: Gillingham - Port Vale
-    leagueId=938628: Deportivo Malacateco - Comunicaciones FC
-    leagueId=938792: Terrassa - Girona B
-    leagueId=941109: Whyteleafe - Burgess Hill Town
-    leagueId=941116: Avro - Ashton United
-    leagueId=941118: Frome Town - Gloucester City
-    leagueId=942125: Chivas (W) - Necaxa (W)
-    leagueId=943009: Ghazl Al Mahalla - Al Ittihad Alexandria
-    leagueId=943230: FC Porto - PSV Eindhoven
-    leagueId=943324: Burnley FC Women (W) - Aston Villa (W)
-    leagueId=943487: 15 de Agosto - Simba SC
-    leagueId=944404: Yangon United - Taguig
-    leagueId=944406: Kasuka - Shan United
-    leagueId=946196: Colo Colo - Puerto Montt
-    leagueId=949004: CD Marathón - Alianza FC
-  SAMPLE MATCH: {"id": 6106287, "leagueId": 943230, "time": "20.10.2026 21:00", "home": {"id": 9773, "score": 0, "name": "FC Porto", "longName": "FC Porto"}, "away": {"id": 8640, "score": 1, "name": "PSV Eindhoven", "longName": "PSV Eindhoven"}, "eliminatedTeamId": null, "statusId": 6, "tournamentStage": "3", "status": {"utcTime": "2026-10-20T19:00:00.000Z", "halfs": {"firstHalfStarted": "20.10.2026 21:01:02", "secondHalfStarted": "20.10.2026 22:02:18"}, "periodLength": 45, "finished": true, "started": true, "cancelled": false, "awarded": false, "scoreStr": "0 - 1", "reason": {"short": "FT", "shortKey": "fulltime_short", "long": "Full-Time", "longKey": "finished"}}, "timeTS": 1792522800000}
+## ucl (32)
+AEK Athens, Arsenal, Aston Villa, Atlético Madrid, Barcelona, Bayern München, Bodø/Glimt, Club Brugge, Como, FC Porto, Feyenoord, Galatasaray, Inter, LASK, Lens, Lille, Liverpool, Manchester City, Manchester United, Napoli, PSV Eindhoven, Paris Saint-Germain, RB Leipzig, Real Betis, Real Madrid, Roma, Shakhtar Donetsk, Slovan Bratislava, Sporting CP, VfB Stuttgart, Viking, Villarreal
 
-MATCHES-BY-DATE 20261025 status 200 len 251759
-  matches: 530
-    leagueId=1000001175: 1st ranked Group C - 2nd ranked Group D
-    leagueId=1000001177: Ferroviária - Maringá
-    leagueId=1000001180: Ogre United - Auda
-    leagueId=1000001181: Nõmme JK Kalju - Flora Tallinn
-    leagueId=1000001196: Crown Legacy FC - Columbus Crew 2
-    leagueId=1000001212: Nacional - Sportivo Trinidense
-    leagueId=1000001214: Kruger United - AmaZulu FC
-    leagueId=1000001235: Rangers - Cobreloa
-    leagueId=1000001249: GV San José - Blooming
-    leagueId=1000001250: LDU de Quito - CSD Macará
-    leagueId=1000001251: Leones del Norte - Libertad
-    leagueId=1000001253: Orense - Delfín
-    leagueId=1000001407: Mirassol - São Paulo
-    leagueId=1000001415: Avaí - Botafogo SP
-    leagueId=1000001465: Watford - Durham Women FC
-    leagueId=1000001471: Prachuap FC - Bangkok United
-    leagueId=1000001497: Wellington Phoenix - Melbourne Victory
-    leagueId=1000001499: Omiya Ardija Ventus - Cerezo Osaka Sakai
-    leagueId=1000001509: Eupen - Beerschot
-    leagueId=1000001513: Middlesbrough U21 - Tottenham Hotspur U21
-    leagueId=1000001573: Slavia Prague B - SK Prostějov
-    leagueId=1000001589: Boca Juniors de Cali - Internacional FC de Palmira
-    leagueId=1000001595: Aberdeen - Spartans FC
-    leagueId=1000001612: OFK Beograd - FK Crvena Zvezda
-    leagueId=1000001616: Kanchanaburi Power - Chainat FC
-    leagueId=1000001618: Hapoel Petah Tikva - Beitar Jerusalem
-    leagueId=1000001644: León - Toluca
-    leagueId=1000001661: O'Higgins - Cobresal
-    leagueId=1000001678: Wellington Phoenix - Central Coast Mariners
-    leagueId=1000001681: Cusco FC - Sporting Cristal
-    leagueId=1000001691: Monagas SC - Academia Puerto Cabello
-    leagueId=1000001696: América de Cali - Cúcuta
-    leagueId=1000001712: Cosmos - Chattanooga Red Wolves SC
-    leagueId=1000001715: Paykan - Malavan
-    leagueId=1000001729: Talleres - Defensa y Justicia
-    leagueId=1000001737: Seongnam FC - Suwon Samsung Bluewings
-    leagueId=1000001739: Yverdon - Kriens
-    leagueId=1000001750: Pendikspor - Kayserispor
-    leagueId=1000001752: CR Bélouizdad - AS Douanes
-    leagueId=1000001798: GAIS - IFK Göteborg
-    leagueId=1000001810: Churchill Brothers - Punjab FC
-    leagueId=10289: SC Heerenveen (W) - AZ Alkmaar (W)
-    leagueId=10308: Gamla Upsala (W) - BK Häcken B (W)
-    leagueId=10713: KäPa - RoPS
-    leagueId=118: Syunik - BKMA
-    leagueId=146: Eintracht Braunschweig - Hannover 96
-    leagueId=168: Norrby - IFK Norrköping
-    leagueId=185: AVS Futebol SAD - Tondela
-    leagueId=197: Odra Opole - Pogoń Siedlce
-    leagueId=203: Strømmen - Strømsgodset
-    leagueId=208: TSV Havelse - Saarbrücken
-    leagueId=212: Vasas Budapest - Paksi SE
-    leagueId=228: Banga Gargzdai - FA Šiauliai
-    leagueId=229: FC Differdange 03 - F91 Dudelange
-    leagueId=249: Arsimi - FK Bregalnica Štip
-    leagueId=250: 07 Vestur - B68 Toftir
-    leagueId=252: Osijek - Rudeš
-    leagueId=260: FC Dinamo City - Egnatia
-    leagueId=262: Imisli FK - Shamakhi FK
-    leagueId=461: FC Jurong - Tampines Rovers FC
-    leagueId=47: Crystal Palace - Newcastle United
-    leagueId=52: FF Jaro - PK-35
-    leagueId=522: Ashanti Gold - Asante Kotoko SC
-    leagueId=53: Monaco - Lille
-    leagueId=54: Hoffenheim - Bayer Leverkusen
-    leagueId=540: AGMK - Kokand 1912
-    leagueId=55: Inter - Fiorentina
-    leagueId=59: Viking - Tromsø
-    leagueId=61: Gil Vicente - FC Porto
-    leagueId=63: FC Rostov - Lokomotiv Moscow
-    leagueId=71: Konyaspor - Gençlerbirliği
-    leagueId=87: Atlético Madrid - Deportivo A Coruña
-    leagueId=8935: Avia Świdnik - Znicz Pruszków
-    leagueId=8972: Loudoun United FC - Brooklyn
-    leagueId=8983: Arema - Dewa United FC
-    leagueId=9088: Da Nẵng - Ha Nội FC
-    leagueId=9089: AIK (W) - FC Rosengård (W)
-    leagueId=9117: Aqvital FC Csákvár - Mezőkövesd SE
-    leagueId=913550: Columbus Crew - Toronto FC
-    leagueId=9136: Gainare Tottori - Kochi United SC
-    leagueId=916553: Ferro Carril Oeste - CA Chaco For Ever
-    leagueId=916561: Argentino de Merlo - Deportivo Merlo
-    leagueId=918043: Karlbergs BK - Umeå
-    leagueId=918053: Trelleborgs FF - Åtvidaberg
-    leagueId=919789: Træff - Arendal Fotball
-    leagueId=919791: Rana FK - Tromsdalen
-    leagueId=919796: Fauske/Sprint - Bossekop
-    leagueId=920228: Denver Summit FC (W) - Racing Louisville (W)
-    leagueId=920267: Wuxi Wugo - Shaanxi Union
-    leagueId=9227: Crystal Palace (W) - Chelsea (W)
-    leagueId=922739: FC Altai Oskemen - FC Yelimay
-    leagueId=922761: Plaza Colonia - Tacuarembo FC
-    leagueId=923169: Arsenal Dzerzhinsk - Dnyapro Mogilev
-    leagueId=935487: FC Midtjylland - Lyngby
-    leagueId=936918: Komárno - Trenčín
-    leagueId=936986: Zimbru - FC Bălți
-    leagueId=937276: ADO Den Haag - SC Heerenveen
-    leagueId=937650: Hibernian - Celtic
-    leagueId=937875: Nagoya Grampus - Yokohama F.Marinos
-    leagueId=937879: Śląsk Wrocław - Wieczysta Kraków
-    leagueId=937880: Thun - Lugano
-    leagueId=937988: Genk - Standard Liège
-    leagueId=938005: OL Lyonnes (W) - Marseille (W)
-    leagueId=938182: Hradec Králové - Jablonec
-    leagueId=938190: Puntarenas FC - Inter San Carlos
-    leagueId=938215: Albirex Niigata - Vegalta Sendai
-    leagueId=938366: Sturm Graz - Ried
-    leagueId=938422: FC Chelyabinsk - Ural
-    leagueId=938428: FCV Farul Constanța - Oțelul Galați
-    leagueId=938628: Club Xelajú - CSD Municipal
-    leagueId=938638: Nykøbing FC - Thisted
-    leagueId=938653: Almería - Real Oviedo
-    leagueId=938777: Deportivo de A Coruña (W) - Deportivo Alavés (W)
-    leagueId=938778: Cultural Leonesa - Pontevedra
-    leagueId=938779: Marino Luanco - Real Oviedo B
-    leagueId=938783: Alcorcón - UD Ibiza
-    leagueId=938792: Girona B - Náxara
-    leagueId=938793: Murcia B - Lorca Deportiva
-    leagueId=938794: Sevilla Atletico - Tenerife B
-    leagueId=938796: Getafe B - CS Puertollano
-    leagueId=938854: Brooklyn FC (W) - Tampa Bay Sun FC (W)
-    leagueId=939530: Tapatío - Atlético Morelia
-    leagueId=939688: OB Q (W) - ASA Aarhus (W)
-    leagueId=940431: Chornomorets Odesa - Karpaty
-    leagueId=940449: BSG Chemie Leipzig - Hertha Berlin II
-    leagueId=940450: Oberhausen - Wattenscheid
-    leagueId=940451: VfB Eichstätt - 1860 München
-    leagueId=940452: 1. FC Phönix Lübeck - SV Atlas Delmenhorst
-    leagueId=940469: Ulm - Homburg
-    leagueId=940873: Borac Banja Luka - Sloga Doboj
-    leagueId=941071: Olympiacos - Kalamata
-    leagueId=941168: CD Plaza Amador - Alianza FC
-    leagueId=941466: Fuerte San Francisco - Atletico Balboa
-    leagueId=941508: CD Choloma - Genesis FC
-    leagueId=941726: Palermo - Carrarese
-    leagueId=942063: Karmiotissa - Apollon Limassol
-    leagueId=942122: Chindia Târgoviște - CSM Olimpia Satu Mare
-    leagueId=942125: Atlético de San Luis (W) - CF América (W)
-    leagueId=942146: Lazio (W) - Como Women (W)
-    leagueId=942844: Renate - AlbinoLeffe
-    leagueId=942846: Forlì - Pianese
-    leagueId=942850: AD Marco 09 - AD Fafe
-    leagueId=942851: CF Os Belenenses - Sporting Covilhã
-    leagueId=942852: Monopoli - Audace Cerignola
-    leagueId=942853: Juventud de las Piedras - Club Atletico Peñarol
-    leagueId=943368: Abia Warriors - Niger Tornadoes
-    leagueId=943389: Ghaz Al-Shamal SC - Naft Maysan
-    leagueId=943487: RS Berkane - Star Sport Academy
-    leagueId=945430: Anagennisi Karditsas - PAOK Thessaloniki B
-    leagueId=945694: HJK - KuPS
-    leagueId=948410: Auckland FC B - Birkenhead United
-    leagueId=949116: Sydney Olympic - Bayswater City
-    leagueId=949117: Wollongong Wolves - South Hobart
-    leagueId=949728: San Martín de Formosa - Club Cipolletti
-    leagueId=949731: Argentino Monte Maíz - Kimberley
-    leagueId=9676: TSG 1899 Hoffenheim (W) - Mainz 05 (W)
-  SAMPLE MATCH: {"id": 5795489, "leagueId": 47, "time": "25.10.2026 15:00", "home": {"id": 9826, "score": 0, "name": "Crystal Palace", "longName": "Crystal Palace"}, "away": {"id": 10261, "score": 0, "name": "Newcastle United", "shortName": "Newcastle", "longName": "Newcastle United"}, "eliminatedTeamId": null, "statusId": 1, "tournamentStage": "8", "status": {"utcTime": "2026-10-25T14:00:00.000Z", "halfs": {"firstHalfStarted": "25.10.2026 15:00:00"}, "periodLength": 45, "started": false, "cancelled": false, "finished": false}, "timeTS": 1792936800000}
+## epl (20)
+AFC Bournemouth, Arsenal, Aston Villa, Brentford, Brighton & Hove Albion, Chelsea, Coventry City, Crystal Palace, Everton, Fulham, Hull City, Ipswich Town, Leeds United, Liverpool, Manchester City, Manchester United, Newcastle United, Nottingham Forest, Sunderland, Tottenham Hotspur
 
-==== DONE2
+## laliga (20)
+Athletic Club, Atlético Madrid, Barcelona, Celta Vigo, Deportivo A Coruña, Deportivo Alavés, Elche, Espanyol, Getafe, Levante, Málaga, Osasuna, Racing Santander, Rayo Vallecano, Real Betis, Real Madrid, Real Sociedad, Sevilla, Valencia, Villarreal
+
+## seriea (20)
+Atalanta, Bologna, Cagliari, Como, Fiorentina, Frosinone, Genoa, Inter, Juventus, Lazio, Lecce, Milan, Monza, Napoli, Parma, Roma, Sassuolo, Torino, Udinese, Venezia
+
+## bundesliga (18)
+1. FC Köln, Augsburg, Bayer Leverkusen, Bayern München, Borussia Dortmund, Borussia Mönchengladbach, Eintracht Frankfurt, Elversberg, Freiburg, Hamburger SV, Hoffenheim, Mainz 05, Paderborn, RB Leipzig, Schalke 04, Union Berlin, VfB Stuttgart, Werder Bremen
+
+## ligue1 (18)
+Angers, Auxerre, Brest, Le Havre, Le Mans, Lens, Lille, Lorient, Lyon, Marseille, Monaco, Nice, Paris FC, Paris Saint-Germain, Rennes, Strasbourg, Toulouse, Troyes
+
+## rpl (16)
+Akron Togliatti, Baltika, CSKA Moscow, Dinamo Moscow, Dynamo Makhachkala, FC Krasnodar, FC Orenburg, FC Rostov, FK Akhmat, Fakel, Krylya Sovetov Samara, Lokomotiv Moscow, Rodina, Rubin Kazan, Spartak Moscow, Zenit St. Petersburg
+
+=== Поиск id Лиги Европы (четверги) ===
+
+20261022 крупные id:
+   943229: ['Ararat Armenia-AZ Alkmaar', 'Dinamo Zagreb-NEC Nijmegen', 'Ferencváros-Torreense']
+   943231: ['Kairat Almaty-Panathinaikos', 'Nordsjælland-CSKA Sofia', 'FK Crvena Zvezda-FC København']
+   913550: ['FC Cincinnati-DC United']
+   949117: ['Lions FC-Preston Lions']
+   944910: ['C.S. Cartaginés-CD Olimpia']
+   949004: ['Firpo-Deportivo Saprissa']
+   946196: ['Universidad de Chile-Antofagasta']
+   938416: ['Santa Fe-Once Caldas', 'Barranquilla FC-América de Cali']
+   938219: ['Reading-Leyton Orient']
+   942122: ['FC Bihor Oradea-CSM Reșița']
+   938628: ['Deportivo Mixco-CSD Municipal']
+   941466: ['CD FAS-Isidro Metapan']
+
+20261023 крупные id:
+   943229: ['AFC Bournemouth-Milan', 'Beşiktaş-Crystal Palace', 'Celtic-Celta Vigo']
+   943231: ['AGF-Egnatia', 'Ajax-Atalanta', 'Borac Banja Luka-KuPS']
+   936592: ['Hobro-Vendsyssel FF', 'Hvidovre-HB Køge']
+   938638: ['FA 2000-HIK', 'FC Roskilde-Fremad Amager']
+   945609: ['Anagennisi Deryneia-Ethnikos Achnas']
+   938696: ['Austria Wien II-Sturm Graz II', 'FC Hertha Wels-Voitsberg', 'First Vienna FC-Floridsdorfer AC']
+   938639: ['Frem-FC Helsingør', 'Sundby BK-Brønshøj']
+   944397: ['Al-Arabi-Al-Nejmeh', 'FC Istiklol-Homs Al Fidaa']
+   944396: ['Ahal-Al-Ansar', 'Al-Ittihad-Paro FC']
+   944401: ['Fortis-Regar-TadAZ', 'FC Goa-Al-Qadsia']
+   949112: ['South Melbourne-Sydney United 58']
+   949115: ['Adelaide City-APIA Leichhardt FC']
+
+20261029 крупные id:
+   938221: ['Manchester City-Brighton & Hove Albion', 'AFC Bournemouth-Aston Villa', 'Fulham-Crystal Palace']
+   913550: ['Charlotte FC-CF Montréal', 'Inter Miami CF-FC Cincinnati', 'New England Revolution-Red Bull New York']
+   949112: ['Canberra Croatia-South Melbourne']
+   944910: ['CD Olimpia-C.S. Cartaginés']
+   949004: ['Deportivo Saprissa-Firpo']
+   944879: ['NFC Volos-Atromitos']
+   944691: ['CFR Cluj-Universitatea Cluj', 'Concordia Chiajna-Sepsi OSK']
+   944693: ['FC Voluntari-Universitatea Craiova']
+   936417: ['Bayer Leverkusen-1. FC Nürnberg', 'Bayern München-Magdeburg', 'Hannover 96-Kaiserslautern']
+   938649: ['Lechia Gdańsk-Jagiellonia Białystok', 'Arka Gdynia-Stal Rzeszów', 'Polonia Warszawa-Korona Kielce']
+   942484: ['FC Porto-Académico Viseu', 'Braga-Famalicão']
+   938628: ['Coban Imperial-CD Suchitepéquez', 'Deportivo Malacateco-Aurora FC', 'CSD Municipal-Comunicaciones FC']
+
+20261030 крупные id:
+   938221: ['Everton-Newcastle United']
+   936592: ['AaB-Hobro']
+   938638: ['HIK-Nykøbing FC', 'Skive-VSK Aarhus']
+   945609: ['Doxa Katokopia-Iraklis Gerolakkou', 'Ermis Aradippou-Anagennisi Deryneia']
+   938696: ['SKN St. Pölten-FC Hertha Wels', 'Austria Salzburg-SKU Amstetten']
+   938639: ['FC Helsingør-Ringsted']
+   949115: ['Broadmeadow Magic-Adelaide City']
+   949116: ['Sydney Olympic-Marconi Stallions']
+   938366: ['Grazer AK-Hartberg']
+   944910: ['LD Alajuelense-FC Motagua']
+   944692: ['Gloria Bistrița-FCSB']
+   942063: ['Karmiotissa-Olympiakos Nicosia']
+
+==== DONE3
