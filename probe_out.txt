@@ -1,0 +1,55 @@
+sample match: 6106285 Aston Villa - Viking
+
+==== /football-get-match-odds?eventid=6106285
+status 404
+{"message":"Endpoint '\/football-get-match-odds' does not exist"}
+
+==== /football-get-odds?eventid=6106285
+status 404
+{"message":"Endpoint '\/football-get-odds' does not exist"}
+
+==== /football-get-all-odds?eventid=6106285
+status 404
+{"message":"Endpoint '\/football-get-all-odds' does not exist"}
+
+==== /football-get-match-all-odds?eventid=6106285
+status 404
+{"message":"Endpoint '\/football-get-match-all-odds' does not exist"}
+
+==== /football-get-match-event-odds?eventid=6106285
+status 404
+{"message":"Endpoint '\/football-get-match-event-odds' does not exist"}
+
+==== /football-get-match-event-all-odds?eventid=6106285
+status 404
+{"message":"Endpoint '\/football-get-match-event-all-odds' does not exist"}
+
+==== /football-get-event-odds?eventid=6106285
+status 404
+{"message":"Endpoint '\/football-get-event-odds' does not exist"}
+
+==== /football-get-odds-by-match?eventid=6106285
+status 404
+{"message":"Endpoint '\/football-get-odds-by-match' does not exist"}
+
+==== /football-get-match-detail?eventid=6106285
+status 200
+{"status":"success","response":{"detail":{"matchId":"6106285","matchName":"Aston Villa-vs-Viking_Wed, Oct 21, 2026, 19:00 UTC","matchRound":"3","teamColors":{"darkMode":{"home":"#9d2358","away":"#244d89"},"lightMode":{"home":"#7D1142","away":"#132847"},"fontDarkMode":{"home":"rgba(255, 255, 255, 1.0)","away":"rgba(255, 255, 255, 1.0)"},"fontLightMode":{"home":"rgba(255, 255, 255, 1.0)","away":"rgba(255, 255, 255, 1.0)"}},"leagueId":943230,"leagueName":"Champions League","leagueRoundName":"3","parentLeagueId":42,"countryCode":"INT-2","homeTeam":{"name":"Aston Villa","id":10252},"awayTeam":{"name":"Viking","id":8478},"coverageLevel":"lower","matchTimeUTC":"Wed, Oct 21, 2026, 19:00 UTC","matchT
+
+==== /football-get-match-event-all-stats?eventid=6106285
+status 200
+{"status":"failed","message":"Request Failed Please try Again"}
+
+==== /football-get-all-live-match
+status 404
+{"message":"Endpoint '\/football-get-all-live-match' does not exist"}
+
+==== /football-get-live-match
+status 404
+{"message":"Endpoint '\/football-get-live-match' does not exist"}
+
+==== /football-get-livescores
+status 404
+{"message":"Endpoint '\/football-get-livescores' does not exist"}
+
+==== DONEP
