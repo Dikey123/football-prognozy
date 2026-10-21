@@ -1,0 +1,68 @@
+/home/runner/work/football-prognozy/football-prognozy/probe.py:59: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+  print("PROBE", datetime.datetime.utcnow().isoformat(), "key_set:", bool(KEY))
+PROBE 2026-10-21T16:48:58.541343 key_set: True
+
+==== /football-get-all-leagues
+STATUS 200  len=23261
+{"status":"success","response":{"leagues":[{"id":42,"name":"Champions League","localizedName":"Champions League","ccode":"INT","logo":"https://images.fotmob.com/image_resources/logo/leaguelogo/dark/42.png"},{"id":73,"name":"Europa League","localizedName":"Europa League","ccode":"INT","logo":"https://images.fotmob.com/image_resources/logo/leaguelogo/dark/73.png"},{"id":9470,"name":"AFC Challenge League","localizedName":"AFC Challenge League","ccode":"INT","logo":"https://images.fotmob.com/image_resources/logo/leaguelogo/dark/9470.png"},{"id":525,"name":"AFC Champions League Elite","localizedName":"AFC Champions League Elite","ccode":"INT","logo":"https://images.fotmob.com/image_resources/logo/leaguelogo/dark/525.png"},{"id":10622,"name":"AFC Champions League Elite Qualification","localizedName":"AFC Champions League Elite Qualification","ccode":"INT","logo":"https://images.fotmob.com/image_resources/logo/leaguelogo/dark/10622.png"},{"id":9469,"name":"AFC Champions League Two","localizedName":"AFC Champions League Two","ccode":"INT","logo":"https://images.fotmob.com/image_resources/logo/leaguelogo/dark/9469.png"},{"id":10511,"name":"AFC Summer Olympics Qualification (Women)","localizedName":"AFC Summer Olympics Qualification (Women)","ccode":"INT","logo":"https://images.fotmob.com/image_resources/logo/leaguelogo/dark/10511.png"},{"id":9841,"name":"AFC U20 Asian Cup","localizedName":"AFC U20 Asian Cup","ccode":"INT","logo":"https://images.fotmob.com/image_resources/logo/leaguelogo/dark/9841.png"},{"id":9571,"name":"AFC U23 Asian Cup","localizedName":"AFC U23 Asian Cup","ccode":"INT","logo":"https://images.fotmob.com/image_resources/logo/leaguelogo/dark/9571.png"},{"id":289,"name":"Africa Cup of Nations","localizedName":"Africa Cup of Nations","ccode":"INT","logo":"https://images.fotmob.com/image_resources/logo/leaguelogo/dark/289.png"},{"id":10608,"name":"Africa Cup of Nations Qualification","localizedName":"Africa Cup of Nations Qualification","ccode":"INT","logo":"https://images.fotmob.com/image_resources/logo/leaguelogo/dark/10608.png"},{"id":10508,"name":"African Football League","localizedName":"African Football League","ccode":"INT","logo":"https://images.fot
+
+==== /football-get-all-popular-leagues
+HTTP 404: {"message":"Endpoint '\/football-get-all-popular-leagues' does not exist"}
+
+==== /football-get-popular-leagues
+HTTP 404: {"message":"Endpoint '\/football-get-popular-leagues' does not exist"}
+
+==== /football-popular-leagues
+STATUS 200  len=1574
+{"status":"success","response":{"popular":[{"id":47,"name":"Premier League","localizedName":"Premier League","ccode":"ENG","logo":"https://images.fotmob.com/image_resources/logo/leaguelogo/dark/47.png"},{"id":42,"name":"Champions League","localizedName":"Champions League","ccode":"INT","logo":"https://images.fotmob.com/image_resources/logo/leaguelogo/dark/42.png"},{"id":87,"name":"LaLiga","localizedName":"LaLiga","ccode":"ESP","logo":"https://images.fotmob.com/image_resources/logo/leaguelogo/dark/87.png"},{"id":77,"name":"World Cup","localizedName":"FIFA World Cup","ccode":"INT","logo":"https://images.fotmob.com/image_resources/logo/leaguelogo/dark/77.png"},{"id":54,"name":"Bundesliga","localizedName":"Bundesliga","ccode":"GER","logo":"https://images.fotmob.com/image_resources/logo/leaguelogo/dark/54.png"},{"id":73,"name":"Europa League","localizedName":"Europa League","ccode":"INT","logo":"https://images.fotmob.com/image_resources/logo/leaguelogo/dark/73.png"},{"id":53,"name":"Ligue 1","localizedName":"Ligue 1","ccode":"FRA","logo":"https://images.fotmob.com/image_resources/logo/leaguelogo/dark/53.png"},{"id":55,"name":"Serie A","localizedName":"Serie A","ccode":"ITA","logo":"https://images.fotmob.com/image_resources/logo/leaguelogo/dark/55.png"},{"id":138,"name":"Copa del Rey","localizedName":"Copa del Rey","ccode":"ESP","logo":"https://images.fotmob.com/image_resources/logo/leaguelogo/dark/138.png"},{"id":132,"name":"FA Cup","localizedName":"FA Cup","ccode":"ENG","logo":"https://images.fotmob.com/image_resources/logo/leaguelogo/dark/132.png"}]}}
+
+==== /football-leagues
+HTTP 404: {"message":"Endpoint '\/football-leagues' does not exist"}
+
+==== /football-get-all-countries
+STATUS 200  len=5764
+{"status":"success","response":{"countries":[{"ccode":"ALB","name":"Albania","localizedName":"Albania"},{"ccode":"ALG","name":"Algeria","localizedName":"Algeria"},{"ccode":"ARG","name":"Argentina","localizedName":"Argentina"},{"ccode":"ARM","name":"Armenia","localizedName":"Armenia"},{"ccode":"AUS","name":"Australia","localizedName":"Australia"},{"ccode":"AUT","name":"Austria","localizedName":"Austria"},{"ccode":"AZE","name":"Azerbaijan","localizedName":"Azerbaijan"},{"ccode":"BAN","name":"Bangladesh","localizedName":"Bangladesh"},{"ccode":"BLR","name":"Belarus","localizedName":"Belarus"},{"ccode":"BEL","name":"Belgium","localizedName":"Belgium"},{"ccode":"BOL","name":"Bolivia","localizedName":"Bolivia"},{"ccode":"BIH","name":"Bosnia-Herzegovina","localizedName":"Bosnia-Herzegovina"},{"ccode":"BRA","name":"Brazil","localizedName":"Brazil"},{"ccode":"BUL","name":"Bulgaria","localizedName":"Bulgaria"},{"ccode":"CAN","name":"Canada","localizedName":"Canada"},{"ccode":"CHI","name":"Chile","localizedName":"Chile"},{"ccode":"CHN","name":"China","localizedName":"China"},{"ccode":"COL","name":"Colombia","localizedName":"Colombia"},{"ccode":"CRC","name":"Costa Rica","localizedName":"Costa Rica"},{"ccode":"CRO","name":"Croatia","localizedName":"Croatia"},{"ccode":"CYP","name":"Cyprus","localizedName":"Cyprus"},{"ccode":"CZE","name":"Czechia","localizedName":"Czech Republic"},{"ccode":"DEN","name":"Denmark","localizedName":"Denmark"},{"ccode":"ECU","name":"Ecuador","localizedName":"Ecuador"},{"ccode":"EGY","name":"Egypt","localizedName":"Egypt"},{"ccode":"SLV","name":"El Salvador","localizedName":"El Salvador"},{"ccode":"ENG","name":"England","localizedName":"England"},{"ccode":"EST","name":"Estonia","localizedName":"Estonia"},{"ccode":"FRO","name":"Faroe Islands","localizedName":"Faroe Islands"},{"ccode":"FIN","name":"Finland","localizedName":"Finland"},{"ccode":"FRA","name":"France","localizedName":"France"},{"ccode":"GEO","name":"Georgia","localizedName":"Georgia"},{"ccode":"GER","name":"Germany","localizedName":"Germany"},{"ccode":"GHA","name":"Ghana","localizedName":"Ghana"},{"ccode":"GRE","name":"Greece","localizedName":"Greece"},{"ccode":"GUA","name":"Guatemala","lo
+
+==== /football-get-countries
+HTTP 404: {"message":"Endpoint '\/football-get-countries' does not exist"}
+
+==== /football-get-matches-by-date?date=20261021
+STATUS 200  len=84999
+{"status":"success","response":{"matches":[{"id":6106287,"leagueId":943230,"time":"20.10.2026 21:00","home":{"id":9773,"score":0,"name":"FC Porto","longName":"FC Porto"},"away":{"id":8640,"score":1,"name":"PSV Eindhoven","longName":"PSV Eindhoven"},"eliminatedTeamId":null,"statusId":6,"tournamentStage":"3","status":{"utcTime":"2026-10-20T19:00:00.000Z","halfs":{"firstHalfStarted":"20.10.2026 21:01:02","secondHalfStarted":"20.10.2026 22:02:18"},"periodLength":45,"finished":true,"started":true,"cancelled":false,"awarded":false,"scoreStr":"0 - 1","reason":{"short":"FT","shortKey":"fulltime_short","long":"Full-Time","longKey":"finished"}},"timeTS":1792522800000},{"id":6106248,"leagueId":943230,"time":"20.10.2026 21:00","home":{"id":8650,"score":4,"name":"Liverpool","longName":"Liverpool"},"away":{"id":10205,"score":3,"name":"Villarreal","longName":"Villarreal"},"eliminatedTeamId":null,"statusId":6,"tournamentStage":"3","status":{"utcTime":"2026-10-20T19:00:00.000Z","halfs":{"firstHalfStarted":"20.10.2026 21:00:45","secondHalfStarted":"20.10.2026 22:04:13"},"periodLength":45,"finished":true,"started":true,"cancelled":false,"awarded":false,"scoreStr":"4 - 3","reason":{"short":"FT","shortKey":"fulltime_short","long":"Full-Time","longKey":"finished"}},"timeTS":1792522800000},{"id":6106257,"leagueId":943230,"time":"20.10.2026 21:00","home":{"id":8456,"score":5,"name":"Manchester City","shortName":"Man City","longName":"Manchester City"},"away":{"id":8563,"score":1,"name":"AEK Athens","longName":"AEK Athens"},"eliminatedTeamId":null,"statusId":6,"tournamentStage":"3","status":{"utcTime":"2026-10-20T19:00:00.000Z","halfs":{"firstHalfStarted":"20.10.2026 21:01:26","secondHalfStarted":"20.10.2026 22:03:38"},"periodLength":45,"finished":true,"started":true,"cancelled":false,"awarded":false,"scoreStr":"5 - 1","reason":{"short":"FT","shortKey":"fulltime_short","long":"Full-Time","longKey":"finished"}},"timeTS":1792522800000},{"id":6106234,"leagueId":943230,"time":"20.10.2026 21:00","home":{"id":9847,"score":4,"name":"Paris Saint-Germain","shortName":"PSG","longName":"Paris Saint-Germain"},"away":{"id":8634,"score":2,"name":"Barcelona","longName":"Barcelona"},"eliminatedTeamId":
+
+==== /football-get-all-matches-by-date?date=20261021
+HTTP 404: {"message":"Endpoint '\/football-get-all-matches-by-date' does not exist"}
+
+==== /football-get-matches-by-date?date=2026-10-21
+STATUS 200  len=63
+{"status":"failed","message":"Request Failed Please try Again"}
+
+==== /football-get-matches?date=20261021
+HTTP 404: {"message":"Endpoint '\/football-get-matches' does not exist"}
+
+==== /football-get-live-matches
+HTTP 404: {"message":"Endpoint '\/football-get-live-matches' does not exist"}
+
+==== /football-get-all-live-matches
+HTTP 404: {"message":"Endpoint '\/football-get-all-live-matches' does not exist"}
+
+==== /football-live-matches
+HTTP 404: {"message":"Endpoint '\/football-live-matches' does not exist"}
+
+==== /football-get-matches-by-league?leagueid=42
+HTTP 404: {"message":"Endpoint '\/football-get-matches-by-league' does not exist"}
+
+==== /football-get-all-matches-by-league?leagueid=42
+STATUS 200  len=99558
+{"status":"success","response":{"matches":[{"id":"4947178","pageUrl":"/matches/athletic-club-vs-arsenal/2pyul3#4947178","opponent":{"id":"8315","name":"Athletic Club","score":0},"home":{"id":"8315","name":"Athletic Club","score":0},"away":{"id":"9825","name":"Arsenal","score":2},"displayTournament":true,"notStarted":false,"tournament":{"stage":""},"status":{"utcTime":"2025-09-16T16:45:00Z","finished":true,"started":true,"cancelled":false,"awarded":false,"scoreStr":"0 - 2","reason":{"short":"FT","shortKey":"fulltime_short","long":"Full-Time","longKey":"finished"}}},{"id":"4947237","pageUrl":"/matches/union-stgilloise-vs-psv-eindhoven/2a7vhj#4947237","opponent":{"id":"8640","name":"PSV Eindhoven","score":1},"home":{"id":"8640","name":"PSV Eindhoven","score":1},"away":{"id":"7978","name":"Union St.Gilloise","score":3},"displayTournament":true,"notStarted":false,"tournament":{"stage":""},"status":{"utcTime":"2025-09-16T16:45:00Z","finished":true,"started":true,"cancelled":false,"awarded":false,"scoreStr":"1 - 3","reason":{"short":"FT","shortKey":"fulltime_short","long":"Full-Time","longKey":"finished"}}},{"id":"4947188","pageUrl":"/matches/qarabag-fk-vs-benfica/2ltzdd#4947188","opponent":{"id":"9772","name":"Benfica","score":2},"home":{"id":"9772","name":"Benfica","score":2},"away":{"id":"7981","name":"Qarabağ FK","score":3},"displayTournament":true,"notStarted":false,"tournament":{"stage":""},"status":{"utcTime":"2025-09-16T19:00:00Z","finished":true,"started":true,"cancelled":false,"awarded":false,"scoreStr":"2 - 3","reason":{"short":"FT","shortKey":"fulltime_short","long":"Full-Time","longKey":"finished"}}},{"id":"4947134","pageUrl":"/matches/borussia-dortmund-vs-juventus/378icc#4947134","opponent":{"id":"9885","name":"Juventus","score":4},"home":{"id":"9885","name":"Juventus","score":4},"away":{"id":"9789","name":"Dortmund","score":4},"displayTournament":true,"notStarted":false,"tournament":{"stage":""},"status":{"utcTime":"2025-09-16T19:00:00Z","finished":true,"started":true,"cancelled":false,"awarded":false,"scoreStr":"4 - 4","reason":{"short":"FT","shortKey":"fulltime_short","long":"Full-Time","longKey":"finished"}}},{"id":"4947120","pageUrl":"/matches/marsei
+
+==== /football-get-league-matches?leagueid=42
+HTTP 404: {"message":"Endpoint '\/football-get-league-matches' does not exist"}
+
+==== /football-league-detail?leagueid=42
+HTTP 404: {"message":"Endpoint '\/football-league-detail' does not exist"}
+
+==== /football-get-standings?leagueid=42
+HTTP 404: {"message":"Endpoint '\/football-get-standings' does not exist"}
+
+==== DONE
