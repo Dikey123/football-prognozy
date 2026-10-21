@@ -1,62 +1,56 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""Пробник эндпоинтов free-api-live-football-data (RapidAPI).
-Опрашивает несколько вероятных путей, печатает статус и начало ответа.
-Запускается в GitHub Actions, результат коммитится в probe_out.txt."""
-import os, json, urllib.request, urllib.error, datetime
+"""Пробник 2: найти ID РПЛ и карту leagueId в матчах по дате."""
+import os, json, urllib.request, urllib.error
 
 KEY = os.environ.get("API_FOOTBALL_KEY", "")
 HOST = "free-api-live-football-data.p.rapidapi.com"
 
-def call(path):
+def get(path):
     url = "https://" + HOST + path
-    req = urllib.request.Request(url, headers={
-        "x-rapidapi-key": KEY, "x-rapidapi-host": HOST})
+    req = urllib.request.Request(url, headers={"x-rapidapi-key": KEY, "x-rapidapi-host": HOST})
     try:
         with urllib.request.urlopen(req, timeout=25) as r:
-            body = r.read().decode("utf-8", "replace")
-            print(f"\n==== {path}\nSTATUS {r.status}  len={len(body)}\n{body[:2200]}")
+            return r.status, r.read().decode("utf-8", "replace")
     except urllib.error.HTTPError as e:
         try:
-            msg = e.read().decode("utf-8", "replace")[:400]
+            return e.code, e.read().decode("utf-8", "replace")[:300]
         except Exception:
-            msg = ""
-        print(f"\n==== {path}\nHTTP {e.code}: {msg}")
+            return e.code, ""
     except Exception as e:
-        print(f"\n==== {path}\nERR {type(e).__name__}: {e}")
+        return 0, f"ERR {e}"
 
-today = datetime.date.today()
-d1 = today.strftime("%Y%m%d")
-d2 = today.strftime("%Y-%m-%d")
+# 1) все лиги — найти нужные (особенно РПЛ)
+st, body = get("/football-get-all-leagues")
+print("ALL-LEAGUES status", st)
+try:
+    leagues = json.loads(body)["response"]["leagues"]
+    print("total leagues:", len(leagues))
+    kw = ["russia", "premier league", "laliga", "la liga", "serie a",
+          "bundesliga", "ligue 1", "champions league", "europa league", "russian"]
+    for lg in leagues:
+        n = lg["name"].lower(); cc = lg.get("ccode", "")
+        if any(k in n for k in kw) or cc == "RUS":
+            print(f'  id={lg["id"]:>8}  ccode={cc:>4}  {lg["name"]}')
+except Exception as e:
+    print("parse err", e, body[:300])
 
-paths = [
-    # лиги
-    "/football-get-all-leagues",
-    "/football-get-all-popular-leagues",
-    "/football-get-popular-leagues",
-    "/football-popular-leagues",
-    "/football-leagues",
-    # страны
-    "/football-get-all-countries",
-    "/football-get-countries",
-    # матчи по дате
-    f"/football-get-matches-by-date?date={d1}",
-    f"/football-get-all-matches-by-date?date={d1}",
-    f"/football-get-matches-by-date?date={d2}",
-    f"/football-get-matches?date={d1}",
-    # лайв
-    "/football-get-live-matches",
-    "/football-get-all-live-matches",
-    "/football-live-matches",
-    # матчи лиги (leagueid наугад — проверка формата/ошибки)
-    "/football-get-matches-by-league?leagueid=42",
-    "/football-get-all-matches-by-league?leagueid=42",
-    "/football-get-league-matches?leagueid=42",
-    "/football-league-detail?leagueid=42",
-    "/football-get-standings?leagueid=42",
-]
+# 2) матчи по дате — карта leagueId + полная структура
+for d in ["20261021", "20261025"]:
+    st, body = get(f"/football-get-matches-by-date?date={d}")
+    print(f"\nMATCHES-BY-DATE {d} status {st} len {len(body)}")
+    try:
+        ms = json.loads(body)["response"]["matches"]
+        print("  matches:", len(ms))
+        seen = {}
+        for m in ms:
+            lid = m.get("leagueId")
+            if lid not in seen:
+                seen[lid] = f'{m["home"]["name"]} - {m["away"]["name"]}'
+        for lid, ex in sorted(seen.items(), key=lambda x: str(x[0])):
+            print(f'    leagueId={lid}: {ex}')
+        print("  SAMPLE MATCH:", json.dumps(ms[0], ensure_ascii=False)[:1400])
+    except Exception as e:
+        print("  parse err", e, body[:200])
 
-print("PROBE", datetime.datetime.utcnow().isoformat(), "key_set:", bool(KEY))
-for p in paths:
-    call(p)
-print("\n==== DONE")
+print("\n==== DONE2")
