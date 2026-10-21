@@ -1,55 +1,32 @@
-sample match: 6106285 Aston Villa - Viking
+=== MATCH-DETAIL (ключи верхнего уровня) === 200
+detail keys: ['matchId', 'matchName', 'matchRound', 'teamColors', 'leagueId', 'leagueName', 'leagueRoundName', 'parentLeagueId', 'countryCode', 'homeTeam', 'awayTeam', 'coverageLevel', 'matchTimeUTC', 'matchTimeUTCDate', 'started', 'finished', 'gender']
+  started: false
+  finished: false
 
-==== /football-get-match-odds?eventid=6106285
-status 404
-{"message":"Endpoint '\/football-get-match-odds' does not exist"}
+=== СЕГОДНЯ: лайв/недавние матчи топ-лиг ===
+  FC Porto 0-1 PSV Eindhoven | started=True finished=True live=False
+     status: {"utcTime": "2026-10-20T19:00:00.000Z", "halfs": {"firstHalfStarted": "20.10.2026 21:01:02", "secondHalfStarted": "20.10.2026 22:02:18"}, "periodLength": 45, "finished": true, "started": true, "cancelled": false, "awarded": false, "scoreStr": "0 - 1", "reason": {"short": "FT", "shortKey": "fulltime_short", "long": "Full-Time", "longKey": "finished"}}
+  Liverpool 4-3 Villarreal | started=True finished=True live=False
+     status: {"utcTime": "2026-10-20T19:00:00.000Z", "halfs": {"firstHalfStarted": "20.10.2026 21:00:45", "secondHalfStarted": "20.10.2026 22:04:13"}, "periodLength": 45, "finished": true, "started": true, "cancelled": false, "awarded": false, "scoreStr": "4 - 3", "reason": {"short": "FT", "shortKey": "fulltime_short", "long": "Full-Time", "longKey": "finished"}}
+  Manchester City 5-1 AEK Athens | started=True finished=True live=False
+     status: {"utcTime": "2026-10-20T19:00:00.000Z", "halfs": {"firstHalfStarted": "20.10.2026 21:01:26", "secondHalfStarted": "20.10.2026 22:03:38"}, "periodLength": 45, "finished": true, "started": true, "cancelled": false, "awarded": false, "scoreStr": "5 - 1", "reason": {"short": "FT", "shortKey": "fulltime_short", "long": "Full-Time", "longKey": "finished"}}
+  Paris Saint-Germain 4-2 Barcelona | started=True finished=True live=False
+     status: {"utcTime": "2026-10-20T19:00:00.000Z", "halfs": {"firstHalfStarted": "20.10.2026 21:02:40", "secondHalfStarted": "20.10.2026 22:08:04"}, "periodLength": 45, "finished": true, "started": true, "cancelled": false, "awarded": false, "scoreStr": "4 - 2", "reason": {"short": "FT", "shortKey": "fulltime_short", "long": "Full-Time", "longKey": "finished"}}
+  Como 4-0 Manchester United | started=True finished=False live=True
+     status: {"utcTime": "2026-10-21T16:45:00.000Z", "halfs": {"firstHalfStarted": "21.10.2026 18:46:54", "secondHalfStarted": "21.10.2026 19:49:10"}, "periodLength": 45, "finished": false, "started": true, "cancelled": false, "ongoing": true, "scoreStr": "4 - 0", "liveTime": {"short": "90‎’‎", "shortKey": "", "long": "89:56", "longKey": "", "maxTime": 90, "basePeriod": 90, "addedTime": 0}}
+  Lille 2-4 Galatasaray | started=True finished=False live=True
+     status: {"utcTime": "2026-10-21T16:45:00.000Z", "halfs": {"firstHalfStarted": "21.10.2026 18:45:14", "secondHalfStarted": "21.10.2026 19:47:46"}, "periodLength": 45, "finished": false, "started": true, "cancelled": false, "ongoing": true, "scoreStr": "2 - 4", "liveTime": {"short": "92‎’‎", "shortKey": "", "long": "91:20", "longKey": "", "maxTime": 90, "basePeriod": 90, "addedTime": 0}}
+  Levante 2-0 Athletic Club | started=True finished=False live=True
+     status: {"utcTime": "2026-10-21T18:00:00.000Z", "halfs": {"firstHalfStarted": "21.10.2026 20:03:16"}, "periodLength": 45, "finished": false, "started": true, "cancelled": false, "ongoing": true, "scoreStr": "2 - 0", "liveTime": {"short": "31‎’‎", "shortKey": "", "long": "30:50", "longKey": "", "maxTime": 45, "basePeriod": 45, "addedTime": 0}}
 
-==== /football-get-odds?eventid=6106285
-status 404
-{"message":"Endpoint '\/football-get-odds' does not exist"}
-
-==== /football-get-all-odds?eventid=6106285
-status 404
-{"message":"Endpoint '\/football-get-all-odds' does not exist"}
-
-==== /football-get-match-all-odds?eventid=6106285
-status 404
-{"message":"Endpoint '\/football-get-match-all-odds' does not exist"}
-
-==== /football-get-match-event-odds?eventid=6106285
-status 404
-{"message":"Endpoint '\/football-get-match-event-odds' does not exist"}
-
-==== /football-get-match-event-all-odds?eventid=6106285
-status 404
-{"message":"Endpoint '\/football-get-match-event-all-odds' does not exist"}
-
-==== /football-get-event-odds?eventid=6106285
-status 404
-{"message":"Endpoint '\/football-get-event-odds' does not exist"}
-
-==== /football-get-odds-by-match?eventid=6106285
-status 404
-{"message":"Endpoint '\/football-get-odds-by-match' does not exist"}
-
-==== /football-get-match-detail?eventid=6106285
-status 200
-{"status":"success","response":{"detail":{"matchId":"6106285","matchName":"Aston Villa-vs-Viking_Wed, Oct 21, 2026, 19:00 UTC","matchRound":"3","teamColors":{"darkMode":{"home":"#9d2358","away":"#244d89"},"lightMode":{"home":"#7D1142","away":"#132847"},"fontDarkMode":{"home":"rgba(255, 255, 255, 1.0)","away":"rgba(255, 255, 255, 1.0)"},"fontLightMode":{"home":"rgba(255, 255, 255, 1.0)","away":"rgba(255, 255, 255, 1.0)"}},"leagueId":943230,"leagueName":"Champions League","leagueRoundName":"3","parentLeagueId":42,"countryCode":"INT-2","homeTeam":{"name":"Aston Villa","id":10252},"awayTeam":{"name":"Viking","id":8478},"coverageLevel":"lower","matchTimeUTC":"Wed, Oct 21, 2026, 19:00 UTC","matchT
-
-==== /football-get-match-event-all-stats?eventid=6106285
-status 200
-{"status":"failed","message":"Request Failed Please try Again"}
-
-==== /football-get-all-live-match
-status 404
-{"message":"Endpoint '\/football-get-all-live-match' does not exist"}
-
-==== /football-get-live-match
-status 404
-{"message":"Endpoint '\/football-get-live-match' does not exist"}
-
-==== /football-get-livescores
-status 404
-{"message":"Endpoint '\/football-get-livescores' does not exist"}
+=== LIVE endpoints ===
+  /football-get-live -> 404  {"message":"Endpoint '\/football-get-live' does not exist"}
+  /football-livescores -> 404  {"message":"Endpoint '\/football-livescores' does not exist"}
+  /football-get-all-livescore -> 404  {"message":"Endpoint '\/football-get-all-livescore' does not exist"}
+  /football-get-live-score -> 404  {"message":"Endpoint '\/football-get-live-score' does not exist"}
+  /football-all-live -> 404  {"message":"Endpoint '\/football-all-live' does not exist"}
+  /football-current-matches -> 404  {"message":"Endpoint '\/football-current-matches' does not exist"}
+  /football-get-all-matches-live -> 404  {"message":"Endpoint '\/football-get-all-matches-live' does not exist"}
+  /football-live -> 404  {"message":"Endpoint '\/football-live' does not exist"}
 
 ==== DONEP
