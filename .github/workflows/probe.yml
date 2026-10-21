@@ -2,7 +2,7 @@ name: API probe
 on:
   workflow_dispatch: {}
   push:
-    paths: ["probe.py", ".github/workflows/probe.yml"]
+    paths: ["probe.py", "fetch_base.py", ".github/workflows/probe.yml"]
 
 permissions:
   contents: write
@@ -22,7 +22,7 @@ jobs:
       - name: Run probe
         env:
           API_FOOTBALL_KEY: ${{ secrets.API_FOOTBALL_KEY }}
-        run: python probe.py > probe_out.txt 2>&1 || true
+        run: python fetch_base.py > probe_out.txt 2>&1 || true
       - name: Commit output
         run: |
           git config user.name "probe"
