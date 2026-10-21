@@ -615,8 +615,17 @@ document.getElementById("ratebtn").onclick=()=>{location.hash="rating"};
 window.addEventListener("hashchange",route);
 function start(data,res){RES=res||window.__RES__||null;boot(data)}
 if(window.__DATA__){start(window.__DATA__,window.__RES__||null)}
-else Promise.all([
-  fetch("data.json",{cache:"no-store"}).then(r=>{if(!r.ok)throw new Error(r.status);return r.json()}),
-  fetch("results.json",{cache:"no-store"}).then(r=>r.ok?r.json():null).catch(()=>null)
-]).then(a=>start(a[0],a[1])).catch(()=>{document.getElementById("view").innerHTML='<div class="empty">Не удалось загрузить данные. Обновите страницу.</div>'});
+else{
+  var _tg=window.Telegram&&window.Telegram.WebApp,_API="https://kaper-ai-bot.onrender.com";
+  var _lock=function(m){var v=document.getElementById("view");if(v)v.innerHTML='<div class="empty" style="padding:48px 20px;text-align:center;line-height:1.6;font-size:15px">'+m+'</div>';};
+  if(_tg&&_tg.initData){
+    _lock('Загрузка…');
+    fetch(_API+"/api/data?initData="+encodeURIComponent(_tg.initData),{cache:"no-store"})
+      .then(function(r){return r.json().then(function(j){return {s:r.status,j:j}})})
+      .then(function(o){if(o.s===200){start(o.j.data,o.j.res);}else if(o.j&&o.j.error==="not_subscribed"){_lock('🔒 Доступ только для подписчиков канала.<br><br>Подпишитесь на наш канал и снова откройте приложение через бота <b>@KaperAIbot</b>.');}else{_lock('🔒 Не удалось подтвердить доступ. Откройте приложение заново через бота <b>@KaperAIbot</b>.');}})
+      .catch(function(){_lock('Не удалось загрузить данные. Попробуйте позже.');});
+  }else{
+    _lock('🔒 Это приложение открывается только через Telegram-бота <b>@KaperAIbot</b>.<br><br>Откройте бота в Telegram и нажмите «📱 Открыть приложение».');
+  }
+}
 </script>
