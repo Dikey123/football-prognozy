@@ -30,13 +30,6 @@ jobs:
         run: |
           git config user.name "base-bot"
           git config user.email "actions@users.noreply.github.com"
-          git add data.json results.json scores_api.json fetch_log.txt fetch_out.txt 2>/dev/null || true
-          if git diff --cached --quiet; then
-            echo "изменений нет"
-          else
-            git commit -m "auto: обновление расписания/счёта/результатов"
-            for i in 1 2 3; do
-              git pull --rebase origin main && git push origin main && break
-              echo "retry $i"; sleep 5
-            done
-          fi
+          git add -A
+          git commit -m "auto: обновление расписания/счёта/результатов" || echo "no changes"
+          git push || echo "push failed"
