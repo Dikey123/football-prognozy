@@ -1,14 +1,3 @@
-=== DRY RUN REPORT ===
-  ucl: matched 9, new 7  примеры новых: ['Порту — ПСВ (20261021)', 'Ливерпуль — Вильярреал (20261021)', 'Манчестер Сити — АЕК (20261021)', 'ПСЖ — Барселона (20261021)']
-  uel: matched 9, new 0  примеры новых: []
-  epl: matched 10, new 0  примеры новых: []
-  laliga: matched 10, new 1  примеры новых: ['Леванте — Атлетик (20261021)']
-  seriea: matched 10, new 1  примеры новых: ['Сассуоло — Лацио (20261027)']
-  bundesliga: matched 9, new 0  примеры новых: []
-  ligue1: matched 9, new 0  примеры новых: []
-  rpl: matched 8, new 0  примеры новых: []
-
-UNMAPPED (нет в таблице англ->рус):
-  uel: ['Hapoel Beer Sheva', 'Jagiellonia Białystok', 'Lech Poznań', 'Levski Sofia', 'Lillestrøm', 'NK Celje', 'OFI Crete', 'Omonia Nicosia', 'Salzburg', 'Sparta Prague', 'Union St.Gilloise', 'Viktoria Plzeň']
-
-==== DONE4
+updated=83 added=7 finished_scores=0 unmapped=0  DRY=True
+DRY RUN — запись не выполнялась
+==== DONE5
