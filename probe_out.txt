@@ -1,82 +1,14 @@
-=== TEAM NAMES (англ) по лигам (на 9 дней вперёд) ===
+=== DRY RUN REPORT ===
+  ucl: matched 9, new 7  примеры новых: ['Порту — ПСВ (20261021)', 'Ливерпуль — Вильярреал (20261021)', 'Манчестер Сити — АЕК (20261021)', 'ПСЖ — Барселона (20261021)']
+  uel: matched 9, new 0  примеры новых: []
+  epl: matched 10, new 0  примеры новых: []
+  laliga: matched 10, new 1  примеры новых: ['Леванте — Атлетик (20261021)']
+  seriea: matched 10, new 1  примеры новых: ['Сассуоло — Лацио (20261027)']
+  bundesliga: matched 9, new 0  примеры новых: []
+  ligue1: matched 9, new 0  примеры новых: []
+  rpl: matched 8, new 0  примеры новых: []
 
-## ucl (32)
-AEK Athens, Arsenal, Aston Villa, Atlético Madrid, Barcelona, Bayern München, Bodø/Glimt, Club Brugge, Como, FC Porto, Feyenoord, Galatasaray, Inter, LASK, Lens, Lille, Liverpool, Manchester City, Manchester United, Napoli, PSV Eindhoven, Paris Saint-Germain, RB Leipzig, Real Betis, Real Madrid, Roma, Shakhtar Donetsk, Slovan Bratislava, Sporting CP, VfB Stuttgart, Viking, Villarreal
+UNMAPPED (нет в таблице англ->рус):
+  uel: ['Hapoel Beer Sheva', 'Jagiellonia Białystok', 'Lech Poznań', 'Levski Sofia', 'Lillestrøm', 'NK Celje', 'OFI Crete', 'Omonia Nicosia', 'Salzburg', 'Sparta Prague', 'Union St.Gilloise', 'Viktoria Plzeň']
 
-## epl (20)
-AFC Bournemouth, Arsenal, Aston Villa, Brentford, Brighton & Hove Albion, Chelsea, Coventry City, Crystal Palace, Everton, Fulham, Hull City, Ipswich Town, Leeds United, Liverpool, Manchester City, Manchester United, Newcastle United, Nottingham Forest, Sunderland, Tottenham Hotspur
-
-## laliga (20)
-Athletic Club, Atlético Madrid, Barcelona, Celta Vigo, Deportivo A Coruña, Deportivo Alavés, Elche, Espanyol, Getafe, Levante, Málaga, Osasuna, Racing Santander, Rayo Vallecano, Real Betis, Real Madrid, Real Sociedad, Sevilla, Valencia, Villarreal
-
-## seriea (20)
-Atalanta, Bologna, Cagliari, Como, Fiorentina, Frosinone, Genoa, Inter, Juventus, Lazio, Lecce, Milan, Monza, Napoli, Parma, Roma, Sassuolo, Torino, Udinese, Venezia
-
-## bundesliga (18)
-1. FC Köln, Augsburg, Bayer Leverkusen, Bayern München, Borussia Dortmund, Borussia Mönchengladbach, Eintracht Frankfurt, Elversberg, Freiburg, Hamburger SV, Hoffenheim, Mainz 05, Paderborn, RB Leipzig, Schalke 04, Union Berlin, VfB Stuttgart, Werder Bremen
-
-## ligue1 (18)
-Angers, Auxerre, Brest, Le Havre, Le Mans, Lens, Lille, Lorient, Lyon, Marseille, Monaco, Nice, Paris FC, Paris Saint-Germain, Rennes, Strasbourg, Toulouse, Troyes
-
-## rpl (16)
-Akron Togliatti, Baltika, CSKA Moscow, Dinamo Moscow, Dynamo Makhachkala, FC Krasnodar, FC Orenburg, FC Rostov, FK Akhmat, Fakel, Krylya Sovetov Samara, Lokomotiv Moscow, Rodina, Rubin Kazan, Spartak Moscow, Zenit St. Petersburg
-
-=== Поиск id Лиги Европы (четверги) ===
-
-20261022 крупные id:
-   943229: ['Ararat Armenia-AZ Alkmaar', 'Dinamo Zagreb-NEC Nijmegen', 'Ferencváros-Torreense']
-   943231: ['Kairat Almaty-Panathinaikos', 'Nordsjælland-CSKA Sofia', 'FK Crvena Zvezda-FC København']
-   913550: ['FC Cincinnati-DC United']
-   949117: ['Lions FC-Preston Lions']
-   944910: ['C.S. Cartaginés-CD Olimpia']
-   949004: ['Firpo-Deportivo Saprissa']
-   946196: ['Universidad de Chile-Antofagasta']
-   938416: ['Santa Fe-Once Caldas', 'Barranquilla FC-América de Cali']
-   938219: ['Reading-Leyton Orient']
-   942122: ['FC Bihor Oradea-CSM Reșița']
-   938628: ['Deportivo Mixco-CSD Municipal']
-   941466: ['CD FAS-Isidro Metapan']
-
-20261023 крупные id:
-   943229: ['AFC Bournemouth-Milan', 'Beşiktaş-Crystal Palace', 'Celtic-Celta Vigo']
-   943231: ['AGF-Egnatia', 'Ajax-Atalanta', 'Borac Banja Luka-KuPS']
-   936592: ['Hobro-Vendsyssel FF', 'Hvidovre-HB Køge']
-   938638: ['FA 2000-HIK', 'FC Roskilde-Fremad Amager']
-   945609: ['Anagennisi Deryneia-Ethnikos Achnas']
-   938696: ['Austria Wien II-Sturm Graz II', 'FC Hertha Wels-Voitsberg', 'First Vienna FC-Floridsdorfer AC']
-   938639: ['Frem-FC Helsingør', 'Sundby BK-Brønshøj']
-   944397: ['Al-Arabi-Al-Nejmeh', 'FC Istiklol-Homs Al Fidaa']
-   944396: ['Ahal-Al-Ansar', 'Al-Ittihad-Paro FC']
-   944401: ['Fortis-Regar-TadAZ', 'FC Goa-Al-Qadsia']
-   949112: ['South Melbourne-Sydney United 58']
-   949115: ['Adelaide City-APIA Leichhardt FC']
-
-20261029 крупные id:
-   938221: ['Manchester City-Brighton & Hove Albion', 'AFC Bournemouth-Aston Villa', 'Fulham-Crystal Palace']
-   913550: ['Charlotte FC-CF Montréal', 'Inter Miami CF-FC Cincinnati', 'New England Revolution-Red Bull New York']
-   949112: ['Canberra Croatia-South Melbourne']
-   944910: ['CD Olimpia-C.S. Cartaginés']
-   949004: ['Deportivo Saprissa-Firpo']
-   944879: ['NFC Volos-Atromitos']
-   944691: ['CFR Cluj-Universitatea Cluj', 'Concordia Chiajna-Sepsi OSK']
-   944693: ['FC Voluntari-Universitatea Craiova']
-   936417: ['Bayer Leverkusen-1. FC Nürnberg', 'Bayern München-Magdeburg', 'Hannover 96-Kaiserslautern']
-   938649: ['Lechia Gdańsk-Jagiellonia Białystok', 'Arka Gdynia-Stal Rzeszów', 'Polonia Warszawa-Korona Kielce']
-   942484: ['FC Porto-Académico Viseu', 'Braga-Famalicão']
-   938628: ['Coban Imperial-CD Suchitepéquez', 'Deportivo Malacateco-Aurora FC', 'CSD Municipal-Comunicaciones FC']
-
-20261030 крупные id:
-   938221: ['Everton-Newcastle United']
-   936592: ['AaB-Hobro']
-   938638: ['HIK-Nykøbing FC', 'Skive-VSK Aarhus']
-   945609: ['Doxa Katokopia-Iraklis Gerolakkou', 'Ermis Aradippou-Anagennisi Deryneia']
-   938696: ['SKN St. Pölten-FC Hertha Wels', 'Austria Salzburg-SKU Amstetten']
-   938639: ['FC Helsingør-Ringsted']
-   949115: ['Broadmeadow Magic-Adelaide City']
-   949116: ['Sydney Olympic-Marconi Stallions']
-   938366: ['Grazer AK-Hartberg']
-   944910: ['LD Alajuelense-FC Motagua']
-   944692: ['Gloria Bistrița-FCSB']
-   942063: ['Karmiotissa-Olympiakos Nicosia']
-
-==== DONE3
+==== DONE4
