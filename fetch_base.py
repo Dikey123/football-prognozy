@@ -91,12 +91,17 @@ today_s = today.strftime("%Y-%m-%d")
 updated = added = 0
 scores = {}       # для settle: {рус_хозяева: "2:1"}
 unmapped = set()
+errors = []
+got_any = False
 
 for i in range(DAYS):
     d = (today + datetime.timedelta(days=i)).strftime("%Y%m%d")
     resp = get(f"/football-get-matches-by-date?date={d}")
-    if "_err" in resp:
-        print("ERR", d, resp["_err"]); continue
+    if "_err" in resp or resp.get("status") == "failed":
+        errors.append(f"{d}: {resp.get('_err') or resp.get('message')}")
+        print("ERR", d, resp.get("_err") or resp.get("message")); continue
+    if resp.get("response", {}).get("matches"):
+        got_any = True
     for m in resp.get("response", {}).get("matches", []):
         tid = LEAGUES.get(m.get("leagueId"))
         if not tid: continue
@@ -127,12 +132,25 @@ for i in range(DAYS):
             tour[tid]["matches"].append(nm)
             added += 1
 
-print(f"updated={updated} added={added} finished_scores={len(scores)} unmapped={len(unmapped)}  DRY={DRY}")
+summary = f"updated={updated} added={added} finished_scores={len(scores)} unmapped={len(unmapped)} errors={len(errors)} got_any={got_any} DRY={DRY}"
+print(summary)
 if unmapped:
     print("UNMAPPED:", sorted(unmapped))
+try:
+    with open("fetch_log.txt", "w", encoding="utf-8") as f:
+        f.write(datetime.datetime.utcnow().isoformat() + "Z\n" + summary + "\n")
+        if errors:
+            f.write("ERRORS:\n" + "\n".join(errors) + "\n")
+        if unmapped:
+            f.write("UNMAPPED: " + ", ".join(sorted(unmapped)) + "\n")
+except Exception:
+    pass
 
 if DRY:
     print("DRY RUN — запись не выполнялась")
+    print("==== DONE5")
+elif not got_any:
+    print("Ни одного успешного ответа API — data.json НЕ трогаем (вероятно лимит API).")
     print("==== DONE5")
 else:
     for t in data["tournaments"]:
