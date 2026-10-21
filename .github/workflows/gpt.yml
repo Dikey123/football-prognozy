@@ -1,0 +1,46 @@
+name: Мнение ChatGPT (gpt.json)
+
+on:
+  push:
+    paths: ["data.json"]        # как только обновился data.json — пересобираем мнения
+  schedule:
+    - cron: "0 */6 * * *"       # и раз в 6 часов на всякий случай
+  workflow_dispatch: {}          # и кнопкой вручную во вкладке Actions
+
+permissions:
+  contents: write                # чтобы коммитить gpt.json обратно
+
+concurrency:
+  group: gpt-gen
+  cancel-in-progress: false
+
+jobs:
+  gen:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Установить зависимости
+        run: pip install "openai>=1.0"
+
+      - name: Сгенерировать мнения
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          OPENAI_MODEL: gpt-4o-mini
+        run: python gen_gpt.py
+
+      - name: Закоммитить gpt.json при изменениях
+        run: |
+          git config user.name "kaper-ai-bot"
+          git config user.email "actions@users.noreply.github.com"
+          if ! git diff --quiet -- gpt.json; then
+            git add gpt.json
+            git commit -m "chore: обновление мнения ChatGPT (gpt.json)"
+            git push
+          else
+            echo "gpt.json без изменений — коммит не нужен"
+          fi
