@@ -37,10 +37,10 @@ jobs:
         run: |
           git config user.name "kaper-ai-bot"
           git config user.email "actions@users.noreply.github.com"
-          if ! git diff --quiet -- gpt.json; then
-            git add gpt.json
+          git add gpt.json
+          if git diff --cached --quiet; then
+            echo "gpt.json без изменений — коммит не нужен"
+          else
             git commit -m "chore: обновление мнения ChatGPT (gpt.json)"
             git push
-          else
-            echo "gpt.json без изменений — коммит не нужен"
           fi
