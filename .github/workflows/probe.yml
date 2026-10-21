@@ -1,0 +1,26 @@
+name: API probe
+on:
+  workflow_dispatch: {}
+  push:
+    paths: ["probe_api.py"]
+permissions:
+  contents: write
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Run probe
+        env:
+          API_FOOTBALL_KEY: ${{ secrets.API_FOOTBALL_KEY }}
+        run: python probe_api.py > probe_out.txt 2>&1 || true
+      - name: Commit output
+        run: |
+          git config user.name "probe"
+          git config user.email "actions@users.noreply.github.com"
+          git add -A
+          git commit -m "probe output" || echo "no changes"
+          git push || echo "push failed"
