@@ -1,5 +1,13 @@
 /home/runner/work/football-prognozy/football-prognozy/fetch_base.py:141: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
   f.write(datetime.datetime.utcnow().isoformat() + "Z\n" + summary + "\n")
-updated=83 added=0 finished_scores=0 unmapped=0 errors=0 got_any=True DRY=False
-data.json записан.
+ERR 20261022 HTTP Error 429: Too Many Requests
+ERR 20261023 HTTP Error 429: Too Many Requests
+ERR 20261024 HTTP Error 429: Too Many Requests
+ERR 20261025 HTTP Error 429: Too Many Requests
+ERR 20261026 HTTP Error 429: Too Many Requests
+ERR 20261027 HTTP Error 429: Too Many Requests
+ERR 20261028 HTTP Error 429: Too Many Requests
+ERR 20261029 HTTP Error 429: Too Many Requests
+updated=0 added=0 finished_scores=0 unmapped=0 errors=8 got_any=False DRY=False
+Ни одного успешного ответа API — data.json НЕ трогаем (вероятно лимит API).
 ==== DONE5
