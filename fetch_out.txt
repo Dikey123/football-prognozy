@@ -1,5 +1,5 @@
 /home/runner/work/football-prognozy/football-prognozy/fetch_base.py:141: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
   f.write(datetime.datetime.utcnow().isoformat() + "Z\n" + summary + "\n")
-updated=80 added=3 finished_scores=0 unmapped=0 errors=0 got_any=True DRY=False
+updated=83 added=0 finished_scores=0 unmapped=0 errors=0 got_any=True DRY=False
 data.json записан.
 ==== DONE5
