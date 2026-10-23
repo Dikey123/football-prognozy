@@ -195,7 +195,7 @@ def main():
                     air='win' if ao==out else 'lose'
             if air in ("win","lose","push"): R["ai"][air]+=1
             ai75=None
-            if (ai_opinion.get("eligible") is not False and ai_prob is not None
+            if (ai_opinion.get("eligible") is True and ai_prob is not None
                     and ai_prob >= AI_MIN_PROBABILITY and ai_pick
                     and ai_pick_has_coefficient(ai_opinion, m)):
                 if published_before_kickoff(ai_opinion, m):
