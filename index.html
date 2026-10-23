@@ -359,15 +359,6 @@ function cardInner(m,open){
   const o=m.odds||[null,null,null],valid=o.filter(x=>x!=null),fav=valid.length?o.indexOf(Math.min(...valid)):-1;
   const op=open?" open":"";
   let h='<div class="odds">'+["П1","Х","П2"].map((l,i)=>'<div class="odd'+(i===fav?" fav":"")+'"><b>'+l+'</b><span>'+(o[i]==null?"—":Number(o[i]).toFixed(2))+'</span></div>').join("")+'</div>';
-  const sources=m.odds_sources||[];
-  if(sources.length){
-    const fmt=x=>x==null?"—":Number(x).toFixed(2);
-    const quoteStamp=m.odds_updated||sources.map(q=>q.updated).filter(Boolean).sort().slice(-1)[0]||"";
-    const stampText=quoteStamp?new Date(quoteStamp).toLocaleString("ru-RU",{dateStyle:"short",timeStyle:"short"}):"";
-    h+='<details class="odds-sources"><summary>Коэффициенты ('+sources.length+' источников)</summary>'
-      +(stampText?'<div class="nsrc">Обновлено: '+esc(stampText)+'</div>':'')
-      +'<ul class="tips">'+sources.map(q=>{const v=q.odds||[];return '<li class="tip"><span class="src">'+esc(q.name||"Источник")+'</span><span class="pick">П1 '+fmt(v[0])+' · Х '+fmt(v[1])+' · П2 '+fmt(v[2])+'</span><span class="k"></span></li>'}).join("")+'</ul></details>';
-  }
   h+='<div class="cbody">';
   if(m.context)h+='<p class="context">'+esc(m.context)+'</p>';
   h+='<div class="lean"><div class="lean-top"><span>Куда склоняются эксперты</span><span>'+tot+' из '+tips.length+' прогнозов на исход</span></div>'
