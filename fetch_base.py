@@ -1,10 +1,11 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """Автономный сбор базы (GitHub Actions): расписание, время, счёт, результаты.
-Источник расписания и результатов: free-api-live-football-data (RapidAPI).
+Основной источник — free-api-live-football-data (RapidAPI); ESPN scoreboard
+подхватывает недавние результаты при ошибке/исчерпании квоты основного API.
 Прогнозы с сайтов собирает отдельный collect_tips.py. По умолчанию DRY-RUN
 (без записи); DRY_RUN=0 включает запись."""
-import os, json, time, urllib.request, urllib.error, datetime, subprocess
+import os, json, time, re, unicodedata, urllib.request, urllib.error, datetime, subprocess
 
 KEY = os.environ.get("API_FOOTBALL_KEY", "")
 HOST = "free-api-live-football-data.p.rapidapi.com"
@@ -12,6 +13,11 @@ DRY = os.environ.get("DRY_RUN", "1") == "1"
 DAY_OFFSETS = (-2, -1, 4)  # два прошлых дня и новый крайний день расписания
 
 LEAGUES = {47:"epl",87:"laliga",55:"seriea",54:"bundesliga",53:"ligue1",63:"rpl",943230:"ucl",943229:"uel"}
+ESPN_LEAGUES = {
+    "eng.1": "epl", "esp.1": "laliga", "ita.1": "seriea",
+    "ger.1": "bundesliga", "fra.1": "ligue1", "rus.1": "rpl",
+    "uefa.champions": "ucl", "uefa.europa": "uel",
+}
 
 TEAM = {
  "Arsenal":"Арсенал","Aston Villa":"Астон Вилла","Bayern München":"Бавария","Real Betis":"Бетис",
@@ -86,8 +92,129 @@ def msk(utc):
 def norm(s):
     return s.replace("РБ ","").replace("ФК ","").lower().replace(" ","").replace("-","").replace("ё","е")
 
+def normalized_team_name(value):
+    value = unicodedata.normalize("NFKD", str(value or "")).encode("ascii", "ignore").decode("ascii")
+    value = value.casefold()
+    value = re.sub(r"\b(?:fc|afc|cf|sc|ac|as|club)\b", "", value)
+    return re.sub(r"[^a-z0-9]", "", value)
+
+TEAM_BY_ESPN_NAME = {normalized_team_name(source): target for source, target in TEAM.items()}
+TEAM_BY_ESPN_NAME.update({
+    "manutd": "Манчестер Юнайтед", "manunited": "Манчестер Юнайтед",
+    "mancity": "Манчестер Сити", "athleticbilbao": "Атлетик",
+    "intermilan": "Интер", "internazionale": "Интер",
+    "bayernmunich": "Бавария", "parissaintgermain": "ПСЖ",
+    "psg": "ПСЖ", "barcelona": "Барселона", "realmadrid": "Реал Мадрид",
+})
+
+def espn_team_name(team):
+    """Translate ESPN's English display names to the Russian team labels in data.json."""
+    if isinstance(team, dict):
+        candidates = (team.get("displayName"), team.get("name"), team.get("shortDisplayName"))
+    else:
+        candidates = (team,)
+    for candidate in candidates:
+        if not candidate:
+            continue
+        mapped = TEAM_BY_ESPN_NAME.get(normalized_team_name(candidate))
+        if mapped:
+            return mapped
+    return None
+
+def fetch_espn_results(today):
+    """Free fallback for completed scores when the RapidAPI quota is exhausted."""
+    results = {}
+    seen = set()
+    responded = 0
+    updated = added = 0
+    unmapped = set()
+    failures = []
+    target_dates = {(today + datetime.timedelta(days=x)).strftime("%Y-%m-%d") for x in (-2, -1, 0)}
+    for league, tid in ESPN_LEAGUES.items():
+        for offset in (-2, -1, 0):
+            day = today + datetime.timedelta(days=offset)
+            date_key = day.strftime("%Y%m%d")
+            url = f"https://site.api.espn.com/apis/site/v2/sports/soccer/{league}/scoreboard?dates={date_key}"
+            req = urllib.request.Request(url, headers={
+                "User-Agent": "FootballForecastCollector/1.0",
+                "Accept": "application/json",
+            })
+            try:
+                with urllib.request.urlopen(req, timeout=20) as response:
+                    payload = json.loads(response.read().decode("utf-8", "replace"))
+                responded += 1
+            except Exception as exc:
+                failures.append(f"ESPN {league} {date_key}: {exc}")
+                continue
+
+            for event in payload.get("events", []):
+                event_date = event.get("date")
+                try:
+                    kickoff = datetime.datetime.fromisoformat(event_date.replace("Z", "+00:00"))
+                    if kickoff.tzinfo is None:
+                        kickoff = kickoff.replace(tzinfo=datetime.timezone.utc)
+                    local_date = kickoff.astimezone(datetime.timezone(datetime.timedelta(hours=3))).strftime("%Y-%m-%d")
+                    local_time = kickoff.astimezone(datetime.timezone(datetime.timedelta(hours=3))).strftime("%H:%M")
+                except (AttributeError, TypeError, ValueError):
+                    continue
+                if local_date not in target_dates:
+                    continue
+
+                competitions = event.get("competitions") or []
+                if not competitions:
+                    continue
+                competition = competitions[0]
+                status_container = competition.get("status") or event.get("status") or {}
+                status = status_container.get("type") or {}
+                if not (status.get("completed") or status.get("state") == "post"):
+                    continue
+
+                home = away = None
+                home_score = away_score = None
+                for competitor in competition.get("competitors", []):
+                    side = competitor.get("homeAway")
+                    mapped_name = espn_team_name(competitor.get("team", {}))
+                    score = str(competitor.get("score", ""))
+                    if side == "home":
+                        home, home_score = mapped_name, score
+                    elif side == "away":
+                        away, away_score = mapped_name, score
+                if not home or not away:
+                    raw_teams = [c.get("team", {}).get("displayName", "?") for c in competition.get("competitors", [])]
+                    unmapped.update(str(name) for name in raw_teams)
+                    continue
+                if not (home_score.isdigit() and away_score.isdigit()):
+                    continue
+
+                score = f"{home_score}:{away_score}"
+                key = (tid, local_date, home, away)
+                if key in seen:
+                    continue
+                seen.add(key)
+                match = next((m for m in tour[tid]["matches"]
+                              if m.get("home") == home and m.get("away") == away
+                              and m.get("date") == local_date), None)
+                if match is None:
+                    match = {"date": local_date, "time": local_time, "home": home,
+                             "away": away, "status": "full", "ft": score}
+                    tour[tid]["matches"].append(match)
+                    added += 1
+                else:
+                    match["ft"] = score
+                    match["status"] = "full"
+                    updated += 1
+                results[home] = score
+
+    print(f"ESPN fallback: responses={responded}/{len(ESPN_LEAGUES) * 3} updated={updated} added={added} finished_scores={len(results)} unmapped={len(unmapped)} errors={len(failures)}")
+    if unmapped:
+        print("ESPN UNMAPPED:", sorted(unmapped))
+    if failures:
+        print("ESPN ERRORS:", " | ".join(failures[:8]))
+    return results, responded > 0, updated, added
+
 data = json.load(open("data.json"))
 tour = {t["id"]: t for t in data["tournaments"]}
+original_data = json.loads(json.dumps(data))
 
 def find_match(tid, hr, ar):
     t = tour.get(tid)
@@ -152,6 +279,17 @@ for request_index, offset in enumerate(DAY_OFFSETS):
             added += 1
 
 summary = f"updated={updated} added={added} finished_scores={len(scores)} unmapped={len(unmapped)} errors={len(errors)} got_response={got_response} DRY={DRY}"
+fallback_ok = False
+if errors:
+    print("RapidAPI returned errors; restoring the previous schedule and trying ESPN for recent results.")
+    data = original_data
+    tour = {t["id"]: t for t in data["tournaments"]}
+    updated = added = 0
+    scores = {}
+    espn_scores, fallback_ok, updated, added = fetch_espn_results(today)
+    scores.update(espn_scores)
+    got_response = got_response or fallback_ok
+    summary = f"updated={updated} added={added} finished_scores={len(scores)} unmapped={len(unmapped)} errors={len(errors)} espn_fallback={fallback_ok} DRY={DRY}"
 print(summary)
 if unmapped:
     print("UNMAPPED:", sorted(unmapped))
@@ -167,12 +305,12 @@ except Exception:
 
 if DRY:
     print("DRY RUN — запись не выполнялась")
-    if errors:
-        raise SystemExit("API ответил ошибками; см. журнал выше.")
+    if errors and not fallback_ok:
+        raise SystemExit("Основной и резервный источники не ответили; см. журнал выше.")
     print("==== DONE5")
-elif errors:
-    print("Обновление отменено: API вернул неполный набор ответов, существующие данные сохранены.")
-    raise SystemExit("Сбор данных не завершён — проверьте лимит и ключ API.")
+elif errors and not fallback_ok:
+    print("Обновление отменено: основной и резервный источники не вернули данные; существующие файлы сохранены.")
+    raise SystemExit("Сбор данных не завершён — проверьте лимиты API и доступность источников.")
 elif not got_response:
     print("Ни одного успешного ответа API — data.json НЕ трогаем (вероятно лимит API).")
     raise SystemExit("API не вернул матчи; существующие данные сохранены.")
@@ -194,3 +332,4 @@ else:
         except Exception as e:
             print("settle err:", e)
     print("==== DONE5")
+
