@@ -264,12 +264,14 @@ footer{font-size:12px;color:var(--muted);text-align:center;padding-top:18px}
   .tip{grid-template-columns:1fr auto}
   .tip .src{grid-column:1/-1}
   .pitches{grid-template-columns:1fr}
-  .fx{grid-template-columns:50px 1fr auto;row-gap:2px}
-  .fx .h{text-align:left;grid-column:2}
+  .fx{grid-template-columns:50px minmax(0,1fr) auto;grid-template-areas:"time home fav" "time away fav";row-gap:2px}
+  .fx .t{grid-area:time}
+  .fx .h{text-align:left;grid-area:home}
   .fx .vs{display:none}
-  .fx .a{grid-column:2}
-  .fx .t{grid-row:1/3}
-  .fx .st{grid-row:1/3;grid-column:3}
+  .fx.finished{grid-template-areas:"time home fav" "time score fav" "time away fav"}
+  .fx.finished .vs{display:block;grid-area:score;text-align:left}
+  .fx .a{grid-area:away}
+  .fx .st{grid-area:fav}
 }
 @media (prefers-reduced-motion:no-preference){
   .match,.fx{transition:border-color .2s,background .2s}
@@ -386,7 +388,7 @@ function fixtureRow(m){
   const st=matchState(m);
   const score=actualScore(m),label=st==="live"?"LIVE":st==="done"?"ЗАВ.":esc(m.time);
   const mid=st==="done"?(score?'<span class="vs final">'+esc(score)+'</span>':'<span class="vs no-score">счёт?</span>'):'<span class="vs">—</span>';
-  return '<a class="fx" href="#m-'+m._id+'"><span class="t">'+label+'</span><span class="h">'+esc(m.home)+'</span>'+mid+'<span class="a">'+esc(m.away)+'</span><span class="st'+(isFav(m)?" on":"")+'" data-fav="'+m._id+'" role="button" tabindex="0" aria-label="В избранное">'+(isFav(m)?"★":"☆")+'</span></a>';
+  return '<a class="fx'+(st==="done"?" finished":"")+'" href="#m-'+m._id+'"><span class="t">'+label+'</span><span class="h">'+esc(m.home)+'</span>'+mid+'<span class="a">'+esc(m.away)+'</span><span class="st'+(isFav(m)?" on":"")+'" data-fav="'+m._id+'" role="button" tabindex="0" aria-label="В избранное">'+(isFav(m)?"★":"☆")+'</span></a>';
 }
 
 function allMatches(){const a=[];D.tournaments.forEach(t=>t.matches.forEach(m=>a.push(m)));return a}
