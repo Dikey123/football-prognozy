@@ -4,6 +4,7 @@ on:
   schedule:
     - cron: "0 */3 * * *"      # каждые 3 часа
   push:
+    branches: [main]
     paths: ["fetch_base.py", ".github/workflows/update.yml"]
 
 permissions:
@@ -25,11 +26,17 @@ jobs:
         env:
           API_FOOTBALL_KEY: ${{ secrets.API_FOOTBALL_KEY }}
           DRY_RUN: "0"
-        run: python fetch_base.py > fetch_out.txt 2>&1 || true
+        run: |
+          set -o pipefail
+          python fetch_base.py 2>&1 | tee fetch_out.txt
       - name: Закоммитить изменения
         run: |
           git config user.name "base-bot"
           git config user.email "actions@users.noreply.github.com"
-          git add -A
-          git commit -m "auto: обновление расписания/счёта/результатов" || echo "no changes"
-          git push || echo "push failed"
+          git add data.json results.json scores_api.json fetch_log.txt fetch_out.txt
+          if git diff --cached --quiet; then
+            echo "no changes"
+          else
+            git commit -m "auto: обновление расписания/счёта/результатов"
+          fi
+          git push

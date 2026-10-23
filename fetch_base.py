@@ -64,6 +64,8 @@ def get(path):
     try:
         with urllib.request.urlopen(req, timeout=25) as r:
             return json.loads(r.read().decode("utf-8","replace"))
+    except urllib.error.HTTPError as e:
+        return {"_err": f"HTTP Error {e.code}: {e.reason}", "_status": e.code}
     except Exception as e:
         return {"_err": str(e)}
 
@@ -99,7 +101,11 @@ for i in range(DAYS):
     resp = get(f"/football-get-matches-by-date?date={d}")
     if "_err" in resp or resp.get("status") == "failed":
         errors.append(f"{d}: {resp.get('_err') or resp.get('message')}")
-        print("ERR", d, resp.get("_err") or resp.get("message")); continue
+        print("ERR", d, resp.get("_err") or resp.get("message"))
+        if resp.get("_status") == 429:
+            print("Остановка запросов: достигнут лимит API (HTTP 429).")
+            break
+        continue
     if resp.get("response", {}).get("matches"):
         got_any = True
     for m in resp.get("response", {}).get("matches", []):
@@ -148,13 +154,19 @@ except Exception:
 
 if DRY:
     print("DRY RUN — запись не выполнялась")
+    if errors:
+        raise SystemExit("API ответил ошибками; см. журнал выше.")
     print("==== DONE5")
+elif errors:
+    print("Обновление отменено: API вернул неполный набор ответов, существующие данные сохранены.")
+    raise SystemExit("Сбор данных не завершён — проверьте лимит и ключ API.")
 elif not got_any:
     print("Ни одного успешного ответа API — data.json НЕ трогаем (вероятно лимит API).")
-    print("==== DONE5")
+    raise SystemExit("API не вернул матчи; существующие данные сохранены.")
 else:
     for t in data["tournaments"]:
         t["matches"].sort(key=lambda x: (x.get("date", ""), x.get("time", "")))
+    data["today"] = today_s
     data["updated"] = datetime.datetime.now(
         datetime.timezone(datetime.timedelta(hours=3))).strftime("%Y-%m-%dT%H:%M:%S+03:00")
     json.dump(data, open("data.json", "w"), ensure_ascii=False, indent=1)
