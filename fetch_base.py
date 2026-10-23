@@ -110,7 +110,8 @@ TEAM_BY_ESPN_NAME.update({
     "lasklinz": "ЛАСК", "hapoelbeer": "Хапоэль Беэр-Шева",
     "akhmatgrozny": "Ахмат", "akrontolyatti": "Акрон", "alaves": "Алавес",
     "deportivo": "Депортиво", "cologne": "Кёльн", "fakelvoronezh": "Факел",
-    "hamburgsv": "Гамбург", "krylyasovetov": "Крылья Советов", "mainz": "Майнц",
+    "hamburgsv": "Гамбург", "krylyasovetov": "Крылья Советов",
+    "kryliasovetov": "Крылья Советов", "mainz": "Майнц",
     "psg": "ПСЖ", "barcelona": "Барселона", "realmadrid": "Реал Мадрид",
 })
 
