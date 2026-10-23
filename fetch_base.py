@@ -7,8 +7,17 @@
 Прогнозы с сайтов собирает отдельный collect_tips.py. По умолчанию DRY-RUN
 (без записи); DRY_RUN=0 включает запись."""
 import os, json, time, re, unicodedata, urllib.request, urllib.error, datetime, subprocess
+from urllib.parse import urlencode
 
 KEY = os.environ.get("API_FOOTBALL_KEY", "")
+ODDS_API_KEY = os.environ.get("ODDS_API_KEY", "")
+ODDS_REGIONS = os.environ.get("ODDS_REGIONS", "eu")
+ODDS_SPORTS = {
+    "epl": "soccer_epl", "laliga": "soccer_spain_la_liga",
+    "seriea": "soccer_italy_serie_a", "bundesliga": "soccer_germany_bundesliga",
+    "ligue1": "soccer_france_ligue_one", "rpl": "soccer_russia_premier_league",
+    "ucl": "soccer_uefa_champs_league", "uel": "soccer_uefa_europa_league",
+}
 HOST = "free-api-live-football-data.p.rapidapi.com"
 DRY = os.environ.get("DRY_RUN", "1") == "1"
 DAY_OFFSETS = (-2, -1, 4)  # два прошлых дня и новый крайний день расписания
@@ -232,6 +241,154 @@ def fetch_espn_matches(today):
         print("ESPN ERRORS:", " | ".join(failures[:8]))
     return results, responded > 0, updated, added, unmapped
 
+
+def fetch_open_odds():
+    """Обновляет коэффициенты 1X2 из открытого агрегатора букмекерских котировок."""
+    if not ODDS_API_KEY:
+        print("ODDS: пропуск — секрет ODDS_API_KEY не задан.")
+        return 0
+
+    now_utc = datetime.datetime.now(datetime.timezone.utc)
+    updated = quotes_total = 0
+    unmapped = set()
+    failures = []
+    remaining = None
+
+    for tid, sport in ODDS_SPORTS.items():
+        query = urlencode({
+            "apiKey": ODDS_API_KEY,
+            "regions": ODDS_REGIONS,
+            "markets": "h2h",
+            "oddsFormat": "decimal",
+            "dateFormat": "iso",
+        })
+        url = f"https://api.the-odds-api.com/v4/sports/{sport}/odds/?{query}"
+        req = urllib.request.Request(url, headers={
+            "User-Agent": "FootballForecastCollector/1.0",
+            "Accept": "application/json",
+        })
+        try:
+            with urllib.request.urlopen(req, timeout=30) as response:
+                remaining = response.headers.get("x-requests-remaining", remaining)
+                payload = json.loads(response.read().decode("utf-8", "replace"))
+        except urllib.error.HTTPError as exc:
+            body = exc.read().decode("utf-8", "replace")[:200]
+            failures.append(f"{sport}: HTTP {exc.code} {body}")
+            if exc.code == 429:
+                break
+            continue
+        except Exception as exc:
+            failures.append(f"{sport}: {exc}")
+            continue
+
+        if not isinstance(payload, list):
+            failures.append(f"{sport}: неожиданный формат ответа")
+            continue
+
+        # Удаляем вчерашние значения только для лиги, если API ответил успешно.
+        # При сетевой ошибке старые значения сохраняются и видна дата котировки.
+        for old_match in tour.get(tid, {}).get("matches", []):
+            if not old_match.get("ft") and old_match.get("status") != "full":
+                old_match.pop("odds", None)
+                old_match.pop("odds_sources", None)
+                old_match.pop("odds_updated", None)
+                old_match.pop("odds_provider", None)
+
+        for event in payload:
+            try:
+                kickoff = datetime.datetime.fromisoformat(
+                    str(event.get("commence_time", "")).replace("Z", "+00:00")
+                )
+                if kickoff.tzinfo is None:
+                    kickoff = kickoff.replace(tzinfo=datetime.timezone.utc)
+                if kickoff <= now_utc:
+                    continue
+                local_date = kickoff.astimezone(
+                    datetime.timezone(datetime.timedelta(hours=3))
+                ).strftime("%Y-%m-%d")
+            except (AttributeError, TypeError, ValueError):
+                continue
+
+            raw_home, raw_away = event.get("home_team"), event.get("away_team")
+            home, away = espn_team_name(raw_home), espn_team_name(raw_away)
+            if not home or not away:
+                if raw_home and not home:
+                    unmapped.add(str(raw_home))
+                if raw_away and not away:
+                    unmapped.add(str(raw_away))
+                continue
+            match = next((item for item in tour[tid]["matches"]
+                          if item.get("date") == local_date
+                          and item.get("home") == home
+                          and item.get("away") == away), None)
+            if not match or match.get("ft"):
+                continue
+
+            source_quotes = []
+            for bookmaker in event.get("bookmakers") or []:
+                values = [None, None, None]
+                quote_updated = bookmaker.get("last_update", "")
+                for market_data in bookmaker.get("markets") or []:
+                    if market_data.get("key") != "h2h":
+                        continue
+                    quote_updated = market_data.get("last_update") or quote_updated
+                    for outcome in market_data.get("outcomes") or []:
+                        outcome_name = str(outcome.get("name") or "")
+                        outcome_norm = normalized_team_name(outcome_name)
+                        mapped_outcome = espn_team_name(outcome_name)
+                        if outcome_norm == normalized_team_name(raw_home) or mapped_outcome == home:
+                            index = 0
+                        elif outcome_norm == normalized_team_name(raw_away) or mapped_outcome == away:
+                            index = 2
+                        elif outcome_name.casefold().strip() in {"draw", "the draw", "tie", "x"}:
+                            index = 1
+                        else:
+                            continue
+                        try:
+                            price = float(outcome.get("price"))
+                        except (TypeError, ValueError):
+                            continue
+                        if 1.01 < price < 100:
+                            values[index] = round(price, 2)
+                if any(value is not None for value in values):
+                    source_quotes.append({
+                        "name": bookmaker.get("title") or bookmaker.get("key") or "Букмекер",
+                        "odds": values,
+                        "updated": quote_updated,
+                    })
+
+            if not source_quotes:
+                continue
+            best = []
+            for index in range(3):
+                available = [quote["odds"][index] for quote in source_quotes
+                             if quote["odds"][index] is not None]
+                best.append(max(available) if available else None)
+            source_quotes.sort(key=lambda quote: quote["name"].casefold())
+            match["odds"] = best
+            match["odds_sources"] = source_quotes
+            match["odds_updated"] = max(
+                (quote["updated"] for quote in source_quotes if quote.get("updated")),
+                default="",
+            )
+            match["odds_provider"] = "The Odds API"
+            updated += 1
+            quotes_total += len(source_quotes)
+
+    if updated:
+        data["odds_updated"] = datetime.datetime.now(
+            datetime.timezone(datetime.timedelta(hours=3))
+        ).strftime("%Y-%m-%dT%H:%M:%S+03:00")
+    print(
+        f"ODDS: updated_matches={updated} bookmaker_quotes={quotes_total} "
+        f"remaining_credits={remaining or 'unknown'} errors={len(failures)}"
+    )
+    if failures:
+        print("ODDS ERRORS:", " | ".join(failures[:8]))
+    if unmapped:
+        print("ODDS UNMAPPED:", sorted(unmapped))
+    return updated
+
 data = json.load(open("data.json"))
 tour = {t["id"]: t for t in data["tournaments"]}
 original_data = json.loads(json.dumps(data))
@@ -336,6 +493,7 @@ elif not got_response:
     print("Ни одного успешного ответа API — data.json НЕ трогаем (вероятно лимит API).")
     raise SystemExit("API не вернул матчи; существующие данные сохранены.")
 else:
+    fetch_open_odds()
     for t in data["tournaments"]:
         t["matches"].sort(key=lambda x: (x.get("date", ""), x.get("time", "")))
     data["today"] = today_s
