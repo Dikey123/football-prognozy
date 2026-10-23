@@ -8,9 +8,8 @@
 Результат — gpt.json,
 ключ матча: "date|home|away" (ровно как поля в data.json).
 
-Инкрементально: однажды сгенерированное мнение не переписывается (пик
-«замораживается» до матча — важно для честного подсчёта проходимости).
-Чтобы пересчитать предстоящие матчи — запусти с FORCE=1.
+Прогноз обновляется не чаще раза в день и при поступлении новых результатов.
+После начала матча он фиксируется. Чтобы пересчитать предстоящие матчи — FORCE=1.
 
 ENV:
   OPENAI_API_KEY  — обязателен
@@ -147,6 +146,27 @@ def is_upcoming(match, now=None):
     except ValueError:
         return True
 
+def parse_timestamp(value):
+    if not value:
+        return None
+    try:
+        stamp = datetime.datetime.fromisoformat(str(value).replace("Z", "+00:00"))
+        return stamp.replace(tzinfo=datetime.timezone.utc) if stamp.tzinfo is None else stamp
+    except ValueError:
+        return None
+
+def needs_generation(key, matches, previous_generated, source_updates, now):
+    if FORCE or key not in matches:
+        return True
+    existing = matches[key]
+    generated = parse_timestamp(existing.get("generated_at") if isinstance(existing, dict) else None)
+    generated = generated or parse_timestamp(previous_generated)
+    if not generated:
+        return True
+    if generated.astimezone(MSK).date() < now.date():
+        return True
+    return any(stamp and stamp > generated for stamp in source_updates)
+
 def match_context(t, m, history):
     L = [f'Матч: {m.get("home","")} — {m.get("away","")}',
          f'Турнир: {t.get("name","")}, {t.get("round","")}',
@@ -187,13 +207,17 @@ def main():
     except (FileNotFoundError, json.JSONDecodeError):
         results = {}
     history = completed_matches(data, results)
+    previous_generated = ""
     try:
         with open(OUT_FILE, encoding="utf-8") as f:
             prev = json.load(f)
         matches = prev.get("matches") if isinstance(prev.get("matches"), dict) else {}
+        previous_generated = prev.get("generated", "")
     except (FileNotFoundError, json.JSONDecodeError):
         matches = {}
 
+    now_msk = datetime.datetime.now(MSK)
+    source_updates = [parse_timestamp(data.get("updated")), parse_timestamp(results.get("updated"))]
     client = OpenAI()
     added = 0
     attempted = 0
@@ -205,7 +229,7 @@ def main():
             if not is_upcoming(m):
                 continue
             k = mkey(m)
-            if k in matches and not FORCE:
+            if not needs_generation(k, matches, previous_generated, source_updates, now_msk):
                 continue
             attempted += 1
             try:
@@ -226,6 +250,7 @@ def main():
                     "text":  str(op.get("text", "")),
                     "conf":  conf,
                     "bet":   str(op.get("bet", "")),
+                    "generated_at": datetime.datetime.now(datetime.timezone.utc).isoformat(timespec="seconds").replace("+00:00", "Z"),
                 }
                 added += 1
                 print("OK  ", k, "→", matches[k]["bet"])
@@ -246,8 +271,8 @@ def main():
             "либо OPENAI_API_KEY неверный. Проверь platform.openai.com/account/billing."
         )
 
-    if not matches:
-        print("Нет мнений для записи — файл не меняю.")
+    if added == 0:
+        print("Нет новых или требующих обновления прогнозов — файл не меняю.")
         return
 
     out = {"generated": datetime.datetime.now(datetime.timezone.utc).isoformat(timespec="seconds").replace("+00:00", "Z"),
