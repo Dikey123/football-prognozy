@@ -233,6 +233,8 @@ summary .badge2{font-family:var(--mono);font-size:10px;letter-spacing:.06em;colo
 .fx .h{text-align:right;font-weight:600;min-width:0;overflow-wrap:anywhere}
 .fx .a{font-weight:600;min-width:0;overflow-wrap:anywhere}
 .fx .vs{font-family:var(--mono);font-size:12px;color:var(--muted)}
+.fx .vs.final{font-weight:700;color:var(--ink)}
+.fx .vs.no-score{font-size:10px}
 .fx .st{font-size:15px;color:var(--muted)}
 .fx .st.on{color:var(--star)}
 .pending{font-size:13px;color:var(--muted);padding:10px 14px;background:var(--raise);border-top:1px solid var(--line)}
@@ -240,6 +242,8 @@ summary .badge2{font-family:var(--mono);font-size:10px;letter-spacing:.06em;colo
 .note h3{font-family:var(--display);font-weight:600;font-size:17px;color:var(--ink);margin:0;text-transform:uppercase}
 .note p{margin:0}
 .empty{padding:28px;text-align:center;color:var(--muted);background:var(--surface);border:1px dashed var(--line);border-radius:12px;margin-top:14px}
+.data-warning{margin:0 0 12px;padding:10px 12px;border:1px solid color-mix(in srgb,var(--warn) 35%,var(--line));border-radius:10px;background:color-mix(in srgb,var(--warn) 10%,var(--surface));color:var(--warn);font-size:13px}
+.data-warning[hidden]{display:none}
 footer{font-size:12px;color:var(--muted);text-align:center;padding-top:18px}
 /* страница матча */
 .detail{padding-block:18px 0}
@@ -292,8 +296,9 @@ footer{font-size:12px;color:var(--muted);text-align:center;padding-top:18px}
     </div>
   </div>
 
-  <nav class="tabs" role="tablist" aria-label="Турниры" id="tabs"></nav>
+  <nav class="tabs" role="tablist" aria-label="Даты матчей: два дня назад — четыре дня вперёд" id="tabs"></nav>
   <div class="controls" id="controls"></div>
+  <div class="data-warning" id="data-warning" role="status" hidden></div>
 
   <main id="view"><div class="empty">Загружаю матчи…</div></main>
 
@@ -324,7 +329,8 @@ function hexLum(c){if(c[0]!=="#")return .5;const n=c.length===4?c.slice(1).split
 function initials(name){const w=String(name).replace(/[«»"().]/g,"").trim().split(/\s+/);if(w.length>=2)return (w[0][0]+w[1][0]).toUpperCase();const s=w[0]||"";return s.length<=3?s.toUpperCase():s.slice(0,2).toUpperCase()}
 function badge(name){const bg=clubColor(name),fg=hexLum(bg)>0.6?"#111":"#fff";return '<span class="badge" style="background:'+bg+';color:'+fg+'">'+esc(initials(name))+'</span>'}
 
-let D=null,tab=null,filter="all",dateFilter="all",query="",favs=new Set(),expCfg=null,expResult=null,expUse=null,expLocked=false,RES=null;
+let D=null,tab=null,filter="all",query="",favs=new Set(),expCfg=null,expResult=null,expUse=null,expLocked=false,RES=null,dataIsStale=false;
+const MAX_DATA_AGE_MS=24*60*60*1000;
 try{filter=localStorage.getItem("lch-filter")||"all"}catch(e){}
 try{favs=new Set(JSON.parse(localStorage.getItem("lch-favs")||"[]"))}catch(e){}
 function saveFavs(){try{localStorage.setItem("lch-favs",JSON.stringify([...favs]))}catch(e){}}
@@ -357,7 +363,8 @@ function cardInner(m,open){
   return h+'</div>';
 }
 function boardHead(m,st,asLink){
-  const t='<div class="mid"><div class="time'+(st==="live"?" live":"")+'">'+(st==="live"?"LIVE":esc(m.time))+'</div><div class="mcd'+(st==="live"?" live":"")+'" data-k="'+inst(m)+'">'+fmtCd(inst(m))+'</div>'+(m.venue?'<div class="venue">'+esc(m.venue)+'</div>':"")+'</div>';
+  const score=actualScore(m),finished=st==="done";
+  const t='<div class="mid"><div class="time'+(st==="live"?" live":"")+'">'+(st==="live"?"LIVE":finished&&score?esc(score):esc(m.time))+'</div><div class="mcd'+(st==="live"?" live":"")+'"'+(finished?"":' data-k="'+inst(m)+'"')+'>'+(finished?(score?"ФИНАЛ":"нет счёта"):fmtCd(inst(m)))+'</div>'+(m.venue?'<div class="venue">'+esc(m.venue)+'</div>':"")+'</div>';
   const inner='<div class="side-t"><span class="team">'+esc(m.home)+'</span></div>'+t+'<div class="side-t"><span class="team">'+esc(m.away)+'</span></div>';
   return asLink?'<a class="board" href="#m-'+m._id+'">'+inner+'</a>':'<div class="board">'+inner+'</div>';
 }
@@ -372,51 +379,64 @@ function card(m){
 }
 function fixtureRow(m){
   const st=matchState(m);
-  return '<a class="fx" href="#m-'+m._id+'"><span class="t">'+(st==="live"?"LIVE":esc(m.time))+'</span><span class="h">'+esc(m.home)+'</span><span class="vs">—</span><span class="a">'+esc(m.away)+'</span><span class="st'+(isFav(m)?" on":"")+'" data-fav="'+m._id+'" role="button" tabindex="0" aria-label="В избранное">'+(isFav(m)?"★":"☆")+'</span></a>';
+  const score=actualScore(m),label=st==="live"?"LIVE":st==="done"?"ЗАВ.":esc(m.time);
+  const mid=st==="done"?(score?'<span class="vs final">'+esc(score)+'</span>':'<span class="vs no-score">счёт?</span>'):'<span class="vs">—</span>';
+  return '<a class="fx" href="#m-'+m._id+'"><span class="t">'+label+'</span><span class="h">'+esc(m.home)+'</span>'+mid+'<span class="a">'+esc(m.away)+'</span><span class="st'+(isFav(m)?" on":"")+'" data-fav="'+m._id+'" role="button" tabindex="0" aria-label="В избранное">'+(isFav(m)?"★":"☆")+'</span></a>';
 }
 
 function allMatches(){const a=[];D.tournaments.forEach(t=>t.matches.forEach(m=>a.push(m)));return a}
 function nextMatch(){const n=Date.now();return allMatches().filter(m=>inst(m)>n).sort((a,b)=>inst(a)-inst(b))[0]||null}
 function liveMatches(){return allMatches().filter(m=>matchState(m)==="live")}
 
+function visibleDates(){return Array.from({length:7},(_,i)=>addDays(D.today,i-2))}
+function addDays(date,offset){const [y,m,d]=date.split("-").map(Number);return new Date(Date.UTC(y,m-1,d+offset)).toISOString().slice(0,10)}
+function dateTabLabel(date,offset){
+  if(offset===0)return "СЕГОДНЯ";
+  if(offset===-1)return "ВЧЕРА";
+  if(offset===1)return "ЗАВТРА";
+  if(offset===-2)return "2 ДНЯ НАЗАД";
+  const d=new Date(date+"T12:00:00");
+  return DAYS[d.getDay()].slice(0,2)+", "+d.getDate()+" "+MON[d.getMonth()].slice(0,3);
+}
+function actualScore(m){
+  if(m.ft)return String(m.ft).replace(/-/g,":");
+  const key=s=>String(s||"").toLowerCase().replace(/ё/g,"е").replace(/[^a-zа-я0-9]/gi,"");
+  const result=(RES&&RES.recent||[]).find(r=>r.date===m.date&&key(r.home)===key(m.home)&&key(r.away)===key(m.away));
+  return result&&result.score?String(result.score):"";
+}
 
 function renderTabs(){
-  const liveByT={};liveMatches().forEach(m=>liveByT[m._tab]=1);
-  const todayByT={};D.tournaments.forEach(t=>{if(t.matches.some(m=>m.date===D.today))todayByT[t.id]=1});
-  document.getElementById("tabs").innerHTML=D.tournaments.map(t=>'<button class="tab" role="tab" id="tab-'+t.id+'" data-id="'+t.id+'" aria-selected="'+(t.id===tab)+'">'+(liveByT[t.id]?'<i class="live"></i>':(todayByT[t.id]?'<i class="live" style="background:var(--pitch);animation:none"></i>':""))+esc(t.short||t.name)+'<span class="c">'+t.matches.length+'</span></button>').join("");
-  document.querySelectorAll(".tab").forEach(b=>b.onclick=()=>{location.hash=b.dataset.id});
+  const dates=visibleDates(),matches=allMatches();
+  document.getElementById("tabs").innerHTML=dates.map((d,i)=>{
+    const count=matches.filter(m=>m.date===d).length,offset=i-2;
+    const live=matches.some(m=>m.date===d&&matchState(m)==="live");
+    return '<button class="tab" role="tab" id="tab-'+d+'" data-date="'+d+'" aria-selected="'+(d===tab)+'" aria-label="'+esc(dLabel(d))+', матчей: '+count+'">'+(live?'<i class="live"></i>':"")+esc(dateTabLabel(d,offset))+'<span class="c">'+count+'</span></button>';
+  }).join("");
+  document.querySelectorAll(".tab").forEach(b=>b.onclick=()=>{location.hash=b.dataset.date});
 }
 function renderControls(){
-  const t=D.tournaments.find(x=>x.id===tab);
-  const dates=[...new Set(t.matches.map(m=>m.date))].sort();
   let h='<span class="lbl">Источники:</span>'
    +'<button class="chip" data-f="all" aria-pressed="'+(filter==="all")+'">Все</button>'
    +'<button class="chip" data-f="ru" aria-pressed="'+(filter==="ru")+'">Рунет</button>'
    +'<button class="chip" data-f="eu" aria-pressed="'+(filter==="eu")+'">Европа</button>';
-  if(dates.length>1){h+='<span class="chip sep" style="pointer-events:none;background:none;border:0;color:var(--muted)">Дата:</span><button class="chip" data-d="all" aria-pressed="'+(dateFilter==="all")+'">Все</button>'+dates.map(d=>{const dd=new Date(d+"T12:00:00");return '<button class="chip" data-d="'+d+'" aria-pressed="'+(dateFilter===d)+'">'+(d===D.today?"сегодня":dd.getDate()+" "+MON[dd.getMonth()].slice(0,3))+'</button>'}).join("")}
   const ctl=document.getElementById("controls");ctl.innerHTML=h;
   ctl.querySelectorAll("[data-f]").forEach(b=>b.onclick=()=>{filter=b.dataset.f;try{localStorage.setItem("lch-filter",filter)}catch(e){}renderList()});
-  ctl.querySelectorAll("[data-d]").forEach(b=>b.onclick=()=>{dateFilter=b.dataset.d;renderList()});
 }
 function renderList(){
   renderControls();
-  const t=D.tournaments.find(x=>x.id===tab);
-  let ms=[...t.matches];
-  if(dateFilter!=="all")ms=ms.filter(m=>m.date===dateFilter);
+  let ms=allMatches().filter(m=>m.date===tab);
   if(query)ms=ms.filter(m=>(m.home+" "+m.away).toLowerCase().includes(query));
-  ms.sort((a,b)=>(a.date+a.time).localeCompare(b.date+b.time));
-  const dates=[...new Set(ms.map(m=>m.date))];
-  let html='<div class="roundline">'+esc(t.name)+' · '+esc(t.round||"")+'</div>';
-  if(!ms.length)html+='<div class="empty">'+(query?"Ничего не найдено по запросу «"+esc(query)+"».":"Матчей нет.")+'</div>';
-  dates.forEach(d=>{
-    let day=ms.filter(m=>m.date===d);
-    day.sort((a,b)=>(isFav(b)-isFav(a))||(a.time+a.home).localeCompare(b.time+b.home));
-    const full=day.filter(m=>m.status==="full"),fx=day.filter(m=>m.status!=="full");
-    html+='<div class="day"><h2>'+dLabel(d)+'</h2>'+(d===D.today?'<span class="today">СЕГОДНЯ</span>':"")+'<span class="rule"></span><span class="n">матчей: '+day.length+'</span></div><div class="stack">';
-    html+=full.map(card).join("");
+  ms.sort((a,b)=>(a.time||"").localeCompare(b.time||"")||a.home.localeCompare(b.home,"ru"));
+  let html='<div class="day"><h2>'+dLabel(tab)+'</h2>'+(tab===D.today?'<span class="today">СЕГОДНЯ</span>':"")+'<span class="rule"></span><span class="n">матчей: '+ms.length+'</span></div>';
+  if(!ms.length)html+='<div class="empty">'+(query?"Ничего не найдено по запросу «"+esc(query)+"».":"На эту дату матчей нет.")+'</div>';
+  else if(tab<D.today){
+    html+='<div class="fixtures">'+ms.map(fixtureRow).join("")+(ms.some(m=>!actualScore(m))?'<div class="pending">Счёт для части матчей ещё не поступил из источника данных.</div>':"")+'</div>';
+  }else{
+    const full=ms.filter(m=>m.status==="full"),fx=ms.filter(m=>m.status!=="full");
+    html+='<div class="stack">'+full.map(card).join("");
     if(fx.length)html+='<div class="fixtures">'+fx.map(fixtureRow).join("")+'<div class="pending">Прогнозы, составы и новости появятся в день матча.</div></div>';
     html+='</div>';
-  });
+  }
   const v=document.getElementById("view");v.innerHTML=html;
   bindFavs(v);
 }
@@ -483,6 +503,7 @@ function readExpForm(){
 }
 function renderExpress(){
   const pool=expCands(),v=document.getElementById("view");
+  if(dataIsStale){v.innerHTML='<div class="detail"><button class="back" id="back">← Все матчи</button><div class="exp-warn">Экспресс временно скрыт: исходные данные не обновлялись более суток. Попробуйте позже.</div></div>';document.getElementById("back").onclick=()=>{location.hash=tab};return}
   const avail=CAT_ORDER.filter(c=>pool.some(p=>p.mk===c));
   const distinct=new Set(pool.map(c=>c.m._id)).size;
   if(distinct<2){v.innerHTML='<div class="detail"><button class="back" id="back">← Все матчи</button><div class="empty">Пока недостаточно матчей с коэффициентами, чтобы собрать экспресс. Загляните ближе к игровому дню.</div></div>';document.getElementById("back").onclick=()=>{location.hash=tab};return}
@@ -491,7 +512,7 @@ function renderExpress(){
   const locked=expLocked&&!unlocked();
   if(!expResult&&!locked)expResult=buildExpress(expCfg,pool,false);
   let h='<div class="detail"><button class="back" id="back">← Все матчи</button><div class="exp">'
-   +'<div class="exp-head"><span class="ai-label" style="color:var(--accent)">⚡ Конструктор экспресса</span><p>Выберите рынки, желаемый коэффициент и количество событий — ИИ подберёт самые вероятные прогнозы под ваши параметры.</p></div>'
+   +'<div class="exp-head"><span class="ai-label" style="color:var(--accent)">⚡ Конструктор экспресса</span><p>Выберите рынки, желаемый коэффициент и количество событий — алгоритм соберёт варианты по коэффициентам и вашим параметрам.</p></div>'
    +'<div class="exp-form">'
    +'<div class="exp-f"><label>Какие ставки включать</label><div class="exp-cats">'+avail.map(c=>'<button class="catchip" data-cat="'+esc(c)+'" aria-pressed="'+(expCfg.cats.has(c))+'">'+esc(c)+'</button>').join("")+'</div></div>'
    +'<div class="exp-nums">'
@@ -508,10 +529,10 @@ function renderExpress(){
   }else{
     const legs=expResult.legs,total=legs.reduce((a,c)=>a*c.odd,1),payout=Math.round(total*1000),impl=Math.round(100/total);
     if(expResult.approx)h+='<div class="exp-warn">Точно под коэффициент '+expCfg.target+' ± '+expCfg.tol+' собрать не вышло — показываю ближайший вариант ('+total.toFixed(2)+'). Увеличьте разброс или измените категории/количество.</div>';
-    h+='<ol class="exp-list">'+legs.map(c=>{const t=D.tournaments.find(x=>x.id===c.tab);return '<li class="exp-item"><a class="exp-m" href="#m-'+c.m._id+'"><span class="exp-teams">'+esc(c.m.home)+' — '+esc(c.m.away)+'</span><span class="exp-meta">'+esc(t.short||"")+' · '+esc(c.m.time)+' · шанс ~'+Math.round(100/c.odd)+'%</span></a><div class="exp-pick"><span class="pk"><span class="exp-mk">'+esc(c.mk)+'</span>'+esc(c.pick)+'</span><span class="exp-k">'+c.odd.toFixed(2)+'</span></div></li>'}).join("")+'</ol>'
-     +'<div class="exp-total"><div class="exp-row"><span>Событий в экспрессе</span><b>'+legs.length+'</b></div><div class="exp-row"><span>Итоговый коэффициент</span><b>'+total.toFixed(2)+'</b></div><div class="exp-row"><span>Оценка вероятности прохода</span><b>~'+impl+'%</b></div><div class="exp-row big"><span>1000 ₽ принесут</span><b>'+payout.toLocaleString("ru-RU")+' ₽</b></div></div>';
+    h+='<ol class="exp-list">'+legs.map(c=>{const t=D.tournaments.find(x=>x.id===c.tab);return '<li class="exp-item"><a class="exp-m" href="#m-'+c.m._id+'"><span class="exp-teams">'+esc(c.m.home)+' — '+esc(c.m.away)+'</span><span class="exp-meta">'+esc(t.short||"")+' · '+esc(c.m.time)+' · оценка по кф ~'+Math.round(100/c.odd)+'%</span></a><div class="exp-pick"><span class="pk"><span class="exp-mk">'+esc(c.mk)+'</span>'+esc(c.pick)+'</span><span class="exp-k">'+c.odd.toFixed(2)+'</span></div></li>'}).join("")+'</ol>'
+     +'<div class="exp-total"><div class="exp-row"><span>Событий в экспрессе</span><b>'+legs.length+'</b></div><div class="exp-row"><span>Итоговый коэффициент</span><b>'+total.toFixed(2)+'</b></div><div class="exp-row"><span>Грубая оценка по коэффициенту</span><b>~'+impl+'%</b></div><div class="exp-row big"><span>1000 ₽ принесут</span><b>'+payout.toLocaleString("ru-RU")+' ₽</b></div></div>';
   }
-  h+='<p class="exp-note">Это аналитика на основе коэффициентов и прогнозов, а не гарантия. В экспрессе должны сыграть все события — одна осечка проигрывает всю ставку. 18+, ставки связаны с риском потери денег.</p></div>';
+  h+='<p class="exp-note">Оценка по коэффициенту — не вероятность модели: она не учитывает маржу букмекера и зависимость событий. Подбор вариантов не является прогнозом ИИ или гарантией результата. В экспрессе должны сыграть все события — одна осечка проигрывает всю ставку. 18+, ставки связаны с риском потери денег.</p></div>';
   v.innerHTML=h;
   document.getElementById("back").onclick=()=>{location.hash=tab};
   v.querySelectorAll("[data-cat]").forEach(b=>b.onclick=()=>{readExpForm();const c=b.dataset.cat;if(expCfg.cats.has(c))expCfg.cats.delete(c);else expCfg.cats.add(c);saveCfg(expCfg);renderExpress()});
@@ -555,7 +576,7 @@ function renderDetail(m){
     +'<button class="star'+(isFav(m)?" on":"")+'" data-fav="'+m._id+'" title="В избранное" aria-label="В избранное">'+(isFav(m)?"★":"☆")+'</button>'
     +boardHead(m,st,false)+cardInner(m,true)+'</article>'
     +'<div class="share"><span>Ссылка на матч:</span><code>'+esc(url)+'</code><button id="copy">Копировать</button></div></div>';
-  document.getElementById("back").onclick=()=>{location.hash=m._tab};
+  document.getElementById("back").onclick=()=>{location.hash=m.date};
   const cp=document.getElementById("copy");
   cp.onclick=()=>{try{navigator.clipboard.writeText(url).then(()=>{cp.textContent="Скопировано ✓";setTimeout(()=>cp.textContent="Копировать",1600)},()=>fallbackCopy(url,cp))}catch(e){fallbackCopy(url,cp)}};
   bindFavs(v);
@@ -573,19 +594,33 @@ function bindFavs(root){
 }
 
 let byId={};
+function moscowToday(){
+  const parts=new Intl.DateTimeFormat("en-CA",{timeZone:"Europe/Moscow",year:"numeric",month:"2-digit",day:"2-digit"}).formatToParts(new Date());
+  const p=Object.fromEntries(parts.filter(x=>x.type!=="literal").map(x=>[x.type,x.value]));
+  return p.year+"-"+p.month+"-"+p.day;
+}
+function updateFreshnessWarning(){
+  const updatedAt=Date.parse(D&&D.updated||"");
+  dataIsStale=!Number.isFinite(updatedAt)||Date.now()-updatedAt>MAX_DATA_AGE_MS;
+  const warning=document.getElementById("data-warning");
+  warning.hidden=!dataIsStale;
+  if(dataIsStale)warning.textContent="⚠️ Данные не обновлялись более суток. Расписание и прогнозы могут быть устаревшими.";
+}
 function route(){
   const h=(location.hash||"").replace(/^#/,"");
-  if(h.indexOf("m-")===0){const m=byId[h.slice(2)];if(m){tab=m._tab;renderTabs();renderDetail(m);tickCd();scrollTo({top:0,behavior:"instant"in document.documentElement.style?"instant":"auto"});return}}
+  if(h.indexOf("m-")===0){const m=byId[h.slice(2)];if(m){tab=m.date;renderTabs();renderDetail(m);tickCd();scrollTo({top:0,behavior:"instant"in document.documentElement.style?"instant":"auto"});return}}
   if(h==="express"){renderExpress();scrollTo({top:0,behavior:"auto"});return}
   if(h==="rating"){renderRating();scrollTo({top:0,behavior:"auto"});return}
-  const ids=D.tournaments.map(t=>t.id);
-  if(ids.includes(h))tab=h;
-  else if(!tab)tab=(D.tournaments.find(t=>t.matches.some(m=>m.date===D.today))||D.tournaments[0]).id;
+  const dates=visibleDates();
+  if(dates.includes(h))tab=h;
+  else if(!dates.includes(tab))tab=D.today;
   renderTabs();renderList();tickCd();
   const at=document.getElementById("tab-"+tab);if(at)at.scrollIntoView({inline:"center",block:"nearest"});
 }
 function boot(data){
   D=data;byId={};
+  D.today=moscowToday();
+  updateFreshnessWarning();
   D.tournaments.forEach(t=>t.matches.forEach((m,i)=>{m._tab=t.id;let s=slug(m.home)+"-"+slug(m.away);if(byId[s])s+="-"+i;m._id=s;byId[s]=m;}));
   const todayN=allMatches().filter(m=>m.date===D.today).length;
   document.getElementById("eyebrow").textContent="Футбол Европы · "+dLabel(D.today);
@@ -594,7 +629,7 @@ function boot(data){
   route();
   clearInterval(window._tick);clearInterval(window._tick2);
   window._tick=setInterval(tickCd,1000);
-  window._tick2=setInterval(()=>{const h=location.hash||"";renderTabs();if(h.indexOf("#m-")!==0)renderList();else{const m=byId[h.slice(2)];if(m)renderDetail(m)}tickCd()},60000);
+  window._tick2=setInterval(()=>{D.today=moscowToday();if(!visibleDates().includes(tab))tab=D.today;updateFreshnessWarning();const h=location.hash||"";renderTabs();if(h.indexOf("#m-")!==0)renderList();else{const m=byId[h.slice(2)];if(m)renderDetail(m)}tickCd()},60000);
 }
 // тема
 // синхронизируем цвет шапки и фона Telegram с темой приложения (Mini App)

@@ -8,7 +8,7 @@ import os, json, urllib.request, urllib.error, datetime, subprocess
 KEY = os.environ.get("API_FOOTBALL_KEY", "")
 HOST = "free-api-live-football-data.p.rapidapi.com"
 DRY = os.environ.get("DRY_RUN", "1") == "1"
-DAYS = 8
+DAY_OFFSETS = range(-2, 5)  # от двух дней назад до четырёх дней вперёд
 
 LEAGUES = {47:"epl",87:"laliga",55:"seriea",54:"bundesliga",53:"ligue1",63:"rpl",943230:"ucl",943229:"uel"}
 
@@ -64,6 +64,8 @@ def get(path):
     try:
         with urllib.request.urlopen(req, timeout=25) as r:
             return json.loads(r.read().decode("utf-8","replace"))
+    except urllib.error.HTTPError as e:
+        return {"_err": f"HTTP Error {e.code}: {e.reason}", "_status": e.code}
     except Exception as e:
         return {"_err": str(e)}
 
@@ -86,7 +88,8 @@ def find_match(tid, hr, ar):
             return m
     return None
 
-today = datetime.date.today()
+today = datetime.datetime.now(
+    datetime.timezone(datetime.timedelta(hours=3))).date()
 today_s = today.strftime("%Y-%m-%d")
 updated = added = 0
 scores = {}       # для settle: {рус_хозяева: "2:1"}
@@ -94,12 +97,16 @@ unmapped = set()
 errors = []
 got_any = False
 
-for i in range(DAYS):
-    d = (today + datetime.timedelta(days=i)).strftime("%Y%m%d")
+for offset in DAY_OFFSETS:
+    d = (today + datetime.timedelta(days=offset)).strftime("%Y%m%d")
     resp = get(f"/football-get-matches-by-date?date={d}")
     if "_err" in resp or resp.get("status") == "failed":
         errors.append(f"{d}: {resp.get('_err') or resp.get('message')}")
-        print("ERR", d, resp.get("_err") or resp.get("message")); continue
+        print("ERR", d, resp.get("_err") or resp.get("message"))
+        if resp.get("_status") == 429:
+            print("Остановка запросов: достигнут лимит API (HTTP 429).")
+            break
+        continue
     if resp.get("response", {}).get("matches"):
         got_any = True
     for m in resp.get("response", {}).get("matches", []):
@@ -114,7 +121,7 @@ for i in range(DAYS):
         dd, tt = msk(st["utcTime"])
         fin = bool(st.get("finished"))
         sc = st.get("scoreStr", "").replace(" ", "")
-        ft = sc.replace("-", ":") if ("-" in sc) else None
+        ft = sc.replace("-", ":") if ("-" in sc) else (sc if ":" in sc else None)
         ex = find_match(tid, hr, ar)
         if ex:
             if ex.get("status") == "fixture":   # уточняем дату/время только для ещё не оформленных
@@ -148,13 +155,19 @@ except Exception:
 
 if DRY:
     print("DRY RUN — запись не выполнялась")
+    if errors:
+        raise SystemExit("API ответил ошибками; см. журнал выше.")
     print("==== DONE5")
+elif errors:
+    print("Обновление отменено: API вернул неполный набор ответов, существующие данные сохранены.")
+    raise SystemExit("Сбор данных не завершён — проверьте лимит и ключ API.")
 elif not got_any:
     print("Ни одного успешного ответа API — data.json НЕ трогаем (вероятно лимит API).")
-    print("==== DONE5")
+    raise SystemExit("API не вернул матчи; существующие данные сохранены.")
 else:
     for t in data["tournaments"]:
         t["matches"].sort(key=lambda x: (x.get("date", ""), x.get("time", "")))
+    data["today"] = today_s
     data["updated"] = datetime.datetime.now(
         datetime.timezone(datetime.timedelta(hours=3))).strftime("%Y-%m-%dT%H:%M:%S+03:00")
     json.dump(data, open("data.json", "w"), ensure_ascii=False, indent=1)
