@@ -236,6 +236,39 @@ def match_context(t, m, history):
         L.append(f'Эксперты склоняются: П1={cnt["1"]}, Х={cnt["X"]}, П2={cnt["2"]}')
     return "\n".join(L)
 
+def pick_coefficient(match, bet):
+    """Return a quoted 1X2 price or an explicitly estimated double-chance price."""
+    code = re.sub(r"\s+", "", str(bet or "").upper()).replace("Х", "X")
+    odds = match.get("odds") or []
+    direct = {"П1": 0, "1": 0, "X": 1, "Х": 1, "П2": 2, "2": 2}
+    if code in direct:
+        try:
+            value = float(odds[direct[code]])
+            return (round(value, 2), False) if 1.01 < value < 100 else (None, False)
+        except (IndexError, TypeError, ValueError):
+            return None, False
+
+    indices = {"1X": (0, 1), "X2": (1, 2)}.get(code)
+    if not indices:
+        return None, False
+    prices = []
+    for source in match.get("odds_sources") or []:
+        values = source.get("odds") or []
+        try:
+            a, b = float(values[indices[0]]), float(values[indices[1]])
+        except (IndexError, TypeError, ValueError):
+            continue
+        if a > 1.01 and b > 1.01:
+            prices.append(1 / (1 / a + 1 / b))
+    if not prices:
+        try:
+            a, b = float(odds[indices[0]]), float(odds[indices[1]])
+        except (IndexError, TypeError, ValueError):
+            return None, False
+        if a > 1.01 and b > 1.01:
+            prices.append(1 / (1 / a + 1 / b))
+    return (round(max(prices), 2), True) if prices else (None, False)
+
 def main():
     if not os.environ.get("OPENAI_API_KEY"):
         sys.exit("OPENAI_API_KEY не задан")
@@ -297,7 +330,9 @@ def main():
                 probability = max(0, min(100, int(op.get("probability", 0) or 0)))
                 candidate_bet = str(op.get("bet", "")).strip()
                 sources = response_sources(r)
-                eligible = probability >= MIN_PROBABILITY and bool(candidate_bet) and bool(sources)
+                coefficient, coefficient_estimated = pick_coefficient(m, candidate_bet)
+                eligible = (probability >= MIN_PROBABILITY and bool(candidate_bet)
+                            and bool(sources) and coefficient is not None)
                 bet = candidate_bet if eligible else ""
                 matches[k] = {
                     "score": str(op.get("score", "")),
@@ -306,8 +341,11 @@ def main():
                     "threshold": MIN_PROBABILITY,
                     "eligible": eligible,
                     "bet": bet,
+                    "coefficient": coefficient if eligible else None,
+                    "coefficient_estimated": coefficient_estimated if eligible else False,
                     "skip_reason": "" if eligible else (
                         "нет подтверждённых веб-источников" if not sources else
+                        "нет котировки по выбранному исходу" if coefficient is None else
                         f"оценка ниже {MIN_PROBABILITY}% или модель не выбрала ставку"
                     ),
                     "sources": sources,
