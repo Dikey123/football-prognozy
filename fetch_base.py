@@ -8,7 +8,7 @@ import os, json, urllib.request, urllib.error, datetime, subprocess
 KEY = os.environ.get("API_FOOTBALL_KEY", "")
 HOST = "free-api-live-football-data.p.rapidapi.com"
 DRY = os.environ.get("DRY_RUN", "1") == "1"
-DAYS = 8
+DAY_OFFSETS = range(-2, 5)  # от двух дней назад до четырёх дней вперёд
 
 LEAGUES = {47:"epl",87:"laliga",55:"seriea",54:"bundesliga",53:"ligue1",63:"rpl",943230:"ucl",943229:"uel"}
 
@@ -88,7 +88,8 @@ def find_match(tid, hr, ar):
             return m
     return None
 
-today = datetime.date.today()
+today = datetime.datetime.now(
+    datetime.timezone(datetime.timedelta(hours=3))).date()
 today_s = today.strftime("%Y-%m-%d")
 updated = added = 0
 scores = {}       # для settle: {рус_хозяева: "2:1"}
@@ -96,8 +97,8 @@ unmapped = set()
 errors = []
 got_any = False
 
-for i in range(DAYS):
-    d = (today + datetime.timedelta(days=i)).strftime("%Y%m%d")
+for offset in DAY_OFFSETS:
+    d = (today + datetime.timedelta(days=offset)).strftime("%Y%m%d")
     resp = get(f"/football-get-matches-by-date?date={d}")
     if "_err" in resp or resp.get("status") == "failed":
         errors.append(f"{d}: {resp.get('_err') or resp.get('message')}")
@@ -120,7 +121,7 @@ for i in range(DAYS):
         dd, tt = msk(st["utcTime"])
         fin = bool(st.get("finished"))
         sc = st.get("scoreStr", "").replace(" ", "")
-        ft = sc.replace("-", ":") if ("-" in sc) else None
+        ft = sc.replace("-", ":") if ("-" in sc) else (sc if ":" in sc else None)
         ex = find_match(tid, hr, ar)
         if ex:
             if ex.get("status") == "fixture":   # уточняем дату/время только для ещё не оформленных
