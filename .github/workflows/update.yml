@@ -22,9 +22,10 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-      - name: Собрать базу (с записью)
+      - name: Собрать расписание, результаты и коэффициенты (с записью)
         env:
           API_FOOTBALL_KEY: ${{ secrets.API_FOOTBALL_KEY }}
+          ODDS_API_KEY: ${{ secrets.ODDS_API_KEY }}
           DRY_RUN: "0"
         run: |
           set -o pipefail
