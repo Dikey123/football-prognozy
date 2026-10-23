@@ -20,6 +20,30 @@ def ai_probability(opinion):
     match = re.search(r'(?<!\d)(100|[1-9]?\d)\s*%', str(opinion.get("text", "")))
     return int(match.group(1)) if match else None
 
+def ai_pick_has_coefficient(opinion, match):
+    if not isinstance(opinion, dict): return False
+    try:
+        quoted = float(opinion.get("coefficient"))
+        if 1.01 < quoted < 100: return True
+    except (TypeError, ValueError):
+        pass
+    code = re.sub(r"\s+", "", str(opinion.get("bet") or opinion.get("pick") or "").upper()).replace("Х", "X")
+    odds = match.get("odds") or []
+    direct = {"П1": 0, "1": 0, "X": 1, "П2": 2, "2": 2}
+    if code in direct:
+        try: return 1.01 < float(odds[direct[code]]) < 100
+        except (IndexError, TypeError, ValueError): return False
+    indices = {"1X": (0, 1), "X2": (1, 2)}.get(code)
+    if not indices: return False
+    for source in match.get("odds_sources") or []:
+        values = source.get("odds") or []
+        try:
+            if float(values[indices[0]]) > 1.01 and float(values[indices[1]]) > 1.01: return True
+        except (IndexError, TypeError, ValueError):
+            continue
+    try: return float(odds[indices[0]]) > 1.01 and float(odds[indices[1]]) > 1.01
+    except (IndexError, TypeError, ValueError): return False
+
 def team_side(q, home, away):
     q, H, A = norm(q), norm(home), norm(away)
     for L in (6,5,4,3):
@@ -171,7 +195,8 @@ def main():
                     air='win' if ao==out else 'lose'
             if air in ("win","lose","push"): R["ai"][air]+=1
             ai75=None
-            if ai_prob is not None and ai_prob >= AI_MIN_PROBABILITY and ai_pick:
+            if (ai_prob is not None and ai_prob >= AI_MIN_PROBABILITY and ai_pick
+                    and ai_pick_has_coefficient(ai_opinion, m)):
                 if published_before_kickoff(ai_opinion, m):
                     ai75=settle_pick(ai_pick, h, a, m["home"], m["away"])
                 if ai75 in ("win","lose","push"): R["ai75"][ai75]+=1
@@ -182,6 +207,7 @@ def main():
             gpt_result=None
             if (gpt_opinion.get("eligible") is True and gpt_prob is not None
                     and gpt_prob >= AI_MIN_PROBABILITY and gpt_pick
+                    and ai_pick_has_coefficient(gpt_opinion, m)
                     and published_before_kickoff({"published_at":gpt_opinion.get("generated_at")}, m)):
                 gpt_result=settle_pick(gpt_pick, h, a, m["home"], m["away"])
                 if gpt_result in ("win","lose","push"): R["gpt75"][gpt_result]+=1
