@@ -142,6 +142,14 @@ button:focus-visible,a:focus-visible,summary:focus-visible,input:focus-visible{o
 .day .rule{flex:1;height:1px;background:var(--line)}
 .day .n{font-family:var(--mono);font-size:12px;color:var(--muted)}
 .stack{display:flex;flex-direction:column;gap:16px;margin-top:12px}
+.league-list{display:flex;flex-direction:column;gap:16px;margin-top:12px}
+.league-group{display:flex;flex-direction:column;gap:8px;min-width:0}
+.league-head{display:flex;align-items:baseline;gap:10px;margin:0;padding:0 2px}
+.league-head strong{font-family:var(--display);font-size:15px;font-weight:700;text-transform:uppercase;letter-spacing:.025em}
+.league-head .round{font-size:12px;color:var(--muted)}
+.league-head .count{margin-left:auto;font-family:var(--mono);font-size:11px;color:var(--muted);white-space:nowrap}
+.league-body{display:flex;flex-direction:column;gap:10px}
+.league-body .stack{margin-top:0}
 /* карточка */
 .match{background:var(--surface);border:1px solid var(--line);border-radius:12px;overflow:hidden;position:relative}
 .match.live{border-color:var(--live)}
@@ -382,6 +390,15 @@ function fixtureRow(m){
 }
 
 function allMatches(){const a=[];D.tournaments.forEach(t=>t.matches.forEach(m=>a.push(m)));return a}
+function leagueGroups(matches){
+  const groups=new Map();
+  matches.forEach(m=>{
+    const key=m._tab||"other";
+    if(!groups.has(key))groups.set(key,{t:D.tournaments.find(x=>x.id===key),matches:[]});
+    groups.get(key).matches.push(m);
+  });
+  return Array.from(groups.values());
+}
 function nextMatch(){const n=Date.now();return allMatches().filter(m=>inst(m)>n).sort((a,b)=>inst(a)-inst(b))[0]||null}
 function liveMatches(){return allMatches().filter(m=>matchState(m)==="live")}
 
@@ -424,15 +441,19 @@ function renderList(){
   let ms=allMatches().filter(m=>m.date===tab);
   if(query)ms=ms.filter(m=>(m.home+" "+m.away).toLowerCase().includes(query));
   ms.sort((a,b)=>(a.time||"").localeCompare(b.time||"")||a.home.localeCompare(b.home,"ru"));
+  const groups=leagueGroups(ms);
   let html='<div class="day"><h2>'+dLabel(tab)+'</h2>'+(tab===D.today?'<span class="today">СЕГОДНЯ</span>':"")+'<span class="rule"></span><span class="n">матчей: '+ms.length+'</span></div>';
   if(!ms.length)html+='<div class="empty">'+(query?"Ничего не найдено по запросу «"+esc(query)+"».":"На эту дату матчей нет.")+'</div>';
   else if(tab<D.today){
-    html+='<div class="fixtures">'+ms.map(fixtureRow).join("")+(ms.some(m=>!actualScore(m))?'<div class="pending">Счёт для части матчей ещё не поступил из источника данных.</div>':"")+'</div>';
+    html+='<div class="league-list">'+groups.map(g=>{
+      const t=g.t||{};
+      return '<section class="league-group"><h3 class="league-head"><strong>'+esc(t.name||"Другие матчи")+'</strong>'+(t.round?'<span class="round">'+esc(t.round)+'</span>':"")+'<span class="count">'+g.matches.length+' матч.</span></h3><div class="fixtures">'+g.matches.map(fixtureRow).join("")+(g.matches.some(m=>!actualScore(m))?'<div class="pending">Счёт для части матчей ещё не поступил из источника данных.</div>':"")+'</div></section>';
+    }).join("")+'</div>';
   }else{
-    const full=ms.filter(m=>m.status==="full"),fx=ms.filter(m=>m.status!=="full");
-    html+='<div class="stack">'+full.map(card).join("");
-    if(fx.length)html+='<div class="fixtures">'+fx.map(fixtureRow).join("")+'<div class="pending">Прогнозы, составы и новости появятся в день матча.</div></div>';
-    html+='</div>';
+    html+='<div class="league-list">'+groups.map(g=>{
+      const t=g.t||{},full=g.matches.filter(m=>m.status==="full"),fx=g.matches.filter(m=>m.status!=="full");
+      return '<section class="league-group"><h3 class="league-head"><strong>'+esc(t.name||"Другие матчи")+'</strong>'+(t.round?'<span class="round">'+esc(t.round)+'</span>':"")+'<span class="count">'+g.matches.length+' матч.</span></h3><div class="league-body">'+(full.length?'<div class="stack">'+full.map(card).join("")+'</div>':"")+(fx.length?'<div class="fixtures">'+fx.map(fixtureRow).join("")+'<div class="pending">Прогнозы, составы и новости появятся в день матча.</div></div>':"")+'</div></section>';
+    }).join("")+'</div>';
   }
   const v=document.getElementById("view");v.innerHTML=html;
   bindFavs(v);
