@@ -3,6 +3,7 @@ ERR 20261021 HTTP Error 429: {"message":"You have exceeded the MONTHLY quota for
 RapidAPI returned errors; restoring the previous schedule and trying ESPN for recent results.
 ESPN fallback: responses=56/56 updated=87 added=0 finished_scores=28 unmapped=0 errors=0
 updated=87 added=0 finished_scores=28 unmapped=0 errors=1 espn_fallback=True DRY=False
+ODDS: пропуск — секрет ODDS_API_KEY не задан.
 data.json записан.
 settle stdout: settled matches: 0 | sources: 37
 
