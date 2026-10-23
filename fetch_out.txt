@@ -1,5 +1,10 @@
 ERR 20261021 HTTP Error 429: {"message":"You have exceeded the MONTHLY quota for Requests on your current plan, BASIC. Upgrade your plan at https:\/\/rapidapi.com\/Creativesdev\/api\/free-api-live-football-data"} (requests remaining: 0)
 Остановка запросов: достигнут лимит API (HTTP 429).
-updated=0 added=0 finished_scores=0 unmapped=0 errors=1 got_response=False DRY=False
-Обновление отменено: API вернул неполный набор ответов, существующие данные сохранены.
-Сбор данных не завершён — проверьте лимит и ключ API.
+RapidAPI returned errors; restoring the previous schedule and trying ESPN for recent results.
+ESPN fallback: responses=24/24 updated=22 added=0 finished_scores=22 unmapped=12 errors=0
+ESPN UNMAPPED: ['Anderlecht', 'Aston Villa', "Hapoel Be'er", 'Jagiellonia Bialystok', 'LASK Linz', 'Lillestrom', 'NK Celje', 'RB Salzburg', 'Real Sociedad', 'Sporting CP', 'Union St.-Gilloise', 'Viking FK']
+updated=22 added=0 finished_scores=22 unmapped=0 errors=1 espn_fallback=True DRY=False
+data.json записан.
+settle stdout: settled matches: 0 | sources: 37
+
+==== DONE5
