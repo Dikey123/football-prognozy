@@ -358,7 +358,17 @@ function cardInner(m,open){
   const tot=cnt[1]+cnt.X+cnt[2],pct=k=>tot?Math.round(cnt[k]/tot*100):0;
   const o=m.odds||[null,null,null],valid=o.filter(x=>x!=null),fav=valid.length?o.indexOf(Math.min(...valid)):-1;
   const op=open?" open":"";
-  let h='<div class="odds">'+["П1","Х","П2"].map((l,i)=>'<div class="odd'+(i===fav?" fav":"")+'"><b>'+l+'</b><span>'+(o[i]==null?"—":Number(o[i]).toFixed(2))+'</span></div>').join("")+'</div><div class="cbody">';
+  let h='<div class="odds">'+["П1","Х","П2"].map((l,i)=>'<div class="odd'+(i===fav?" fav":"")+'"><b>'+l+'</b><span>'+(o[i]==null?"—":Number(o[i]).toFixed(2))+'</span></div>').join("")+'</div>';
+  const sources=m.odds_sources||[];
+  if(sources.length){
+    const fmt=x=>x==null?"—":Number(x).toFixed(2);
+    const quoteStamp=m.odds_updated||sources.map(q=>q.updated).filter(Boolean).sort().slice(-1)[0]||"";
+    const stampText=quoteStamp?new Date(quoteStamp).toLocaleString("ru-RU",{dateStyle:"short",timeStyle:"short"}):"";
+    h+='<details class="odds-sources"><summary>Коэффициенты ('+sources.length+' источников)</summary>'
+      +(stampText?'<div class="nsrc">Обновлено: '+esc(stampText)+'</div>':'')
+      +'<ul class="tips">'+sources.map(q=>{const v=q.odds||[];return '<li class="tip"><span class="src">'+esc(q.name||"Источник")+'</span><span class="pick">П1 '+fmt(v[0])+' · Х '+fmt(v[1])+' · П2 '+fmt(v[2])+'</span><span class="k"></span></li>'}).join("")+'</ul></details>';
+  }
+  h+='<div class="cbody">';
   if(m.context)h+='<p class="context">'+esc(m.context)+'</p>';
   h+='<div class="lean"><div class="lean-top"><span>Куда склоняются эксперты</span><span>'+tot+' из '+tips.length+' прогнозов на исход</span></div>'
     +'<div class="bar" role="img" aria-label="Хозяева '+pct(1)+'%, ничья '+pct("X")+'%, гости '+pct(2)+'%"><i class="h" style="width:'+pct(1)+'%"></i><i class="d" style="width:'+pct("X")+'%"></i><i class="a" style="width:'+pct(2)+'%"></i></div>'
@@ -480,7 +490,7 @@ function market(pick){const p=" "+String(pick).toLowerCase().trim()+" ";
 function expCands(){
   const n=Date.now(),out=[];
   allMatches().forEach(m=>{
-    if(m.status!=="full"||inst(m)<=n)return;
+    if(inst(m)<=n)return;
     const seen={};
     const o=m.odds||[],p1=o[0],p2=o[2];
     if(p1!=null&&(p2==null||p1<=p2)){out.push({m,odd:+p1,pick:"Победа «"+m.home+"»",mk:"Исход",tab:m._tab});seen["побед«"+m.home.toLowerCase()]=1}
@@ -491,6 +501,43 @@ function expCands(){
   out.sort((a,b)=>b.prob-a.prob);
   return out;
 }
+function aiExpCands(){
+  const n=Date.now(),byMatch=new Map();
+  allMatches().forEach(m=>{
+    if(inst(m)<=n)return;
+    const options=[["ИИ",m.ai],["ChatGPT",m.gpt]].filter(x=>x[1]&&String(x[1].bet||x[1].pick||"").trim());
+    if(!options.length)return;
+    const candidates=options.map(([model,o])=>{
+      let conf=0;try{conf=Math.max(0,Math.min(5,parseInt(o.conf,10)||0))}catch(e){}
+      const text=String(o.text||""),prob=text.match(/\b(100|[1-9]?\d)\s*%/);
+      return {m,model,pick:String(o.bet||o.pick).trim(),score:String(o.score||""),conf,
+        probability:prob?prob[1]:"",mk:market(o.bet||o.pick),tab:m._tab};
+    }).sort((a,b)=>b.conf-a.conf||(a.model==="ИИ"?-1:1));
+    const candidate=candidates[0],old=byMatch.get(m._id);
+    if(!old||candidate.conf>old.conf)byMatch.set(m._id,candidate);
+  });
+  return Array.from(byMatch.values()).sort((a,b)=>b.conf-a.conf||a.m.time.localeCompare(b.m.time)).slice(0,8);
+}
+function renderAiExpressFallback(cands,distinct){
+  const v=document.getElementById("view");
+  let h='<div class="detail"><button class="back" id="back">← Все матчи</button><div class="exp">'
+    +'<div class="exp-head"><span class="ai-label" style="color:var(--accent)">⚡ Подбор по прогнозам ИИ</span>'
+    +'<p>Для полноценного экспресса не хватает коэффициентов минимум по двум матчам. Ниже — самые уверенные прогнозы ИИ на предстоящие матчи; общий коэффициент не рассчитывается.</p></div>';
+  if(cands.length){
+    h+='<ol class="exp-list">'+cands.slice(0,4).map(c=>{
+      const t=D.tournaments.find(x=>x.id===c.tab),odds=c.m.odds||[];
+      const oddsText=odds.some(x=>x!=null)?'П1 '+(odds[0]==null?'—':Number(odds[0]).toFixed(2))+' · Х '+(odds[1]==null?'—':Number(odds[1]).toFixed(2))+' · П2 '+(odds[2]==null?'—':Number(odds[2]).toFixed(2)):'коэффициенты пока не поступили';
+      const meta=[t?(t.short||t.name):"",c.m.time||"",c.model,c.probability?"оценка модели "+c.probability+"%":"уверенность "+c.conf+"/5"].filter(Boolean).map(esc).join(" · ");
+      return '<li class="exp-item"><a class="exp-m" href="#m-'+c.m._id+'"><span class="exp-teams">'+esc(c.m.home)+' — '+esc(c.m.away)+'</span><span class="exp-meta">'+meta+'</span></a><div class="exp-pick"><span class="pk"><span class="exp-mk">'+esc(c.mk)+'</span>'+esc(c.pick)+(c.score?' · счёт '+esc(c.score):'')+'</span><span class="exp-k">'+esc(oddsText)+'</span></div></li>';
+    }).join("")+'</ol>';
+  }
+  if(cands.length<2)h+='<div class="exp-warn">Сейчас доступно '+cands.length+' ИИ-прогноз(а). Для экспресса нужно не менее двух разных матчей.</div>';
+  else h+='<div class="exp-warn">Это подбор исходов ИИ без общего коэффициента. Коэффициенты появятся после утреннего обновления источников, если они доступны для этих матчей.</div>';
+  h+='<p class="exp-note">Прогноз модели не гарантирует результат. Экспресс проигрывает при одном неверном исходе; ставки связаны с риском потери денег. 18+.</p></div>';
+  v.innerHTML=h;
+  document.getElementById("back").onclick=()=>{location.hash=tab};
+}
+
 const CAT_ORDER=["Исход","Двойной шанс","Фора","Тотал больше","Тотал меньше","Обе забьют","Угловые","Карточки","Точный счёт","Ставка"];
 function defCfg(avail){return {cats:new Set(avail),target:4,tol:1,nmin:3,nmax:4}}
 function loadCfg(){try{const s=JSON.parse(localStorage.getItem("lch-exp")||"null");if(s&&s.cats)return {cats:new Set(s.cats),target:s.target,tol:s.tol,nmin:s.nmin,nmax:s.nmax}}catch(e){}return null}
@@ -530,7 +577,7 @@ function renderExpress(){
   if(dataIsStale){v.innerHTML='<div class="detail"><button class="back" id="back">← Все матчи</button><div class="exp-warn">Экспресс временно скрыт: исходные данные не обновлялись более суток. Попробуйте позже.</div></div>';document.getElementById("back").onclick=()=>{location.hash=tab};return}
   const avail=CAT_ORDER.filter(c=>pool.some(p=>p.mk===c));
   const distinct=new Set(pool.map(c=>c.m._id)).size;
-  if(distinct<2){v.innerHTML='<div class="detail"><button class="back" id="back">← Все матчи</button><div class="empty">Пока недостаточно матчей с коэффициентами, чтобы собрать экспресс. Загляните ближе к игровому дню.</div></div>';document.getElementById("back").onclick=()=>{location.hash=tab};return}
+  if(distinct<2){renderAiExpressFallback(aiExpCands(),distinct);return}
   if(!expCfg){expCfg=loadCfg()||defCfg(avail);if(!expCfg.cats||!expCfg.cats.size)expCfg.cats=new Set(avail)}
   if(!expUse)expUse=loadUse();
   const locked=expLocked&&!unlocked();
