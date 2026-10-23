@@ -1,6 +1,6 @@
 {
- "updated": "2026-10-22T06:27:15+03:00",
- "today": "2026-10-21",
+ "updated": "2026-10-23T10:52:43+03:00",
+ "today": "2026-10-23",
  "tournaments": [
   {
    "id": "ucl",
@@ -54,7 +54,8 @@
        "s": "Ставка ТВ",
        "u": "https://stavka.tv/matches/soccer/21-10-2026-como-1907-manchester-united"
       }
-     ]
+     ],
+     "ft": "4:1"
     },
     {
      "date": "2026-10-21",
@@ -174,7 +175,8 @@
        "s": "Ставка ТВ",
        "u": "https://stavka.tv/matches/soccer/21-10-2026-lille-galatasaray-istanbul"
       }
-     ]
+     ],
+     "ft": "2:4"
     },
     {
      "date": "2026-10-21",
@@ -208,7 +210,8 @@
        "s": "Ставка ТВ",
        "u": "https://stavka.tv/matches/soccer/21-10-2026-aston-villa-viking"
       }
-     ]
+     ],
+     "ft": "3:1"
     },
     {
      "date": "2026-10-21",
@@ -246,7 +249,8 @@
        "s": "Ставка ТВ",
        "u": "https://stavka.tv/matches/soccer/21-10-2026-club-brugge-lens"
       }
-     ]
+     ],
+     "ft": "3:0"
     },
     {
      "date": "2026-10-21",
@@ -297,7 +301,8 @@
        "s": "Ставка ТВ",
        "u": "https://stavka.tv/matches/soccer/21-10-2026-bayern-munich-arsenal"
       }
-     ]
+     ],
+     "ft": "2:2"
     },
     {
      "date": "2026-10-21",
@@ -425,7 +430,8 @@
        ],
        "doubt": []
       }
-     }
+     },
+     "ft": "1:0"
     },
     {
      "date": "2026-10-21",
@@ -555,7 +561,8 @@
         "Баумгартнер"
        ]
       }
-     }
+     },
+     "ft": "4:1"
     },
     {
      "date": "2026-10-21",
@@ -577,7 +584,8 @@
       "bet": "«Бетис» не проиграет (1Х)",
       "pick": "1Х"
      },
-     "status": "full"
+     "status": "full",
+     "ft": "1:0"
     },
     {
      "date": "2026-10-21",
@@ -608,7 +616,8 @@
       "bet": "Победа «Спортинга» (П1)",
       "pick": "П1"
      },
-     "status": "full"
+     "status": "full",
+     "ft": "2:3"
     }
    ]
   },
@@ -623,126 +632,144 @@
      "time": "19:45",
      "home": "Арарат-Армения",
      "away": "Алкмаар",
-     "status": "fixture"
+     "status": "full",
+     "ft": "0:4"
     },
     {
      "date": "2026-10-22",
      "time": "19:45",
      "home": "Ференцварош",
      "away": "Торреенсе",
-     "status": "fixture"
+     "status": "full",
+     "ft": "4:1"
     },
     {
      "date": "2026-10-22",
      "time": "19:45",
      "home": "Динамо Загреб",
      "away": "Неймеген",
-     "status": "fixture"
+     "status": "full",
+     "ft": "2:4"
     },
     {
      "date": "2026-10-22",
      "time": "19:45",
      "home": "Ювентус",
      "away": "Ренн",
-     "status": "fixture"
+     "status": "full",
+     "ft": "2:2"
     },
     {
      "date": "2026-10-22",
      "time": "19:45",
      "home": "Лех",
      "away": "Сандерленд",
-     "status": "fixture"
+     "status": "full",
+     "ft": "1:1"
     },
     {
      "date": "2026-10-22",
      "time": "19:45",
      "home": "ОФИ",
      "away": "Байер",
-     "status": "fixture"
+     "status": "full",
+     "ft": "0:2"
     },
     {
      "date": "2026-10-22",
      "time": "19:45",
      "home": "Юнион Сен-Жиллуаз",
      "away": "Хапоэль Беэр-Шева",
-     "status": "fixture"
+     "status": "full",
+     "ft": "4:0"
     },
     {
      "date": "2026-10-22",
      "time": "19:45",
      "home": "Штурм",
      "away": "Марсель",
-     "status": "fixture"
+     "status": "full",
+     "ft": "1:0"
     },
     {
      "date": "2026-10-22",
      "time": "22:00",
      "home": "Борнмут",
      "away": "Милан",
-     "status": "fixture"
+     "status": "full",
+     "ft": "3:0"
     },
     {
      "date": "2026-10-22",
      "time": "22:00",
      "home": "Бешикташ",
      "away": "Кристал Пэлас",
-     "status": "fixture"
+     "status": "full",
+     "ft": "2:2"
     },
     {
      "date": "2026-10-22",
      "time": "22:00",
      "home": "Селтик",
      "away": "Сельта",
-     "status": "fixture"
+     "status": "full",
+     "ft": "1:2"
     },
     {
      "date": "2026-10-22",
      "time": "22:00",
      "home": "Виктория Пльзень",
      "away": "Левски",
-     "status": "fixture"
+     "status": "full",
+     "ft": "1:2"
     },
     {
      "date": "2026-10-22",
      "time": "22:00",
      "home": "Ягеллония",
      "away": "Андерлехт",
-     "status": "fixture"
+     "status": "full",
+     "ft": "0:3"
     },
     {
      "date": "2026-10-22",
      "time": "22:00",
      "home": "Лиллестрём",
      "away": "Реал Сосьедад",
-     "status": "fixture"
+     "status": "full",
+     "ft": "0:6"
     },
     {
      "date": "2026-10-22",
      "time": "22:00",
      "home": "Целе",
      "away": "Зальцбург",
-     "status": "fixture"
+     "status": "full",
+     "ft": "2:2"
     },
     {
      "date": "2026-10-22",
      "time": "22:00",
      "home": "Олимпиакос",
      "away": "Спарта Прага",
-     "status": "fixture"
+     "status": "full",
+     "ft": "1:0"
     },
     {
      "date": "2026-10-22",
      "time": "22:00",
      "home": "Омония",
      "away": "Бенфика",
-     "status": "fixture"
+     "status": "full",
+     "ft": "1:4"
     },
     {
      "date": "2026-10-22",
      "time": "22:00",
      "home": "Хоффенхайм",
      "away": "Лион",
-     "status": "fixture"
+     "status": "full",
+     "ft": "3:0"
     }
    ]
   },
@@ -757,70 +784,240 @@
      "time": "22:00",
      "home": "Ипсвич",
      "away": "Ноттингем Форест",
-     "status": "fixture"
+     "status": "fixture",
+     "tips": [
+      {
+       "src": "Opta Analyst",
+       "reg": "eu",
+       "pick": "1Х",
+       "k": "",
+       "lean": "1",
+       "url": "https://theanalyst.com/articles/premier-league-match-predictions"
+      }
+     ],
+     "ai": {
+      "score": "1:1",
+      "text": "Модель Opta Analyst оценивает выбранный сценарий примерно в 70%. Мой выбор — 1Х — хозяева не проиграют. Стартовые составы ещё не подтверждены.",
+      "conf": 3,
+      "bet": "1Х — хозяева не проиграют",
+      "pick": "1Х"
+     }
     },
     {
      "date": "2026-10-24",
      "time": "14:30",
      "home": "Астон Вилла",
      "away": "Манчестер Сити",
-     "status": "fixture"
+     "status": "fixture",
+     "tips": [
+      {
+       "src": "Opta Analyst",
+       "reg": "eu",
+       "pick": "Х2",
+       "k": "",
+       "lean": "2",
+       "url": "https://theanalyst.com/articles/premier-league-match-predictions"
+      }
+     ],
+     "ai": {
+      "score": "1:2",
+      "text": "Модель Opta Analyst оценивает выбранный сценарий примерно в 68%. Мой выбор — Х2 — гости не проиграют. Стартовые составы ещё не подтверждены.",
+      "conf": 3,
+      "bet": "Х2 — гости не проиграют",
+      "pick": "Х2"
+     }
     },
     {
      "date": "2026-10-24",
      "time": "17:00",
      "home": "Арсенал",
      "away": "Эвертон",
-     "status": "fixture"
+     "status": "fixture",
+     "tips": [
+      {
+       "src": "Opta Analyst",
+       "reg": "eu",
+       "pick": "П1",
+       "k": "",
+       "lean": "1",
+       "url": "https://theanalyst.com/articles/premier-league-match-predictions"
+      }
+     ],
+     "ai": {
+      "score": "2:0",
+      "text": "Модель Opta Analyst оценивает выбранный сценарий примерно в 70%. Мой выбор — П1 — победа хозяев. Стартовые составы ещё не подтверждены.",
+      "conf": 3,
+      "bet": "П1 — победа хозяев",
+      "pick": "П1"
+     }
     },
     {
      "date": "2026-10-24",
      "time": "17:00",
      "home": "Ковентри",
      "away": "Фулхэм",
-     "status": "fixture"
+     "status": "fixture",
+     "tips": [
+      {
+       "src": "Opta Analyst",
+       "reg": "eu",
+       "pick": "1Х",
+       "k": "",
+       "lean": "1",
+       "url": "https://theanalyst.com/articles/premier-league-match-predictions"
+      }
+     ],
+     "ai": {
+      "score": "1:1",
+      "text": "Модель Opta Analyst оценивает выбранный сценарий примерно в 70%. Мой выбор — 1Х — хозяева не проиграют. Стартовые составы ещё не подтверждены.",
+      "conf": 3,
+      "bet": "1Х — хозяева не проиграют",
+      "pick": "1Х"
+     }
     },
     {
      "date": "2026-10-24",
      "time": "19:30",
      "home": "Челси",
      "away": "Тоттенхэм",
-     "status": "fixture"
+     "status": "fixture",
+     "tips": [
+      {
+       "src": "Opta Analyst",
+       "reg": "eu",
+       "pick": "П1",
+       "k": "",
+       "lean": "1",
+       "url": "https://theanalyst.com/articles/premier-league-match-predictions"
+      }
+     ],
+     "ai": {
+      "score": "2:1",
+      "text": "Модель Opta Analyst оценивает выбранный сценарий примерно в 54%. Мой выбор — П1 — победа хозяев. Стартовые составы ещё не подтверждены.",
+      "conf": 2,
+      "bet": "П1 — победа хозяев",
+      "pick": "П1"
+     }
     },
     {
      "date": "2026-10-25",
      "time": "17:00",
      "home": "Кристал Пэлас",
      "away": "Ньюкасл",
-     "status": "fixture"
+     "status": "fixture",
+     "tips": [
+      {
+       "src": "Opta Analyst",
+       "reg": "eu",
+       "pick": "1Х",
+       "k": "",
+       "lean": "1",
+       "url": "https://theanalyst.com/articles/premier-league-match-predictions"
+      }
+     ],
+     "ai": {
+      "score": "1:1",
+      "text": "Модель Opta Analyst оценивает выбранный сценарий примерно в 67%. Мой выбор — 1Х — хозяева не проиграют. Стартовые составы ещё не подтверждены.",
+      "conf": 3,
+      "bet": "1Х — хозяева не проиграют",
+      "pick": "1Х"
+     }
     },
     {
      "date": "2026-10-25",
      "time": "17:00",
      "home": "Халл",
      "away": "Брентфорд",
-     "status": "fixture"
+     "status": "fixture",
+     "tips": [
+      {
+       "src": "Opta Analyst",
+       "reg": "eu",
+       "pick": "Х2",
+       "k": "",
+       "lean": "2",
+       "url": "https://theanalyst.com/articles/premier-league-match-predictions"
+      }
+     ],
+     "ai": {
+      "score": "1:1",
+      "text": "Модель Opta Analyst оценивает выбранный сценарий примерно в 64%. Мой выбор — Х2 — гости не проиграют. Стартовые составы ещё не подтверждены.",
+      "conf": 3,
+      "bet": "Х2 — гости не проиграют",
+      "pick": "Х2"
+     }
     },
     {
      "date": "2026-10-25",
      "time": "17:00",
      "home": "Ливерпуль",
      "away": "Брайтон",
-     "status": "fixture"
+     "status": "fixture",
+     "tips": [
+      {
+       "src": "Opta Analyst",
+       "reg": "eu",
+       "pick": "1Х",
+       "k": "",
+       "lean": "1",
+       "url": "https://theanalyst.com/articles/premier-league-match-predictions"
+      }
+     ],
+     "ai": {
+      "score": "2:1",
+      "text": "Модель Opta Analyst оценивает выбранный сценарий примерно в 73%. Мой выбор — 1Х — хозяева не проиграют. Стартовые составы ещё не подтверждены.",
+      "conf": 3,
+      "bet": "1Х — хозяева не проиграют",
+      "pick": "1Х"
+     }
     },
     {
      "date": "2026-10-25",
      "time": "17:00",
      "home": "Манчестер Юнайтед",
      "away": "Борнмут",
-     "status": "fixture"
+     "status": "fixture",
+     "tips": [
+      {
+       "src": "Opta Analyst",
+       "reg": "eu",
+       "pick": "1Х",
+       "k": "",
+       "lean": "1",
+       "url": "https://theanalyst.com/articles/premier-league-match-predictions"
+      }
+     ],
+     "ai": {
+      "score": "1:1",
+      "text": "Модель Opta Analyst оценивает выбранный сценарий примерно в 74%. Мой выбор — 1Х — хозяева не проиграют. Стартовые составы ещё не подтверждены.",
+      "conf": 3,
+      "bet": "1Х — хозяева не проиграют",
+      "pick": "1Х"
+     }
     },
     {
      "date": "2026-10-25",
      "time": "19:30",
      "home": "Сандерленд",
      "away": "Лидс",
-     "status": "fixture"
+     "status": "fixture",
+     "tips": [
+      {
+       "src": "Opta Analyst",
+       "reg": "eu",
+       "pick": "1Х",
+       "k": "",
+       "lean": "1",
+       "url": "https://theanalyst.com/articles/premier-league-match-predictions"
+      }
+     ],
+     "ai": {
+      "score": "1:1",
+      "text": "Модель Opta Analyst оценивает выбранный сценарий примерно в 65%. Мой выбор — 1Х — хозяева не проиграют. Стартовые составы ещё не подтверждены.",
+      "conf": 3,
+      "bet": "1Х — хозяева не проиграют",
+      "pick": "1Х"
+     }
     }
    ]
   },
@@ -835,7 +1032,7 @@
      "time": "21:00",
      "home": "Леванте",
      "away": "Атлетик",
-     "status": "fixture",
+     "status": "full",
      "ft": "3:1"
     },
     {
@@ -843,70 +1040,240 @@
      "time": "22:00",
      "home": "Алавес",
      "away": "Малага",
-     "status": "fixture"
+     "status": "fixture",
+     "tips": [
+      {
+       "src": "LaLiga Expert",
+       "reg": "eu",
+       "pick": "П1",
+       "k": "",
+       "lean": "1",
+       "url": "https://laligaexpert.com/la-liga-predictions-match-previews/"
+      }
+     ],
+     "ai": {
+      "score": "2:1",
+      "text": "Модель LaLiga Expert оценивает выбранный сценарий примерно в 54%. Мой выбор — П1 — победа хозяев. Стартовые составы ещё не подтверждены.",
+      "conf": 2,
+      "bet": "П1 — победа хозяев",
+      "pick": "П1"
+     }
     },
     {
      "date": "2026-10-24",
      "time": "15:00",
      "home": "Райо Вальекано",
      "away": "Эльче",
-     "status": "fixture"
+     "status": "fixture",
+     "tips": [
+      {
+       "src": "LaLiga Expert",
+       "reg": "eu",
+       "pick": "П1",
+       "k": "",
+       "lean": "1",
+       "url": "https://laligaexpert.com/la-liga-predictions-match-previews/"
+      }
+     ],
+     "ai": {
+      "score": "2:1",
+      "text": "Модель LaLiga Expert оценивает выбранный сценарий примерно в 54%. Мой выбор — П1 — победа хозяев. Стартовые составы ещё не подтверждены.",
+      "conf": 2,
+      "bet": "П1 — победа хозяев",
+      "pick": "П1"
+     }
     },
     {
      "date": "2026-10-24",
      "time": "17:15",
      "home": "Расинг",
      "away": "Эспаньол",
-     "status": "fixture"
+     "status": "fixture",
+     "tips": [
+      {
+       "src": "LaLiga Expert",
+       "reg": "eu",
+       "pick": "Х",
+       "k": "",
+       "lean": "X",
+       "url": "https://laligaexpert.com/la-liga-predictions-match-previews/"
+      }
+     ],
+     "ai": {
+      "score": "2:2",
+      "text": "Модель LaLiga Expert оценивает выбранный сценарий примерно в 26%. Мой выбор — ничья. Стартовые составы ещё не подтверждены.",
+      "conf": 1,
+      "bet": "ничья",
+      "pick": "Х"
+     }
     },
     {
      "date": "2026-10-24",
      "time": "19:30",
      "home": "Валенсия",
      "away": "Вильярреал",
-     "status": "fixture"
+     "status": "fixture",
+     "tips": [
+      {
+       "src": "LaLiga Expert",
+       "reg": "eu",
+       "pick": "Х",
+       "k": "",
+       "lean": "X",
+       "url": "https://laligaexpert.com/la-liga-predictions-match-previews/"
+      }
+     ],
+     "ai": {
+      "score": "1:1",
+      "text": "Модель LaLiga Expert оценивает выбранный сценарий примерно в 26%. Мой выбор — ничья. Стартовые составы ещё не подтверждены.",
+      "conf": 1,
+      "bet": "ничья",
+      "pick": "Х"
+     }
     },
     {
      "date": "2026-10-24",
      "time": "22:00",
      "home": "Атлетико Мадрид",
      "away": "Депортиво",
-     "status": "fixture"
+     "status": "fixture",
+     "tips": [
+      {
+       "src": "LaLiga Expert",
+       "reg": "eu",
+       "pick": "П1",
+       "k": "",
+       "lean": "1",
+       "url": "https://laligaexpert.com/la-liga-predictions-match-previews/"
+      }
+     ],
+     "ai": {
+      "score": "2:1",
+      "text": "Модель LaLiga Expert оценивает выбранный сценарий примерно в 76%. Мой выбор — П1 — победа хозяев. Стартовые составы ещё не подтверждены.",
+      "conf": 4,
+      "bet": "П1 — победа хозяев",
+      "pick": "П1"
+     }
     },
     {
      "date": "2026-10-25",
      "time": "16:00",
      "home": "Атлетик",
      "away": "Хетафе",
-     "status": "fixture"
+     "status": "fixture",
+     "tips": [
+      {
+       "src": "LaLiga Expert",
+       "reg": "eu",
+       "pick": "П1",
+       "k": "",
+       "lean": "1",
+       "url": "https://laligaexpert.com/la-liga-predictions-match-previews/"
+      }
+     ],
+     "ai": {
+      "score": "1:0",
+      "text": "Модель LaLiga Expert оценивает выбранный сценарий примерно в 59%. Мой выбор — П1 — победа хозяев. Стартовые составы ещё не подтверждены.",
+      "conf": 2,
+      "bet": "П1 — победа хозяев",
+      "pick": "П1"
+     }
     },
     {
      "date": "2026-10-25",
      "time": "18:15",
      "home": "Сельта",
      "away": "Бетис",
-     "status": "fixture"
+     "status": "fixture",
+     "tips": [
+      {
+       "src": "LaLiga Expert",
+       "reg": "eu",
+       "pick": "П2",
+       "k": "",
+       "lean": "2",
+       "url": "https://laligaexpert.com/la-liga-predictions-match-previews/"
+      }
+     ],
+     "ai": {
+      "score": "1:2",
+      "text": "Модель LaLiga Expert оценивает выбранный сценарий примерно в 38%. Мой выбор — П2 — победа гостей. Стартовые составы ещё не подтверждены.",
+      "conf": 1,
+      "bet": "П2 — победа гостей",
+      "pick": "П2"
+     }
     },
     {
      "date": "2026-10-25",
      "time": "20:30",
      "home": "Реал Сосьедад",
      "away": "Леванте",
-     "status": "fixture"
+     "status": "fixture",
+     "tips": [
+      {
+       "src": "LaLiga Expert",
+       "reg": "eu",
+       "pick": "П1",
+       "k": "",
+       "lean": "1",
+       "url": "https://laligaexpert.com/la-liga-predictions-match-previews/"
+      }
+     ],
+     "ai": {
+      "score": "3:2",
+      "text": "Модель LaLiga Expert оценивает выбранный сценарий примерно в 55%. Мой выбор — П1 — победа хозяев. Стартовые составы ещё не подтверждены.",
+      "conf": 2,
+      "bet": "П1 — победа хозяев",
+      "pick": "П1"
+     }
     },
     {
      "date": "2026-10-25",
      "time": "23:00",
      "home": "Барселона",
      "away": "Реал Мадрид",
-     "status": "fixture"
+     "status": "fixture",
+     "tips": [
+      {
+       "src": "LaLiga Expert",
+       "reg": "eu",
+       "pick": "П1",
+       "k": "",
+       "lean": "1",
+       "url": "https://laligaexpert.com/la-liga-predictions-match-previews/"
+      }
+     ],
+     "ai": {
+      "score": "4:2",
+      "text": "Модель LaLiga Expert оценивает выбранный сценарий примерно в 62%. Мой выбор — П1 — победа хозяев. Стартовые составы ещё не подтверждены.",
+      "conf": 3,
+      "bet": "П1 — победа хозяев",
+      "pick": "П1"
+     }
     },
     {
      "date": "2026-10-26",
      "time": "23:00",
      "home": "Севилья",
      "away": "Осасуна",
-     "status": "fixture"
+     "status": "fixture",
+     "tips": [
+      {
+       "src": "LaLiga Expert",
+       "reg": "eu",
+       "pick": "П1",
+       "k": "",
+       "lean": "1",
+       "url": "https://laligaexpert.com/la-liga-predictions-match-previews/"
+      }
+     ],
+     "ai": {
+      "score": "1:0",
+      "text": "Модель LaLiga Expert оценивает выбранный сценарий примерно в 49%. Мой выбор — П1 — победа хозяев. Стартовые составы ещё не подтверждены.",
+      "conf": 2,
+      "bet": "П1 — победа хозяев",
+      "pick": "П1"
+     }
     }
    ]
   },
@@ -921,91 +1288,312 @@
      "time": "21:45",
      "home": "Торино",
      "away": "Монца",
-     "status": "fixture"
+     "status": "fixture",
+     "tips": [
+      {
+       "src": "Betora",
+       "reg": "eu",
+       "pick": "1Х",
+       "k": "",
+       "lean": "1",
+       "url": "https://betora.app/it/lega/italy-serie-a/giornata/8"
+      }
+     ],
+     "ai": {
+      "score": "2:1",
+      "text": "Модель Betora оценивает выбранный сценарий примерно в 78%. Мой выбор — 1Х — хозяева не проиграют. Стартовые составы ещё не подтверждены.",
+      "conf": 4,
+      "bet": "1Х — хозяева не проиграют",
+      "pick": "1Х"
+     }
     },
     {
      "date": "2026-10-24",
      "time": "16:00",
      "home": "Кальяри",
      "away": "Болонья",
-     "status": "fixture"
+     "status": "fixture",
+     "tips": [
+      {
+       "src": "Betora",
+       "reg": "eu",
+       "pick": "Х2",
+       "k": "",
+       "lean": "2",
+       "url": "https://betora.app/it/lega/italy-serie-a/giornata/8"
+      }
+     ],
+     "ai": {
+      "score": "1:1",
+      "text": "Модель Betora оценивает выбранный сценарий примерно в 70%. Мой выбор — Х2 — гости не проиграют. Стартовые составы ещё не подтверждены.",
+      "conf": 3,
+      "bet": "Х2 — гости не проиграют",
+      "pick": "Х2"
+     }
     },
     {
      "date": "2026-10-24",
      "time": "16:00",
      "home": "Комо",
      "away": "Сассуоло",
-     "status": "fixture"
+     "status": "fixture",
+     "tips": [
+      {
+       "src": "Betora",
+       "reg": "eu",
+       "pick": "П1",
+       "k": "",
+       "lean": "1",
+       "url": "https://betora.app/it/lega/italy-serie-a/giornata/8"
+      }
+     ],
+     "ai": {
+      "score": "2:0",
+      "text": "Модель Betora оценивает выбранный сценарий примерно в 64%. Мой выбор — П1 — победа хозяев. Стартовые составы ещё не подтверждены.",
+      "conf": 3,
+      "bet": "П1 — победа хозяев",
+      "pick": "П1"
+     }
     },
     {
      "date": "2026-10-24",
      "time": "19:00",
      "home": "Наполи",
      "away": "Рома",
-     "status": "fixture"
+     "status": "fixture",
+     "tips": [
+      {
+       "src": "Betora",
+       "reg": "eu",
+       "pick": "Х2",
+       "k": "",
+       "lean": "2",
+       "url": "https://betora.app/it/lega/italy-serie-a/giornata/8"
+      }
+     ],
+     "ai": {
+      "score": "1:2",
+      "text": "Модель Betora оценивает выбранный сценарий примерно в 73%. Мой выбор — Х2 — гости не проиграют. Стартовые составы ещё не подтверждены.",
+      "conf": 3,
+      "bet": "Х2 — гости не проиграют",
+      "pick": "Х2"
+     }
     },
     {
      "date": "2026-10-24",
      "time": "21:45",
      "home": "Лацио",
      "away": "Парма",
-     "status": "fixture"
+     "status": "fixture",
+     "tips": [
+      {
+       "src": "Betora",
+       "reg": "eu",
+       "pick": "П1",
+       "k": "",
+       "lean": "1",
+       "url": "https://betora.app/it/lega/italy-serie-a/giornata/8"
+      }
+     ],
+     "ai": {
+      "score": "2:0",
+      "text": "Модель Betora оценивает выбранный сценарий примерно в 64%. Мой выбор — П1 — победа хозяев. Стартовые составы ещё не подтверждены.",
+      "conf": 3,
+      "bet": "П1 — победа хозяев",
+      "pick": "П1"
+     }
     },
     {
      "date": "2026-10-25",
      "time": "14:30",
      "home": "Интер",
      "away": "Фиорентина",
-     "status": "fixture"
+     "status": "fixture",
+     "tips": [
+      {
+       "src": "Betora",
+       "reg": "eu",
+       "pick": "П1",
+       "k": "",
+       "lean": "1",
+       "url": "https://betora.app/it/lega/italy-serie-a/giornata/8"
+      }
+     ],
+     "ai": {
+      "score": "2:1",
+      "text": "Модель Betora оценивает выбранный сценарий примерно в 67%. Мой выбор — П1 — победа хозяев. Стартовые составы ещё не подтверждены.",
+      "conf": 3,
+      "bet": "П1 — победа хозяев",
+      "pick": "П1"
+     }
     },
     {
      "date": "2026-10-25",
      "time": "17:00",
      "home": "Аталанта",
      "away": "Фрозиноне",
-     "status": "fixture"
+     "status": "fixture",
+     "tips": [
+      {
+       "src": "Betora",
+       "reg": "eu",
+       "pick": "П1",
+       "k": "",
+       "lean": "1",
+       "url": "https://betora.app/it/lega/italy-serie-a/giornata/8"
+      }
+     ],
+     "ai": {
+      "score": "2:1",
+      "text": "Модель Betora оценивает выбранный сценарий примерно в 57%. Мой выбор — П1 — победа хозяев. Стартовые составы ещё не подтверждены.",
+      "conf": 2,
+      "bet": "П1 — победа хозяев",
+      "pick": "П1"
+     }
     },
     {
      "date": "2026-10-25",
      "time": "17:00",
      "home": "Дженоа",
      "away": "Венеция",
-     "status": "fixture"
+     "status": "fixture",
+     "tips": [
+      {
+       "src": "Betora",
+       "reg": "eu",
+       "pick": "1Х",
+       "k": "",
+       "lean": "1",
+       "url": "https://betora.app/it/lega/italy-serie-a/giornata/8"
+      }
+     ],
+     "ai": {
+      "score": "1:1",
+      "text": "Модель Betora оценивает выбранный сценарий примерно в 80%. Мой выбор — 1Х — хозяева не проиграют. Стартовые составы ещё не подтверждены.",
+      "conf": 4,
+      "bet": "1Х — хозяева не проиграют",
+      "pick": "1Х"
+     }
     },
     {
      "date": "2026-10-25",
      "time": "20:00",
      "home": "Лечче",
      "away": "Ювентус",
-     "status": "fixture"
+     "status": "fixture",
+     "tips": [
+      {
+       "src": "Betora",
+       "reg": "eu",
+       "pick": "П2",
+       "k": "",
+       "lean": "2",
+       "url": "https://betora.app/it/lega/italy-serie-a/giornata/8"
+      }
+     ],
+     "ai": {
+      "score": "0:2",
+      "text": "Модель Betora оценивает выбранный сценарий примерно в 64%. Мой выбор — П2 — победа гостей. Стартовые составы ещё не подтверждены.",
+      "conf": 3,
+      "bet": "П2 — победа гостей",
+      "pick": "П2"
+     }
     },
     {
      "date": "2026-10-25",
      "time": "22:45",
      "home": "Удинезе",
      "away": "Милан",
-     "status": "fixture"
+     "status": "fixture",
+     "tips": [
+      {
+       "src": "Betora",
+       "reg": "eu",
+       "pick": "П2",
+       "k": "",
+       "lean": "2",
+       "url": "https://betora.app/it/lega/italy-serie-a/giornata/8"
+      }
+     ],
+     "ai": {
+      "score": "1:2",
+      "text": "Модель Betora оценивает выбранный сценарий примерно в 64%. Мой выбор — П2 — победа гостей. Стартовые составы ещё не подтверждены.",
+      "conf": 3,
+      "bet": "П2 — победа гостей",
+      "pick": "П2"
+     }
     },
     {
      "date": "2026-10-27",
      "time": "20:30",
      "home": "Сассуоло",
      "away": "Лацио",
-     "status": "fixture"
+     "status": "fixture",
+     "tips": [
+      {
+       "src": "Betora",
+       "reg": "eu",
+       "pick": "П2",
+       "k": "",
+       "lean": "2",
+       "url": "https://betora.app/it/lega/italy-serie-a/giornata/9"
+      }
+     ],
+     "ai": {
+      "score": "1:2",
+      "text": "Модель Betora оценивает выбранный сценарий примерно в 61%. Мой выбор — П2 — победа гостей. Стартовые составы ещё не подтверждены.",
+      "conf": 3,
+      "bet": "П2 — победа гостей",
+      "pick": "П2"
+     }
     },
     {
      "date": "2026-10-27",
      "time": "22:45",
      "home": "Рома",
      "away": "Кальяри",
-     "status": "fixture"
+     "status": "fixture",
+     "tips": [
+      {
+       "src": "Betora",
+       "reg": "eu",
+       "pick": "П1",
+       "k": "",
+       "lean": "1",
+       "url": "https://betora.app/it/lega/italy-serie-a/giornata/9"
+      }
+     ],
+     "ai": {
+      "score": "2:0",
+      "text": "Модель Betora оценивает выбранный сценарий примерно в 57%. Мой выбор — П1 — победа хозяев. Стартовые составы ещё не подтверждены.",
+      "conf": 2,
+      "bet": "П1 — победа хозяев",
+      "pick": "П1"
+     }
     },
     {
      "date": "2026-10-27",
      "time": "22:45",
      "home": "Торино",
      "away": "Комо",
-     "status": "fixture"
+     "status": "fixture",
+     "tips": [
+      {
+       "src": "Betora",
+       "reg": "eu",
+       "pick": "П2",
+       "k": "",
+       "lean": "2",
+       "url": "https://betora.app/it/lega/italy-serie-a/giornata/9"
+      }
+     ],
+     "ai": {
+      "score": "1:2",
+      "text": "Модель Betora оценивает выбранный сценарий примерно в 63%. Мой выбор — П2 — победа гостей. Стартовые составы ещё не подтверждены.",
+      "conf": 3,
+      "bet": "П2 — победа гостей",
+      "pick": "П2"
+     }
     },
     {
      "date": "2026-10-28",
@@ -1062,63 +1650,216 @@
      "time": "21:30",
      "home": "Штутгарт",
      "away": "Боруссия Мёнхенгладбах",
-     "status": "fixture"
+     "status": "fixture",
+     "tips": [
+      {
+       "src": "LuckAdjusted",
+       "reg": "eu",
+       "pick": "П1",
+       "k": "",
+       "lean": "1",
+       "url": "https://luckadjusted.com/bundesliga/predictions"
+      }
+     ],
+     "ai": {
+      "score": "2:0",
+      "text": "Модель LuckAdjusted оценивает выбранный сценарий примерно в 67%. Мой выбор — П1 — победа хозяев. Стартовые составы ещё не подтверждены.",
+      "conf": 3,
+      "bet": "П1 — победа хозяев",
+      "pick": "П1"
+     }
     },
     {
      "date": "2026-10-24",
      "time": "16:30",
      "home": "РБ Лейпциг",
      "away": "Эльферсберг",
-     "status": "fixture"
+     "status": "fixture",
+     "tips": [
+      {
+       "src": "LuckAdjusted",
+       "reg": "eu",
+       "pick": "П1",
+       "k": "",
+       "lean": "1",
+       "url": "https://luckadjusted.com/bundesliga/predictions"
+      }
+     ],
+     "ai": {
+      "score": "2:0",
+      "text": "Модель LuckAdjusted оценивает выбранный сценарий примерно в 62%. Мой выбор — П1 — победа хозяев. Стартовые составы ещё не подтверждены.",
+      "conf": 3,
+      "bet": "П1 — победа хозяев",
+      "pick": "П1"
+     }
     },
     {
      "date": "2026-10-24",
      "time": "16:30",
      "home": "Аугсбург",
      "away": "Унион Берлин",
-     "status": "fixture"
+     "status": "fixture",
+     "tips": [
+      {
+       "src": "LuckAdjusted",
+       "reg": "eu",
+       "pick": "П1",
+       "k": "",
+       "lean": "1",
+       "url": "https://luckadjusted.com/bundesliga/predictions"
+      }
+     ],
+     "ai": {
+      "score": "2:1",
+      "text": "Модель LuckAdjusted оценивает выбранный сценарий примерно в 56%. Мой выбор — П1 — победа хозяев. Стартовые составы ещё не подтверждены.",
+      "conf": 2,
+      "bet": "П1 — победа хозяев",
+      "pick": "П1"
+     }
     },
     {
      "date": "2026-10-24",
      "time": "16:30",
      "home": "Майнц",
      "away": "Вердер",
-     "status": "fixture"
+     "status": "fixture",
+     "tips": [
+      {
+       "src": "LuckAdjusted",
+       "reg": "eu",
+       "pick": "1Х",
+       "k": "",
+       "lean": "1",
+       "url": "https://luckadjusted.com/bundesliga/predictions"
+      }
+     ],
+     "ai": {
+      "score": "1:1",
+      "text": "Модель LuckAdjusted оценивает выбранный сценарий примерно в 76%. Мой выбор — 1Х — хозяева не проиграют. Стартовые составы ещё не подтверждены.",
+      "conf": 4,
+      "bet": "1Х — хозяева не проиграют",
+      "pick": "1Х"
+     }
     },
     {
      "date": "2026-10-24",
      "time": "16:30",
      "home": "Кёльн",
      "away": "Шальке",
-     "status": "fixture"
+     "status": "fixture",
+     "tips": [
+      {
+       "src": "LuckAdjusted",
+       "reg": "eu",
+       "pick": "1Х",
+       "k": "",
+       "lean": "1",
+       "url": "https://luckadjusted.com/bundesliga/predictions"
+      }
+     ],
+     "ai": {
+      "score": "1:1",
+      "text": "Модель LuckAdjusted оценивает выбранный сценарий примерно в 72%. Мой выбор — 1Х — хозяева не проиграют. Стартовые составы ещё не подтверждены.",
+      "conf": 3,
+      "bet": "1Х — хозяева не проиграют",
+      "pick": "1Х"
+     }
     },
     {
      "date": "2026-10-24",
      "time": "16:30",
      "home": "Падерборн",
      "away": "Гамбург",
-     "status": "fixture"
+     "status": "fixture",
+     "tips": [
+      {
+       "src": "LuckAdjusted",
+       "reg": "eu",
+       "pick": "1Х",
+       "k": "",
+       "lean": "1",
+       "url": "https://luckadjusted.com/bundesliga/predictions"
+      }
+     ],
+     "ai": {
+      "score": "1:1",
+      "text": "Модель LuckAdjusted оценивает выбранный сценарий примерно в 70%. Мой выбор — 1Х — хозяева не проиграют. Стартовые составы ещё не подтверждены.",
+      "conf": 3,
+      "bet": "1Х — хозяева не проиграют",
+      "pick": "1Х"
+     }
     },
     {
      "date": "2026-10-24",
      "time": "19:30",
      "home": "Боруссия Дортмунд",
      "away": "Айнтрахт Франкфурт",
-     "status": "fixture"
+     "status": "fixture",
+     "tips": [
+      {
+       "src": "LuckAdjusted",
+       "reg": "eu",
+       "pick": "П1",
+       "k": "",
+       "lean": "1",
+       "url": "https://luckadjusted.com/bundesliga/predictions"
+      }
+     ],
+     "ai": {
+      "score": "2:1",
+      "text": "Модель LuckAdjusted оценивает выбранный сценарий примерно в 64%. Мой выбор — П1 — победа хозяев. Стартовые составы ещё не подтверждены.",
+      "conf": 3,
+      "bet": "П1 — победа хозяев",
+      "pick": "П1"
+     }
     },
     {
      "date": "2026-10-25",
      "time": "17:30",
      "home": "Хоффенхайм",
      "away": "Байер",
-     "status": "fixture"
+     "status": "fixture",
+     "tips": [
+      {
+       "src": "LuckAdjusted",
+       "reg": "eu",
+       "pick": "Х2",
+       "k": "",
+       "lean": "2",
+       "url": "https://luckadjusted.com/bundesliga/predictions"
+      }
+     ],
+     "ai": {
+      "score": "1:2",
+      "text": "Модель LuckAdjusted оценивает выбранный сценарий примерно в 70%. Мой выбор — Х2 — гости не проиграют. Стартовые составы ещё не подтверждены.",
+      "conf": 3,
+      "bet": "Х2 — гости не проиграют",
+      "pick": "Х2"
+     }
     },
     {
      "date": "2026-10-25",
      "time": "19:30",
      "home": "Фрайбург",
      "away": "Бавария",
-     "status": "fixture"
+     "status": "fixture",
+     "tips": [
+      {
+       "src": "LuckAdjusted",
+       "reg": "eu",
+       "pick": "П2",
+       "k": "",
+       "lean": "2",
+       "url": "https://luckadjusted.com/bundesliga/predictions"
+      }
+     ],
+     "ai": {
+      "score": "1:2",
+      "text": "Модель LuckAdjusted оценивает выбранный сценарий примерно в 62%. Мой выбор — П2 — победа гостей. Стартовые составы ещё не подтверждены.",
+      "conf": 3,
+      "bet": "П2 — победа гостей",
+      "pick": "П2"
+     }
     }
    ]
   },
@@ -1133,63 +1874,216 @@
      "time": "21:45",
      "home": "Брест",
      "away": "Ницца",
-     "status": "fixture"
+     "status": "fixture",
+     "tips": [
+      {
+       "src": "PlacarHub",
+       "reg": "eu",
+       "pick": "П1",
+       "k": "",
+       "lean": "1",
+       "url": "https://placarhub.com/es/noticias/ligue-1-2026-rodada-8-palpites/"
+      }
+     ],
+     "ai": {
+      "score": "2:1",
+      "text": "Модель PlacarHub оценивает выбранный сценарий примерно в 60%. Мой выбор — П1 — победа хозяев. Стартовые составы ещё не подтверждены.",
+      "conf": 3,
+      "bet": "П1 — победа хозяев",
+      "pick": "П1"
+     }
     },
     {
      "date": "2026-10-24",
      "time": "21:45",
      "home": "Ланс",
      "away": "Париж",
-     "status": "fixture"
+     "status": "fixture",
+     "tips": [
+      {
+       "src": "PlacarHub",
+       "reg": "eu",
+       "pick": "1Х",
+       "k": "",
+       "lean": "1",
+       "url": "https://placarhub.com/es/noticias/ligue-1-2026-rodada-8-palpites/"
+      }
+     ],
+     "ai": {
+      "score": "1:1",
+      "text": "Модель PlacarHub оценивает выбранный сценарий примерно в 71%. Мой выбор — 1Х — хозяева не проиграют. Стартовые составы ещё не подтверждены.",
+      "conf": 3,
+      "bet": "1Х — хозяева не проиграют",
+      "pick": "1Х"
+     }
     },
     {
      "date": "2026-10-25",
      "time": "17:00",
      "home": "Монако",
      "away": "Лилль",
-     "status": "fixture"
+     "status": "fixture",
+     "tips": [
+      {
+       "src": "PlacarHub",
+       "reg": "eu",
+       "pick": "ОЗ да",
+       "k": "",
+       "lean": "",
+       "url": "https://placarhub.com/es/noticias/ligue-1-2026-rodada-8-palpites/"
+      }
+     ],
+     "ai": {
+      "score": "2:1",
+      "text": "Модель PlacarHub оценивает выбранный сценарий примерно в 54%. Мой выбор — обе команды забьют. Стартовые составы ещё не подтверждены.",
+      "conf": 2,
+      "bet": "обе команды забьют",
+      "pick": "ОЗ да"
+     }
     },
     {
      "date": "2026-10-25",
      "time": "19:15",
      "home": "Тулуза",
      "away": "Труа",
-     "status": "fixture"
+     "status": "fixture",
+     "tips": [
+      {
+       "src": "PlacarHub",
+       "reg": "eu",
+       "pick": "ОЗ да",
+       "k": "",
+       "lean": "",
+       "url": "https://placarhub.com/es/noticias/ligue-1-2026-rodada-8-palpites/"
+      }
+     ],
+     "ai": {
+      "score": "2:1",
+      "text": "Модель PlacarHub оценивает выбранный сценарий примерно в 54%. Мой выбор — обе команды забьют. Стартовые составы ещё не подтверждены.",
+      "conf": 2,
+      "bet": "обе команды забьют",
+      "pick": "ОЗ да"
+     }
     },
     {
      "date": "2026-10-25",
      "time": "19:15",
      "home": "Анже",
      "away": "Лорьян",
-     "status": "fixture"
+     "status": "fixture",
+     "tips": [
+      {
+       "src": "PlacarHub",
+       "reg": "eu",
+       "pick": "ОЗ да",
+       "k": "",
+       "lean": "",
+       "url": "https://placarhub.com/es/noticias/ligue-1-2026-rodada-8-palpites/"
+      }
+     ],
+     "ai": {
+      "score": "1:1",
+      "text": "Модель PlacarHub оценивает выбранный сценарий примерно в 53%. Мой выбор — обе команды забьют. Стартовые составы ещё не подтверждены.",
+      "conf": 2,
+      "bet": "обе команды забьют",
+      "pick": "ОЗ да"
+     }
     },
     {
      "date": "2026-10-25",
      "time": "19:15",
      "home": "Осер",
      "away": "Ле-Ман",
-     "status": "fixture"
+     "status": "fixture",
+     "tips": [
+      {
+       "src": "PlacarHub",
+       "reg": "eu",
+       "pick": "ОЗ да",
+       "k": "",
+       "lean": "",
+       "url": "https://placarhub.com/es/noticias/ligue-1-2026-rodada-8-palpites/"
+      }
+     ],
+     "ai": {
+      "score": "2:1",
+      "text": "Модель PlacarHub оценивает выбранный сценарий примерно в 61%. Мой выбор — обе команды забьют. Стартовые составы ещё не подтверждены.",
+      "conf": 3,
+      "bet": "обе команды забьют",
+      "pick": "ОЗ да"
+     }
     },
     {
      "date": "2026-10-25",
      "time": "19:15",
      "home": "Марсель",
      "away": "Гавр",
-     "status": "fixture"
+     "status": "fixture",
+     "tips": [
+      {
+       "src": "PlacarHub",
+       "reg": "eu",
+       "pick": "ОЗ да",
+       "k": "",
+       "lean": "",
+       "url": "https://placarhub.com/es/noticias/ligue-1-2026-rodada-8-palpites/"
+      }
+     ],
+     "ai": {
+      "score": "2:1",
+      "text": "Модель PlacarHub оценивает выбранный сценарий примерно в 63%. Мой выбор — обе команды забьют. Стартовые составы ещё не подтверждены.",
+      "conf": 3,
+      "bet": "обе команды забьют",
+      "pick": "ОЗ да"
+     }
     },
     {
      "date": "2026-10-25",
      "time": "19:15",
      "home": "Ренн",
      "away": "Страсбур",
-     "status": "fixture"
+     "status": "fixture",
+     "tips": [
+      {
+       "src": "PlacarHub",
+       "reg": "eu",
+       "pick": "ТБ 2.5",
+       "k": "",
+       "lean": "",
+       "url": "https://placarhub.com/es/noticias/ligue-1-2026-rodada-8-palpites/"
+      }
+     ],
+     "ai": {
+      "score": "3:1",
+      "text": "Модель PlacarHub оценивает выбранный сценарий примерно в 76%. Мой выбор — тотал больше 2,5. Стартовые составы ещё не подтверждены.",
+      "conf": 4,
+      "bet": "тотал больше 2,5",
+      "pick": "ТБ 2.5"
+     }
     },
     {
      "date": "2026-10-25",
      "time": "22:45",
      "home": "ПСЖ",
      "away": "Лион",
-     "status": "fixture"
+     "status": "fixture",
+     "tips": [
+      {
+       "src": "Betora",
+       "reg": "eu",
+       "pick": "П1",
+       "k": "",
+       "lean": "1",
+       "url": "https://betora.app/league/france-ligue-1/round/8"
+      }
+     ],
+     "ai": {
+      "score": "2:0",
+      "text": "Модель Betora оценивает выбранный сценарий примерно в 67%. Мой выбор — П1 — победа хозяев. Стартовые составы ещё не подтверждены.",
+      "conf": 3,
+      "bet": "П1 — победа хозяев",
+      "pick": "П1"
+     }
     }
    ]
   },
@@ -1204,56 +2098,192 @@
      "time": "19:30",
      "home": "Ахмат",
      "away": "Оренбург",
-     "status": "fixture"
+     "status": "fixture",
+     "tips": [
+      {
+       "src": "Fixture360",
+       "reg": "eu",
+       "pick": "1Х",
+       "k": "",
+       "lean": "1",
+       "url": "https://www.fixture360.com/en/football/russia/premier-league/fixtures"
+      }
+     ],
+     "ai": {
+      "score": "1:0",
+      "text": "Модель Fixture360 оценивает выбранный сценарий примерно в 77%. Мой выбор — 1Х — хозяева не проиграют. Стартовые составы ещё не подтверждены.",
+      "conf": 4,
+      "bet": "1Х — хозяева не проиграют",
+      "pick": "1Х"
+     }
     },
     {
      "date": "2026-10-24",
      "time": "12:45",
      "home": "Акрон",
      "away": "Динамо",
-     "status": "fixture"
+     "status": "fixture",
+     "tips": [
+      {
+       "src": "Fixture360",
+       "reg": "eu",
+       "pick": "Х2",
+       "k": "",
+       "lean": "2",
+       "url": "https://www.fixture360.com/en/football/russia/premier-league/fixtures"
+      }
+     ],
+     "ai": {
+      "score": "1:1",
+      "text": "Модель Fixture360 оценивает выбранный сценарий примерно в 80%. Мой выбор — Х2 — гости не проиграют. Стартовые составы ещё не подтверждены.",
+      "conf": 4,
+      "bet": "Х2 — гости не проиграют",
+      "pick": "Х2"
+     }
     },
     {
      "date": "2026-10-24",
      "time": "15:00",
      "home": "Факел",
      "away": "Родина",
-     "status": "fixture"
+     "status": "fixture",
+     "tips": [
+      {
+       "src": "Fixture360",
+       "reg": "eu",
+       "pick": "ТМ 2.5",
+       "k": "",
+       "lean": "",
+       "url": "https://www.fixture360.com/en/football/russia/premier-league/fixtures"
+      }
+     ],
+     "ai": {
+      "score": "1:0",
+      "text": "Модель Fixture360 оценивает выбранный сценарий примерно в 59%. Мой выбор — тотал меньше 2,5. Стартовые составы ещё не подтверждены.",
+      "conf": 2,
+      "bet": "тотал меньше 2,5",
+      "pick": "ТМ 2.5"
+     }
     },
     {
      "date": "2026-10-24",
      "time": "17:15",
      "home": "Рубин",
      "away": "Крылья Советов",
-     "status": "fixture"
+     "status": "fixture",
+     "tips": [
+      {
+       "src": "Fixture360",
+       "reg": "eu",
+       "pick": "Х2",
+       "k": "",
+       "lean": "2",
+       "url": "https://www.fixture360.com/en/football/russia/premier-league/fixtures"
+      }
+     ],
+     "ai": {
+      "score": "1:1",
+      "text": "Модель Fixture360 оценивает выбранный сценарий примерно в 72%. Мой выбор — Х2 — гости не проиграют. Стартовые составы ещё не подтверждены.",
+      "conf": 3,
+      "bet": "Х2 — гости не проиграют",
+      "pick": "Х2"
+     }
     },
     {
      "date": "2026-10-24",
      "time": "19:30",
      "home": "Краснодар",
      "away": "Балтика",
-     "status": "fixture"
+     "status": "fixture",
+     "tips": [
+      {
+       "src": "Fixture360",
+       "reg": "eu",
+       "pick": "ТМ 2.5",
+       "k": "",
+       "lean": "",
+       "url": "https://www.fixture360.com/en/football/russia/premier-league/fixtures"
+      }
+     ],
+     "ai": {
+      "score": "1:1",
+      "text": "Модель Fixture360 оценивает выбранный сценарий примерно в 55%. Мой выбор — тотал меньше 2,5. Стартовые составы ещё не подтверждены.",
+      "conf": 2,
+      "bet": "тотал меньше 2,5",
+      "pick": "ТМ 2.5"
+     }
     },
     {
      "date": "2026-10-25",
      "time": "13:45",
      "home": "Ростов",
      "away": "Локомотив",
-     "status": "fixture"
+     "status": "fixture",
+     "tips": [
+      {
+       "src": "Fixture360",
+       "reg": "eu",
+       "pick": "Х2",
+       "k": "",
+       "lean": "2",
+       "url": "https://www.fixture360.com/en/football/russia/premier-league/fixtures"
+      }
+     ],
+     "ai": {
+      "score": "1:2",
+      "text": "Модель Fixture360 оценивает выбранный сценарий примерно в 73%. Мой выбор — Х2 — гости не проиграют. Стартовые составы ещё не подтверждены.",
+      "conf": 3,
+      "bet": "Х2 — гости не проиграют",
+      "pick": "Х2"
+     }
     },
     {
      "date": "2026-10-25",
      "time": "16:00",
      "home": "ЦСКА",
      "away": "Спартак",
-     "status": "fixture"
+     "status": "fixture",
+     "tips": [
+      {
+       "src": "Fixture360",
+       "reg": "eu",
+       "pick": "1Х",
+       "k": "",
+       "lean": "1",
+       "url": "https://www.fixture360.com/en/football/russia/premier-league/fixtures"
+      }
+     ],
+     "ai": {
+      "score": "1:1",
+      "text": "Модель Fixture360 оценивает выбранный сценарий примерно в 75%. Мой выбор — 1Х — хозяева не проиграют. Стартовые составы ещё не подтверждены.",
+      "conf": 4,
+      "bet": "1Х — хозяева не проиграют",
+      "pick": "1Х"
+     }
     },
     {
      "date": "2026-10-25",
      "time": "18:30",
      "home": "Зенит",
      "away": "Динамо (Махачкала)",
-     "status": "fixture"
+     "status": "fixture",
+     "tips": [
+      {
+       "src": "Fixture360",
+       "reg": "eu",
+       "pick": "П1",
+       "k": "",
+       "lean": "1",
+       "url": "https://www.fixture360.com/en/football/russia/premier-league/fixtures"
+      }
+     ],
+     "ai": {
+      "score": "2:0",
+      "text": "Модель Fixture360 оценивает выбранный сценарий примерно в 59%. Мой выбор — П1 — победа хозяев. Стартовые составы ещё не подтверждены.",
+      "conf": 2,
+      "bet": "П1 — победа хозяев",
+      "pick": "П1"
+     }
     }
    ]
   }
