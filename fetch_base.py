@@ -95,7 +95,7 @@ def norm(s):
 def normalized_team_name(value):
     value = unicodedata.normalize("NFKD", str(value or "")).encode("ascii", "ignore").decode("ascii")
     value = value.casefold()
-    value = re.sub(r"\b(?:fc|afc|cf|sc|ac|as|club)\b", "", value)
+    value = re.sub(r"\b(?:fc|afc|cf|sc|ac|as|club|rb|nk|fk)\b", "", value)
     return re.sub(r"[^a-z0-9]", "", value)
 
 TEAM_BY_ESPN_NAME = {normalized_team_name(source): target for source, target in TEAM.items()}
@@ -104,6 +104,7 @@ TEAM_BY_ESPN_NAME.update({
     "mancity": "Манчестер Сити", "athleticbilbao": "Атлетик",
     "intermilan": "Интер", "internazionale": "Интер",
     "bayernmunich": "Бавария", "parissaintgermain": "ПСЖ",
+    "lasklinz": "ЛАСК", "hapoelbeer": "Хапоэль Беэр-Шева",
     "psg": "ПСЖ", "barcelona": "Барселона", "realmadrid": "Реал Мадрид",
 })
 
@@ -180,8 +181,10 @@ def fetch_espn_results(today):
                     elif side == "away":
                         away, away_score = mapped_name, score
                 if not home or not away:
-                    raw_teams = [c.get("team", {}).get("displayName", "?") for c in competition.get("competitors", [])]
-                    unmapped.update(str(name) for name in raw_teams)
+                    for competitor in competition.get("competitors", []):
+                        raw_team = competitor.get("team", {})
+                        if not espn_team_name(raw_team):
+                            unmapped.add(str(raw_team.get("displayName") or raw_team.get("name") or "?"))
                     continue
                 if not (home_score.isdigit() and away_score.isdigit()):
                     continue
