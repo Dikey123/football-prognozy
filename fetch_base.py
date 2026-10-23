@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """Автономный сбор базы (GitHub Actions): расписание, время, счёт, результаты.
-Источник: free-api-live-football-data (RapidAPI). Богатые поля (tips/ai/lineups/news/odds)
-НЕ трогаем — их заполняет Claude. По умолчанию DRY-RUN (без записи); DRY_RUN=0 включает запись."""
+Источник расписания и результатов: free-api-live-football-data (RapidAPI).
+Прогнозы с сайтов собирает отдельный collect_tips.py. По умолчанию DRY-RUN
+(без записи); DRY_RUN=0 включает запись."""
 import os, json, time, urllib.request, urllib.error, datetime, subprocess
 
 KEY = os.environ.get("API_FOOTBALL_KEY", "")
@@ -138,6 +139,7 @@ for request_index, offset in enumerate(DAY_OFFSETS):
                 ex["date"], ex["time"] = dd, tt
             if fin and ft:
                 ex["ft"] = ft
+                ex["status"] = "full"
                 scores[hr] = ft               # счёт для settle (сработает, если матч обогащён)
             updated += 1
         else:

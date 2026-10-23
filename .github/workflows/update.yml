@@ -5,7 +5,7 @@ on:
     - cron: "15 3 * * *" # ежедневно в 06:15 по Москве
   push:
     branches: [main]
-    paths: ["fetch_base.py", ".github/workflows/update.yml"]
+    paths: ["fetch_base.py", "settle.py", ".github/workflows/update.yml"]
 
 permissions:
   contents: write

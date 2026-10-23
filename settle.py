@@ -5,6 +5,8 @@
 # results.json читается и дополняется (накопление по дням). Пушы в % не учитываются.
 import json, re, sys, datetime
 
+MSK = datetime.timezone(datetime.timedelta(hours=3))
+
 def norm(s): return re.sub(r'[^а-яёa-z0-9]', '', str(s).lower())
 
 def team_side(q, home, away):
@@ -91,6 +93,22 @@ def load(path, default):
         with open(path, encoding='utf-8') as f: return json.load(f)
     except Exception: return default
 
+def published_before_kickoff(tip, match):
+    """Не засчитываем источник, если прогноз опубликован после начала матча."""
+    raw = tip.get("published_at")
+    if not raw:  # Старые записи не содержат временную метку.
+        return True
+    try:
+        published = datetime.datetime.fromisoformat(str(raw).replace("Z", "+00:00"))
+        if published.tzinfo is None:
+            published = published.replace(tzinfo=MSK)
+        kickoff = datetime.datetime.strptime(
+            f'{match.get("date", "")} {match.get("time", "23:59")}', "%Y-%m-%d %H:%M"
+        ).replace(tzinfo=MSK)
+        return published < kickoff
+    except Exception:
+        return False
+
 def main():
     data = load(sys.argv[1], {})
     scores = load(sys.argv[2], {})
@@ -113,6 +131,10 @@ def main():
             out='1' if h>a else ('2' if h<a else 'x')
             picklog=[]
             for tp in m.get("tips",[]):
+                if not published_before_kickoff(tp, m):
+                    picklog.append({"src":tp.get("src","?"),"reg":tp.get("reg","ru"),
+                                    "pick":tp.get("pick",""),"res":"late"})
+                    continue
                 r=settle_pick(tp.get("pick",""), h, a, m["home"], m["away"])
                 src=tp.get("src","?"); reg=tp.get("reg","ru")
                 S=R["sources"].setdefault(src,{"reg":reg,"win":0,"lose":0,"push":0})
