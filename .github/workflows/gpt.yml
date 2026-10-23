@@ -4,7 +4,7 @@ on:
   push:
     paths: ["data.json", "results.json", "gen_gpt.py", ".github/workflows/gpt.yml"]
   schedule:
-    - cron: "0 */6 * * *"       # и раз в 6 часов на всякий случай
+    - cron: "0 6 * * *"         # ежедневно в 09:00 по Москве (06:00 UTC)
   workflow_dispatch: {}          # и кнопкой вручную во вкладке Actions
 
 permissions:
