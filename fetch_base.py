@@ -3,12 +3,12 @@
 """Автономный сбор базы (GitHub Actions): расписание, время, счёт, результаты.
 Источник: free-api-live-football-data (RapidAPI). Богатые поля (tips/ai/lineups/news/odds)
 НЕ трогаем — их заполняет Claude. По умолчанию DRY-RUN (без записи); DRY_RUN=0 включает запись."""
-import os, json, urllib.request, urllib.error, datetime, subprocess
+import os, json, time, urllib.request, urllib.error, datetime, subprocess
 
 KEY = os.environ.get("API_FOOTBALL_KEY", "")
 HOST = "free-api-live-football-data.p.rapidapi.com"
 DRY = os.environ.get("DRY_RUN", "1") == "1"
-DAY_OFFSETS = range(-2, 5)  # от двух дней назад до четырёх дней вперёд
+DAY_OFFSETS = (-2, -1, 4)  # два прошлых дня и новый крайний день расписания
 
 LEAGUES = {47:"epl",87:"laliga",55:"seriea",54:"bundesliga",53:"ligue1",63:"rpl",943230:"ucl",943229:"uel"}
 
@@ -65,7 +65,16 @@ def get(path):
         with urllib.request.urlopen(req, timeout=25) as r:
             return json.loads(r.read().decode("utf-8","replace"))
     except urllib.error.HTTPError as e:
-        return {"_err": f"HTTP Error {e.code}: {e.reason}", "_status": e.code}
+        body = e.read().decode("utf-8", "replace").strip()
+        headers = e.headers or {}
+        details = body or str(e.reason)
+        retry_after = headers.get("Retry-After")
+        remaining = headers.get("X-RapidAPI-Requests-Remaining") or headers.get("X-Ratelimit-Requests-Remaining")
+        if retry_after:
+            details += f" (Retry-After: {retry_after}s)"
+        if remaining is not None:
+            details += f" (requests remaining: {remaining})"
+        return {"_err": f"HTTP Error {e.code}: {details}", "_status": e.code}
     except Exception as e:
         return {"_err": str(e)}
 
@@ -95,9 +104,11 @@ updated = added = 0
 scores = {}       # для settle: {рус_хозяева: "2:1"}
 unmapped = set()
 errors = []
-got_any = False
+got_response = False
 
-for offset in DAY_OFFSETS:
+for request_index, offset in enumerate(DAY_OFFSETS):
+    if request_index:
+        time.sleep(1.2)  # не отправляем несколько запросов подряд в RapidAPI
     d = (today + datetime.timedelta(days=offset)).strftime("%Y%m%d")
     resp = get(f"/football-get-matches-by-date?date={d}")
     if "_err" in resp or resp.get("status") == "failed":
@@ -107,8 +118,7 @@ for offset in DAY_OFFSETS:
             print("Остановка запросов: достигнут лимит API (HTTP 429).")
             break
         continue
-    if resp.get("response", {}).get("matches"):
-        got_any = True
+    got_response = True
     for m in resp.get("response", {}).get("matches", []):
         tid = LEAGUES.get(m.get("leagueId"))
         if not tid: continue
@@ -139,13 +149,13 @@ for offset in DAY_OFFSETS:
             tour[tid]["matches"].append(nm)
             added += 1
 
-summary = f"updated={updated} added={added} finished_scores={len(scores)} unmapped={len(unmapped)} errors={len(errors)} got_any={got_any} DRY={DRY}"
+summary = f"updated={updated} added={added} finished_scores={len(scores)} unmapped={len(unmapped)} errors={len(errors)} got_response={got_response} DRY={DRY}"
 print(summary)
 if unmapped:
     print("UNMAPPED:", sorted(unmapped))
 try:
     with open("fetch_log.txt", "w", encoding="utf-8") as f:
-        f.write(datetime.datetime.utcnow().isoformat() + "Z\n" + summary + "\n")
+        f.write(datetime.datetime.now(datetime.timezone.utc).isoformat().replace("+00:00", "Z") + "\n" + summary + "\n")
         if errors:
             f.write("ERRORS:\n" + "\n".join(errors) + "\n")
         if unmapped:
@@ -161,7 +171,7 @@ if DRY:
 elif errors:
     print("Обновление отменено: API вернул неполный набор ответов, существующие данные сохранены.")
     raise SystemExit("Сбор данных не завершён — проверьте лимит и ключ API.")
-elif not got_any:
+elif not got_response:
     print("Ни одного успешного ответа API — data.json НЕ трогаем (вероятно лимит API).")
     raise SystemExit("API не вернул матчи; существующие данные сохранены.")
 else:
