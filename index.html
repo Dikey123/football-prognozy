@@ -380,7 +380,7 @@ function aiCoefficient(m,o){
   return prices.length?{value:Math.round(Math.max(...prices)*100)/100,estimated:true}:null;
 }
 function aiBetEligible(o,m){
-  return !!o&&o.eligible!==false&&aiProbability(o)>=AI_MIN_PROBABILITY&&String(o.bet||o.pick||"").trim().length>0&&!!aiCoefficient(m,o);
+  return !!o&&o.eligible===true&&aiProbability(o)>=AI_MIN_PROBABILITY&&String(o.bet||o.pick||"").trim().length>0&&!!aiCoefficient(m,o);
 }
 function aiSources(o){
   const sources=Array.isArray(o&&o.sources)?o.sources:[];
