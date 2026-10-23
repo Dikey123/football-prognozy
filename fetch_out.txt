@@ -1,7 +1,5 @@
-/home/runner/work/football-prognozy/football-prognozy/fetch_base.py:148: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
-  f.write(datetime.datetime.utcnow().isoformat() + "Z\n" + summary + "\n")
-ERR 20261021 HTTP Error 429: Too Many Requests
+ERR 20261021 HTTP Error 429: {"message":"You have exceeded the MONTHLY quota for Requests on your current plan, BASIC. Upgrade your plan at https:\/\/rapidapi.com\/Creativesdev\/api\/free-api-live-football-data"} (requests remaining: 0)
 Остановка запросов: достигнут лимит API (HTTP 429).
-updated=0 added=0 finished_scores=0 unmapped=0 errors=1 got_any=False DRY=False
+updated=0 added=0 finished_scores=0 unmapped=0 errors=1 got_response=False DRY=False
 Обновление отменено: API вернул неполный набор ответов, существующие данные сохранены.
 Сбор данных не завершён — проверьте лимит и ключ API.
