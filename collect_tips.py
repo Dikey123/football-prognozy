@@ -59,10 +59,18 @@ SITES = {
     "ratingbet.com": ("RatingBet", "eu"),
     "legalbet.ru": ("Legalbet", "ru"),
     "sportsmole.co.uk": ("Sports Mole", "eu"),
+    "90minwaffle.co.uk": ("90min Waffle", "eu"),
+    "expected90.com": ("Expected90", "eu"),
+    "metisfootball.com": ("Metis Football", "eu"),
     "olbg.com": ("OLBG", "eu"),
     "betclan.com": ("BetClan", "eu"),
     "betimate.com": ("Betimate", "eu"),
     "footballpredictions.com": ("FootballPredictions.com", "eu"),
+}
+MODEL_SITES = {
+    "Opta Analyst", "LaLiga Expert", "Betora", "Fixture360", "LuckAdjusted",
+    "PlacarHub", "Forepitch", "Forebet", "PredictZ", "90min Waffle",
+    "Expected90", "Metis Football",
 }
 
 ROBOTS = {}
@@ -108,6 +116,15 @@ def aliases_for(team):
     aliases = [str(team or "")]
     aliases.extend(ENGLISH_NAMES.get(norm_words(team), []))
     aliases.extend(re.sub(r"^(?:fc|fk|ac|sc|afc|club)\s+", "", a, flags=re.I) for a in list(aliases))
+    # Common abbreviations used in forecast pages and RSS titles.
+    for alias in list(aliases):
+        normalized = norm_words(alias)
+        if normalized == "nottingham forest":
+            aliases.extend(("Nottm Forest", "Nott'm Forest"))
+        elif normalized == "manchester united":
+            aliases.extend(("Man United", "Man Utd"))
+        elif normalized == "manchester city":
+            aliases.append("Man City")
     return list(dict.fromkeys(a for a in aliases if len(norm_words(a)) >= 4))
 
 
@@ -359,7 +376,8 @@ def extract_explicit_pick(text, home_aliases, away_aliases):
     marker = re.compile(
         r"(?:наш\s+прогноз(?:\s+на\s+матч)?|прогноз\s+(?:редакции|автора)|выбор\s+(?:редакции|редактора)|"
         r"наш\s+(?:выбор|вариант)|основной\s+прогноз|прогноз(?=\s*[:—–-])|ставка\s+дня|our\s+prediction|our\s+pick|"
-        r"editor(?:'s)?\s+pick|best\s+bet|prediction\s+is|prediction(?=\s*[:—–-])|our\s+tip|pron[oó]stico)\s*(?:[:—–-]\s*|\s+)([^\n]{3,220})",
+        r"editor(?:'s)?\s+pick|best\s+bet|prediction\s+is|prediction(?=\s*[:—–-])|our\s+tip|"
+        r"statiq\s+pick|pron[oó]stico)\s*(?:[:—–-]\s*|\s+)([^\n]{3,220})",
         re.IGNORECASE,
     )
     for match in marker.finditer(text):
@@ -374,6 +392,36 @@ def extract_explicit_pick(text, home_aliases, away_aliases):
             pick = canonical_pick(candidate, home_aliases, away_aliases)
             if pick:
                 return pick, candidate
+        # Sports Mole publishes a clearly labelled editorial score line.
+        if re.search(r"\bwe say\s*:", paragraph, re.I):
+            score = re.search(r"\b(\d{1,2})\s*[-–:]\s*(\d{1,2})\b", paragraph)
+            if (score and contains_name(paragraph, home_aliases)
+                    and contains_name(paragraph, away_aliases)):
+                candidate = f"Счёт {score.group(1)}:{score.group(2)}"
+                return candidate, paragraph
+    return None
+
+
+def extract_labeled_probabilistic_pick(text, home_aliases, away_aliases):
+    """Берёт исход только из подписанных вероятностей 1/X/2 на модельной странице."""
+    lines = [re.sub(r"\s+", " ", line).strip() for line in text.splitlines() if line.strip()]
+    probabilities = {}
+    for index, line in enumerate(lines):
+        percentage = re.search(r"(\d{1,2}(?:\.\d+)?)\s*%", line)
+        if not percentage:
+            continue
+        label = line if re.sub(r"\d{1,2}(?:\.\d+)?\s*%", "", line).strip() else (
+            lines[index - 1] if index else ""
+        )
+        if re.search(r"\b(draw|tie|empate)\b|ничь", label, re.I):
+            side = "Х"
+        else:
+            identified = identify_side(label, home_aliases, away_aliases)
+            side = {"1": "П1", "2": "П2"}.get(identified)
+        if side:
+            probabilities[side] = max(probabilities.get(side, 0), float(percentage.group(1)))
+    if probabilities:
+        return max(probabilities, key=probabilities.get), f"Модель: {probabilities[max(probabilities, key=probabilities.get)]:g}%"
     return None
 
 
@@ -432,14 +480,22 @@ def extract_pick(article, home_aliases, away_aliases, match_page=False):
     text = article["text"]
     if not contains_name(text, home_aliases) or not contains_name(text, away_aliases):
         return None
-    if article["site"][0] in {"Opta Analyst", "LaLiga Expert", "Betora", "Fixture360",
-                              "LuckAdjusted", "PlacarHub", "Forepitch", "Forebet", "PredictZ"}:
+    site_name = article["site"][0]
+    if site_name in MODEL_SITES:
         match_page = True
+    if site_name in {"Expected90", "Metis Football"}:
+        result = extract_labeled_probabilistic_pick(text, home_aliases, away_aliases)
+        if result:
+            return result
+    if site_name == "90min Waffle":
+        result = extract_explicit_pick(text, home_aliases, away_aliases)
+        if result:
+            return result
     block = match_block(text, home_aliases, away_aliases)
     if match_page:
         if not block:
             return None
-        if article["site"][0] == "Opta Analyst":
+        if site_name == "Opta Analyst":
             result = extract_opta_pick(block, home_aliases, away_aliases)
             if result:
                 return result
