@@ -93,8 +93,10 @@ def norm(s):
     return s.replace("РБ ","").replace("ФК ","").lower().replace(" ","").replace("-","").replace("ё","е")
 
 def normalized_team_name(value):
-    value = unicodedata.normalize("NFKD", str(value or "")).encode("ascii", "ignore").decode("ascii")
-    value = value.casefold()
+    value = str(value or "").casefold().translate(str.maketrans({
+        "ł": "l", "ø": "o", "æ": "ae", "œ": "oe", "ß": "ss",
+    }))
+    value = unicodedata.normalize("NFKD", value).encode("ascii", "ignore").decode("ascii")
     value = re.sub(r"\b(?:fc|afc|cf|sc|ac|as|club|rb|nk|fk)\b", "", value)
     return re.sub(r"[^a-z0-9]", "", value)
 
@@ -213,7 +215,7 @@ def fetch_espn_results(today):
         print("ESPN UNMAPPED:", sorted(unmapped))
     if failures:
         print("ESPN ERRORS:", " | ".join(failures[:8]))
-    return results, responded > 0, updated, added
+    return results, responded > 0, updated, added, unmapped
 
 data = json.load(open("data.json"))
 tour = {t["id"]: t for t in data["tournaments"]}
@@ -289,8 +291,9 @@ if errors:
     tour = {t["id"]: t for t in data["tournaments"]}
     updated = added = 0
     scores = {}
-    espn_scores, fallback_ok, updated, added = fetch_espn_results(today)
+    espn_scores, fallback_ok, updated, added, espn_unmapped = fetch_espn_results(today)
     scores.update(espn_scores)
+    unmapped.update(espn_unmapped)
     got_response = got_response or fallback_ok
     summary = f"updated={updated} added={added} finished_scores={len(scores)} unmapped={len(unmapped)} errors={len(errors)} espn_fallback={fallback_ok} DRY={DRY}"
 print(summary)
