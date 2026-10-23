@@ -13,7 +13,7 @@
 
 ENV:
   OPENAI_API_KEY  — обязателен
-  OPENAI_MODEL    — модель (по умолчанию gpt-4o-mini)
+  OPENAI_MODEL    — модель (по умолчанию gpt-6.1-sol)
   DATA_FILE       — путь к data.json (по умолчанию data.json)
   OUT_FILE        — путь к gpt.json  (по умолчанию gpt.json)
   RES_FILE        — путь к results.json (по умолчанию results.json)
@@ -25,8 +25,10 @@ from openai import OpenAI
 DATA_FILE = os.environ.get("DATA_FILE", "data.json")
 OUT_FILE  = os.environ.get("OUT_FILE", "gpt.json")
 RES_FILE  = os.environ.get("RES_FILE", "results.json")
-MODEL     = os.environ.get("OPENAI_MODEL", "gpt-4o-mini")
+MODEL     = os.environ.get("OPENAI_MODEL", "gpt-6.1-sol")
 FORCE     = os.environ.get("FORCE", "") == "1"
+MIN_PROBABILITY = 75
+MAX_DAYS_AHEAD = 4
 MSK = datetime.timezone(datetime.timedelta(hours=3))
 
 SYSTEM = (
@@ -36,13 +38,29 @@ SYSTEM = (
     "Коэффициенты и чужие прогнозы используй только как дополнительную проверку, "
     "не копируй их. Используй только переданные факты; не выдумывай форму, травмы, "
     "составы, очные встречи и статистику. Если данных о форме мало, прямо укажи это "
-    "и снизь уверенность. Верни ТОЛЬКО JSON-объект со схемой: "
-    '{"score":"X:Y","text":"1–2 предложения по-русски","conf":0-5 (целое),"bet":"ставка"}. '
-    "score — наиболее вероятный точный счёт, bet — наиболее вероятный исход и только "
-    "из вариантов П1, Х, П2, 1Х или Х2; score и bet должны быть согласованы. "
-    "conf: 0–1 почти равный матч, 2–3 умеренно, 4–5 высоко; не завышай. "
-    "Это аналитика, без обещаний. Никакого текста вне JSON."
+    "Ищи актуальную информацию именно по этому матчу: новости и травмы, ожидаемые/" 
+    "подтверждённые составы, свежую форму, контекст турнира и коэффициенты. Используй "
+    "факты из поиска и переданных данных; не выдумывай. При нехватке надёжных данных "
+    "или конфликте источников выбери пропуск. Оцени вероятность выбранного исхода "
+    "консервативно, как оценку модели, а не гарантию; учитывай базовую вероятность "
+    "по коэффициентам и не завышай её. Ставку указывай только если оценка не ниже 75%. "
+    "Допустимые варианты: П1, Х, П2, 1Х, Х2. Для пропуска верни пустую ставку. "
+    "Верни JSON: score (наиболее вероятный счёт), text (короткое обоснование по-русски), "
+    "probability (целое 0–100), bet (допустимый вариант или пустая строка). Никакого "
+    "текста вне JSON. Источники поиска будут сохранены отдельно."
 )
+
+OUTPUT_SCHEMA = {
+    "type": "object",
+    "properties": {
+        "score": {"type": "string"},
+        "text": {"type": "string"},
+        "probability": {"type": "integer"},
+        "bet": {"type": "string", "enum": ["П1", "Х", "П2", "1Х", "Х2", ""]},
+    },
+    "required": ["score", "text", "probability", "bet"],
+    "additionalProperties": False,
+}
 
 def mkey(m):
     return f'{m.get("date","")}|{m.get("home","")}|{m.get("away","")}'
@@ -156,6 +174,27 @@ def parse_timestamp(value):
     except ValueError:
         return None
 
+def response_sources(response):
+    """Collect clickable web citations returned by the Responses API."""
+    try:
+        raw = response.model_dump()
+    except Exception:
+        return []
+    found, seen = [], set()
+    stack = [raw]
+    while stack:
+        item = stack.pop()
+        if isinstance(item, dict):
+            url = item.get("url")
+            title = item.get("title")
+            if isinstance(url, str) and url.startswith(("https://", "http://")) and url not in seen:
+                seen.add(url)
+                found.append({"title": str(title or url), "url": url})
+            stack.extend(item.values())
+        elif isinstance(item, list):
+            stack.extend(item)
+    return found[:10]
+
 def needs_generation(key, matches, previous_generated, source_updates, now):
     if FORCE or key not in matches:
         return True
@@ -229,32 +268,53 @@ def main():
                 continue
             if not is_upcoming(m):
                 continue
+            try:
+                match_day = datetime.date.fromisoformat(m.get("date", ""))
+            except ValueError:
+                continue
+            if match_day > now_msk.date() + datetime.timedelta(days=MAX_DAYS_AHEAD):
+                continue
             k = mkey(m)
             if not needs_generation(k, matches, previous_generated, source_updates, now_msk):
                 continue
             attempted += 1
             try:
-                r = client.chat.completions.create(
+                r = client.responses.create(
                     model=MODEL,
-                    messages=[{"role": "system", "content": SYSTEM},
-                              {"role": "user", "content": match_context(t, m, history)}],
-                    response_format={"type": "json_object"},
-                    temperature=0.7,
+                    instructions=SYSTEM,
+                    input=match_context(t, m, history),
+                    tools=[{"type": "web_search"}],
+                    tool_choice="required",
+                    text={"format": {
+                        "type": "json_schema",
+                        "name": "football_prediction",
+                        "strict": True,
+                        "schema": OUTPUT_SCHEMA,
+                    }},
+                    store=False,
                 )
-                op = json.loads(r.choices[0].message.content)
-                try:
-                    conf = max(0, min(5, int(op.get("conf", 0) or 0)))
-                except (TypeError, ValueError):
-                    conf = 0
+                op = json.loads(r.output_text)
+                probability = max(0, min(100, int(op.get("probability", 0) or 0)))
+                candidate_bet = str(op.get("bet", "")).strip()
+                sources = response_sources(r)
+                eligible = probability >= MIN_PROBABILITY and bool(candidate_bet) and bool(sources)
+                bet = candidate_bet if eligible else ""
                 matches[k] = {
                     "score": str(op.get("score", "")),
                     "text":  str(op.get("text", "")),
-                    "conf":  conf,
-                    "bet":   str(op.get("bet", "")),
+                    "probability": probability,
+                    "threshold": MIN_PROBABILITY,
+                    "eligible": eligible,
+                    "bet": bet,
+                    "skip_reason": "" if eligible else (
+                        "нет подтверждённых веб-источников" if not sources else
+                        f"оценка ниже {MIN_PROBABILITY}% или модель не выбрала ставку"
+                    ),
+                    "sources": sources,
                     "generated_at": datetime.datetime.now(datetime.timezone.utc).isoformat(timespec="seconds").replace("+00:00", "Z"),
                 }
                 added += 1
-                print("OK  ", k, "→", matches[k]["bet"])
+                print("OK  ", k, "→", matches[k]["bet"] or "ПРОПУСК", f"({probability}%, источников {len(sources)})")
             except Exception as ex:
                 if first_error is None:
                     first_error = ex
@@ -278,6 +338,7 @@ def main():
 
     out = {"generated": datetime.datetime.now(datetime.timezone.utc).isoformat(timespec="seconds").replace("+00:00", "Z"),
            "model": MODEL,
+           "minimum_probability": MIN_PROBABILITY,
            "matches": matches}
     with open(OUT_FILE, "w", encoding="utf-8") as f:
         json.dump(out, f, ensure_ascii=False, indent=2)
@@ -285,3 +346,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
