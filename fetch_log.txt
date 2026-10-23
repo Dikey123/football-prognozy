@@ -1,4 +1,5 @@
-2026-10-23T15:55:41.587876Z
-updated=28 added=0 finished_scores=28 unmapped=0 errors=1 espn_fallback=True DRY=False
+2026-10-23T15:57:33.068295Z
+updated=76 added=2 finished_scores=28 unmapped=9 errors=1 espn_fallback=True DRY=False
 ERRORS:
 20261021: HTTP Error 429: {"message":"You have exceeded the MONTHLY quota for Requests on your current plan, BASIC. Upgrade your plan at https:\/\/rapidapi.com\/Creativesdev\/api\/free-api-live-football-data"} (requests remaining: 0)
+UNMAPPED: Akhmat Grozny, Akron Tolyatti, Alavés, Deportivo, FC Cologne, Fakel Voronezh, Hamburg SV, Krylia Sovetov, Mainz
