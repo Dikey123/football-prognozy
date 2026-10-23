@@ -39,5 +39,7 @@ jobs:
             echo "no changes"
           else
             git commit -m "auto: обновление расписания/счёта/результатов"
+            # Pull first so a parallel app or data update cannot reject this push.
+            git pull --rebase origin main
             git push
           fi
