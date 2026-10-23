@@ -72,6 +72,21 @@ MODEL_SITES = {
     "PlacarHub", "Forepitch", "Forebet", "PredictZ", "90min Waffle",
     "Expected90", "Metis Football",
 }
+EXPECTED90_LEAGUES = {
+    "epl": "premier-league", "laliga": "la-liga", "seriea": "serie-a",
+    "bundesliga": "bundesliga", "ligue1": "ligue-1",
+}
+METIS_LEAGUES = {
+    "epl": "premier_league", "laliga": "la_liga", "seriea": "serie_a",
+    "bundesliga": "bundesliga", "ligue1": "ligue_1",
+}
+METIS_TEAM_SLUGS = {
+    "ipswich town": "ipswich", "nottingham forest": "nottm-forest",
+    "manchester united": "man-utd", "manchester city": "man-city",
+    "tottenham hotspur": "tottenham", "newcastle united": "newcastle",
+    "west ham united": "west-ham", "brighton and hove albion": "brighton",
+    "wolverhampton wanderers": "wolves", "leeds united": "leeds",
+}
 
 ROBOTS = {}
 ARTICLE_CACHE = {}
@@ -487,7 +502,8 @@ def extract_pick(article, home_aliases, away_aliases, match_page=False):
         result = extract_labeled_probabilistic_pick(text, home_aliases, away_aliases)
         if result:
             return result
-    if site_name == "90min Waffle":
+    if (site_name == "90min Waffle"
+            and "/weekend/" not in urllib.parse.urlsplit(article["url"]).path):
         result = extract_explicit_pick(text, home_aliases, away_aliases)
         if result:
             return result
@@ -520,6 +536,36 @@ def kickoff_for(match):
         return dt.datetime.strptime(f"{match['date']} {match.get('time', '23:59')}", "%Y-%m-%d %H:%M").replace(tzinfo=MSK)
     except Exception:
         return None
+
+
+def english_team_name(team):
+    return next((alias for alias in aliases_for(team) if re.search(r"[A-Za-z]", alias)), str(team or ""))
+
+
+def url_slug(value):
+    return "-".join(norm_words(value).split())
+
+
+def direct_model_pages(match, tournament_id):
+    """Known public match/model pages that are not reliably indexed in news RSS."""
+    home = english_team_name(match.get("home", ""))
+    away = english_team_name(match.get("away", ""))
+    home_slug, away_slug = url_slug(home), url_slug(away)
+    match_date = match.get("date", "")
+    if home_slug and away_slug and match_date:
+        # This page lists probabilities for the weekend's fixtures and is cached once per run.
+        yield "https://90minwaffle.co.uk/weekend/"
+        yield f"https://90minwaffle.co.uk/preview/{home_slug}-vs-{away_slug}-{match_date}/"
+        expected_league = EXPECTED90_LEAGUES.get(tournament_id)
+        if expected_league:
+            yield (f"https://expected90.com/football-predictions/{expected_league}/"
+                   f"{home_slug}-vs-{away_slug}")
+        metis_league = METIS_LEAGUES.get(tournament_id)
+        if metis_league:
+            home_metis = METIS_TEAM_SLUGS.get(norm_words(home), home_slug)
+            away_metis = METIS_TEAM_SLUGS.get(norm_words(away), away_slug)
+            yield (f"https://metisfootball.com/match/{metis_league}/"
+                   f"{home_metis}-vs-{away_metis}-{match_date}")
 
 
 def parse_odds(candidate):
@@ -575,7 +621,7 @@ def store_tip(match, article, pick_info, now, kickoff, current):
     return False
 
 
-def collect_for_match(match, now, source_pages):
+def collect_for_match(match, now, source_pages, tournament_id):
     kickoff = kickoff_for(match)
     if not kickoff or kickoff <= now:
         return 0
@@ -603,6 +649,22 @@ def collect_for_match(match, now, source_pages):
                 added += 1
             domains_seen.add(site_domain)
             break
+        if len(domains_seen) >= MAX_SOURCES_PER_MATCH:
+            return added
+
+    for url in direct_model_pages(match, tournament_id):
+        domain, _ = site_for(url)
+        if not domain or domain in domains_seen or not robots_allow(url):
+            continue
+        article = load_article(url)
+        if not article:
+            continue
+        pick_info = extract_pick(article, home_aliases, away_aliases)
+        if not pick_info:
+            continue
+        if store_tip(match, article, pick_info, now, kickoff, current):
+            added += 1
+        domains_seen.add(domain)
         if len(domains_seen) >= MAX_SOURCES_PER_MATCH:
             return added
 
@@ -667,7 +729,7 @@ def main():
             if not today <= match_date <= end or match.get("status") == "full":
                 continue
             processed += 1
-            count = collect_for_match(match, now, source_pages)
+            count = collect_for_match(match, now, source_pages, tournament.get("id", ""))
             added += count
             log(f"{match['date']} {match.get('home')} — {match.get('away')}: новых/обновлённых источников {count}")
     if added:
