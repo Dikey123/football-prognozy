@@ -1,11 +1,4 @@
-2026-10-23T06:32:27.380839Z
-updated=0 added=0 finished_scores=0 unmapped=0 errors=8 got_any=False DRY=False
+2026-10-23T07:19:20.638946Z
+updated=0 added=0 finished_scores=0 unmapped=0 errors=1 got_any=False DRY=False
 ERRORS:
-20261023: HTTP Error 429: Too Many Requests
-20261024: HTTP Error 429: Too Many Requests
-20261025: HTTP Error 429: Too Many Requests
-20261026: HTTP Error 429: Too Many Requests
-20261027: HTTP Error 429: Too Many Requests
-20261028: HTTP Error 429: Too Many Requests
-20261029: HTTP Error 429: Too Many Requests
-20261030: HTTP Error 429: Too Many Requests
+20261021: HTTP Error 429: Too Many Requests
