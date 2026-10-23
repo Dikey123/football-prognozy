@@ -207,6 +207,7 @@ details[open]>summary::after{content:"–"}
 .newsitem .nsrc{display:block;font-family:var(--mono);font-size:11px;color:var(--muted);margin-top:2px}
 summary .badge2{font-family:var(--mono);font-size:10px;letter-spacing:.06em;color:var(--warn);background:color-mix(in srgb,var(--warn) 16%,transparent);padding:1px 7px;border-radius:999px;margin-left:8px;font-weight:700}
 .lineups{padding:4px 12px 12px;display:flex;flex-direction:column;gap:10px}
+.lineup-note{margin:0;color:var(--muted);font-size:13px}
 .pitches{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 .side{display:flex;flex-direction:column;gap:8px;min-width:0}
 .side-head{display:flex;justify-content:space-between;align-items:baseline;gap:8px;flex-wrap:wrap}
@@ -364,6 +365,7 @@ function cardInner(m,open){
     +'<div class="legend"><em style="--c:var(--pitch)">'+esc(m.home)+' · '+cnt[1]+'</em><em style="--c:var(--muted)">Ничья · '+cnt.X+'</em><em style="--c:var(--ai)">'+esc(m.away)+' · '+cnt[2]+'</em></div></div>';
   if(m.news&&m.news.length)h+='<details'+op+'><summary>Новости матча<span class="badge2">'+m.news.length+'</span></summary><ul class="news">'+m.news.map(nw=>'<li class="newsitem"><div><a href="'+esc(nw.u)+'" target="_blank" rel="noopener">'+esc(nw.t)+'</a><span class="nsrc">'+esc(nw.s)+'</span></div></li>').join("")+'</ul></details>';
   if(m.lineups)h+='<details'+op+'><summary>Предполагаемые составы</summary><div class="lineups"><div class="pitches">'+lineupSide(m.lineups.home,m.home,"home")+lineupSide(m.lineups.away,m.away,"away")+'</div>'+(m.lineups.source?'<div class="lsrc">Источник: <a href="'+esc(m.lineups.source.url)+'" target="_blank" rel="noopener">'+esc(m.lineups.source.name)+'</a></div>':"")+'</div></details>';
+  else if(matchState(m)==="soon")h+='<details'+op+'><summary>Предполагаемые составы</summary><div class="lineups"><p class="lineup-note">Составы ещё не опубликованы. Обычно они появляются ближе к началу матча.</p></div></details>';
   h+='<details'+op+'><summary>Все прогнозы ('+tips.length+')</summary><ul class="tips">'+(tips.map(t=>'<li class="tip"><span class="src"><a href="'+esc(t.url)+'" target="_blank" rel="noopener">'+esc(t.src)+'</a><span class="tagr '+t.reg+'">'+(t.reg==="ru"?"РУ":"EU")+'</span></span><span class="pick">'+esc(t.pick)+'</span><span class="k">'+(t.k?"кф "+esc(t.k):"")+'</span></li>').join("")||'<li class="tip"><span class="pick">Нет прогнозов из этой группы</span></li>')+'</ul></details>';
   if(m.gpt){const conf=[1,2,3,4,5].map(i=>'<i class="'+(i<=m.gpt.conf?"on":"")+'"></i>').join("");
     h+='<div class="ai"><div class="ai-head"><span class="ai-label">Прогноз модели ИИ · форма и результаты</span><span class="score">'+esc(m.gpt.score)+'</span></div><p>'+esc(m.gpt.text)+'</p><div class="bet">Наиболее вероятный исход: <b>'+esc(m.gpt.bet)+'</b> <span style="color:var(--muted)">· уверенность</span><span class="conf" aria-label="Уверенность '+m.gpt.conf+' из 5">'+conf+'</span></div></div>';}
@@ -384,7 +386,7 @@ function card(m){
     +'<button class="star'+(isFav(m)?" on":"")+'" data-fav="'+m._id+'" title="В избранное" aria-label="В избранное">'+(isFav(m)?"★":"☆")+'</button>'
     +boardHead(m,st,true)
     +'<a class="open-hint" href="#m-'+m._id+'">Открыть страницу матча →</a>'
-    +cardInner(m,false)+'</article>';
+    +cardInner(m,true)+'</article>';
 }
 function fixtureRow(m){
   const st=matchState(m);
@@ -455,8 +457,8 @@ function renderList(){
     }).join("")+'</div>';
   }else{
     html+='<div class="league-list">'+groups.map(g=>{
-      const t=g.t||{},full=g.matches.filter(m=>m.status==="full"),fx=g.matches.filter(m=>m.status!=="full");
-      return '<section class="league-group"><h3 class="league-head"><strong>'+esc(t.name||"Другие матчи")+'</strong>'+(t.round?'<span class="round">'+esc(t.round)+'</span>':"")+'<span class="count">'+g.matches.length+' матч.</span></h3><div class="league-body">'+(full.length?'<div class="stack">'+full.map(card).join("")+'</div>':"")+(fx.length?'<div class="fixtures">'+fx.map(fixtureRow).join("")+'<div class="pending">Прогнозы, составы и новости появятся в день матча.</div></div>':"")+'</div></section>';
+      const t=g.t||{},detailed=g.matches.filter(m=>m.status==="full"||(m.tips&&m.tips.length)||(m.news&&m.news.length)||m.lineups||m.ai||m.gpt),simple=g.matches.filter(m=>!detailed.includes(m));
+      return '<section class="league-group"><h3 class="league-head"><strong>'+esc(t.name||"Другие матчи")+'</strong>'+(t.round?'<span class="round">'+esc(t.round)+'</span>':"")+'<span class="count">'+g.matches.length+' матч.</span></h3><div class="league-body">'+(detailed.length?'<div class="stack">'+detailed.map(card).join("")+'</div>':"")+(simple.length?'<div class="fixtures">'+simple.map(fixtureRow).join("")+'<div class="pending">Новости и прогнозы для этих матчей пока не поступили.</div></div>':"")+'</div></section>';
     }).join("")+'</div>';
   }
   const v=document.getElementById("view");v.innerHTML=html;
