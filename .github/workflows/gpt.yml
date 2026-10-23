@@ -2,7 +2,7 @@ name: Мнение ChatGPT (gpt.json)
 
 on:
   push:
-    paths: ["data.json"]        # как только обновился data.json — пересобираем мнения
+    paths: ["data.json", "results.json", "gen_gpt.py", ".github/workflows/gpt.yml"]
   schedule:
     - cron: "0 */6 * * *"       # и раз в 6 часов на всякий случай
   workflow_dispatch: {}          # и кнопкой вручную во вкладке Actions
