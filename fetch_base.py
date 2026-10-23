@@ -108,6 +108,9 @@ TEAM_BY_ESPN_NAME.update({
     "intermilan": "Интер", "internazionale": "Интер",
     "bayernmunich": "Бавария", "parissaintgermain": "ПСЖ",
     "lasklinz": "ЛАСК", "hapoelbeer": "Хапоэль Беэр-Шева",
+    "akhmatgrozny": "Ахмат", "akrontolyatti": "Акрон", "alaves": "Алавес",
+    "deportivo": "Депортиво", "cologne": "Кёльн", "fakelvoronezh": "Факел",
+    "hamburgsv": "Гамбург", "krylyasovetov": "Крылья Советов", "mainz": "Майнц",
     "psg": "ПСЖ", "barcelona": "Барселона", "realmadrid": "Реал Мадрид",
 })
 
