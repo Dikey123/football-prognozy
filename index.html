@@ -360,8 +360,27 @@ function aiProbability(o){
   const match=String(o.text||"").match(/(?:^|\D)(100|[1-9]?\d)\s*%/);
   return match?Number(match[1]):null;
 }
-function aiBetEligible(o){
-  return !!o&&o.eligible!==false&&aiProbability(o)>=AI_MIN_PROBABILITY&&String(o.bet||o.pick||"").trim().length>0;
+function aiCoefficient(m,o){
+  const stored=Number(o&&o.coefficient);
+  if(Number.isFinite(stored)&&stored>1.01&&stored<100)return {value:stored,estimated:!!o.coefficient_estimated};
+  const code=String(o&&(o.bet||o.pick)||"").toUpperCase().replace(/\s+/g,"").replace(/Х/g,"X"),odds=m&&m.odds||[];
+  const direct={"П1":0,"1":0,"X":1,"П2":2,"2":2};
+  if(Object.prototype.hasOwnProperty.call(direct,code)){
+    const price=Number(odds[direct[code]]);
+    return Number.isFinite(price)&&price>1.01?{value:price,estimated:false}:null;
+  }
+  const pair={"1X":[0,1],"X2":[1,2]}[code];
+  if(!pair)return null;
+  const prices=[];
+  (m&&m.odds_sources||[]).forEach(source=>{
+    const values=source&&source.odds||[],a=Number(values[pair[0]]),b=Number(values[pair[1]]);
+    if(a>1.01&&b>1.01)prices.push(1/(1/a+1/b));
+  });
+  if(!prices.length){const a=Number(odds[pair[0]]),b=Number(odds[pair[1]]);if(a>1.01&&b>1.01)prices.push(1/(1/a+1/b));}
+  return prices.length?{value:Math.round(Math.max(...prices)*100)/100,estimated:true}:null;
+}
+function aiBetEligible(o,m){
+  return !!o&&o.eligible!==false&&aiProbability(o)>=AI_MIN_PROBABILITY&&String(o.bet||o.pick||"").trim().length>0&&!!aiCoefficient(m,o);
 }
 function aiSources(o){
   const sources=Array.isArray(o&&o.sources)?o.sources:[];
@@ -392,17 +411,17 @@ function cardInner(m,open){
   else if(matchState(m)==="soon")h+='<details'+op+'><summary>Предполагаемые составы</summary><div class="lineups"><p class="lineup-note">Составы ещё не опубликованы. Обычно они появляются ближе к началу матча.</p></div></details>';
   h+='<details'+op+'><summary>Все прогнозы ('+tips.length+')</summary><ul class="tips">'+(tips.map(t=>'<li class="tip"><span class="src"><a href="'+esc(t.url)+'" target="_blank" rel="noopener">'+esc(t.src)+'</a><span class="tagr '+t.reg+'">'+(t.reg==="ru"?"РУ":"EU")+'</span></span><span class="pick">'+esc(t.pick)+'</span><span class="k">'+(t.k?"кф "+esc(t.k):"")+'</span></li>').join("")||'<li class="tip"><span class="pick">Нет прогнозов из этой группы</span></li>')+'</ul></details>';
   if(m.gpt){
-    const eligible=aiBetEligible(m.gpt),prob=aiProbability(m.gpt),sources=aiSources(m.gpt);
+    const eligible=aiBetEligible(m.gpt,m),prob=aiProbability(m.gpt),sources=aiSources(m.gpt),quote=aiCoefficient(m,m.gpt);
     h+='<div class="ai"><div class="ai-head"><span class="ai-label">Прогноз ИИ · GPT</span>'+(eligible?'<span class="score">'+esc(m.gpt.score)+'</span>':"")+'</div>'
-      +(eligible?'<p>'+esc(m.gpt.text)+'</p><div class="bet">Ставка: <b>'+esc(m.gpt.bet)+'</b> <span style="color:var(--muted)">· оценка модели '+prob+'%</span></div>':
-        '<p>ИИ не публикует ставку: оценка ниже 75% или не хватает подтверждённых данных.</p>')
+      +(eligible?'<p>'+esc(m.gpt.text)+'</p><div class="bet">Ставка: <b>'+esc(m.gpt.bet)+'</b> · кф <b>'+(quote.estimated?'≈':'')+quote.value.toFixed(2)+'</b> <span style="color:var(--muted)">· оценка модели '+prob+'%</span></div>':
+        '<p>ИИ не публикует ставку: оценка ниже 75%, нет источников или коэффициента.</p>')
       +(sources.length?'<div class="lsrc">Источники ИИ: '+sources.map(s=>'<a href="'+esc(s.url)+'" target="_blank" rel="noopener">'+esc(s.title||s.url)+'</a>').join(' · ')+'</div>':"")+'</div>';
   }
   if(m.ai){
-    const eligible=aiBetEligible(m.ai),prob=aiProbability(m.ai),pick=m.ai.bet||m.ai.pick;
+    const eligible=aiBetEligible(m.ai,m),prob=aiProbability(m.ai),pick=m.ai.bet||m.ai.pick,quote=aiCoefficient(m,m.ai);
     h+='<div class="ai"><div class="ai-head"><span class="ai-label">Мнение ИИ</span>'+(eligible?'<span class="score">'+esc(m.ai.score)+'</span>':"")+'</div>'
-      +(eligible?'<p>'+esc(m.ai.text)+'</p><div class="bet">Ставка: <b>'+esc(pick)+'</b> <span style="color:var(--muted)">· оценка модели '+prob+'%</span></div>':
-        '<p>ИИ не публикует ставку: нет подтверждённой оценки не ниже 75%.</p>')+'</div>';
+      +(eligible?'<p>'+esc(m.ai.text)+'</p><div class="bet">Ставка: <b>'+esc(pick)+'</b> · кф <b>'+(quote.estimated?'≈':'')+quote.value.toFixed(2)+'</b> <span style="color:var(--muted)">· оценка модели '+prob+'%</span></div>':
+        '<p>ИИ не публикует ставку: нет оценки от 75% или коэффициента.</p>')+'</div>';
   }
   return h+'</div>';
 }
@@ -528,12 +547,13 @@ function aiExpCands(){
   const n=Date.now(),byMatch=new Map();
   allMatches().forEach(m=>{
     if(inst(m)<=n)return;
-    const options=[["ИИ",m.ai],["ChatGPT",m.gpt]].filter(x=>aiBetEligible(x[1]));
+    const options=[["ИИ",m.ai],["ChatGPT",m.gpt]].filter(x=>aiBetEligible(x[1],m));
     if(!options.length)return;
     const candidates=options.map(([model,o])=>{
       const probability=aiProbability(o);
+      const quote=aiCoefficient(m,o);
       return {m,model,pick:String(o.bet||o.pick).trim(),score:String(o.score||""),conf:probability,
-        probability:String(probability),mk:market(o.bet||o.pick),tab:m._tab};
+        probability:String(probability),coefficient:quote.value,coefficient_estimated:quote.estimated,mk:market(o.bet||o.pick),tab:m._tab};
     }).sort((a,b)=>b.conf-a.conf||(a.model==="ИИ"?-1:1));
     const candidate=candidates[0],old=byMatch.get(m._id);
     if(!old||candidate.conf>old.conf)byMatch.set(m._id,candidate);
@@ -548,7 +568,7 @@ function renderAiExpressFallback(cands,distinct){
   if(cands.length){
     h+='<ol class="exp-list">'+cands.slice(0,4).map(c=>{
       const t=D.tournaments.find(x=>x.id===c.tab),odds=c.m.odds||[];
-      const oddsText=odds.some(x=>x!=null)?'П1 '+(odds[0]==null?'—':Number(odds[0]).toFixed(2))+' · Х '+(odds[1]==null?'—':Number(odds[1]).toFixed(2))+' · П2 '+(odds[2]==null?'—':Number(odds[2]).toFixed(2)):'коэффициенты пока не поступили';
+      const oddsText='кф '+(c.coefficient_estimated?'≈':'')+Number(c.coefficient).toFixed(2)+' · котировка выбранного исхода';
       const meta=[t?(t.short||t.name):"",c.m.time||"",c.model,c.probability?"оценка модели "+c.probability+"%":"уверенность "+c.conf+"/5"].filter(Boolean).map(esc).join(" · ");
       return '<li class="exp-item"><a class="exp-m" href="#m-'+c.m._id+'"><span class="exp-teams">'+esc(c.m.home)+' — '+esc(c.m.away)+'</span><span class="exp-meta">'+meta+'</span></a><div class="exp-pick"><span class="pk"><span class="exp-mk">'+esc(c.mk)+'</span>'+esc(c.pick)+(c.score?' · счёт '+esc(c.score):'')+'</span><span class="exp-k">'+esc(oddsText)+'</span></div></li>';
     }).join("")+'</ol>';
