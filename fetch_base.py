@@ -2,7 +2,8 @@
 # -*- coding: utf-8 -*-
 """Автономный сбор базы (GitHub Actions): расписание, время, счёт, результаты.
 Основной источник — free-api-live-football-data (RapidAPI); ESPN scoreboard
-подхватывает недавние результаты при ошибке/исчерпании квоты основного API.
+подхватывает результаты за два прошлых дня и расписание на четыре дня вперёд,
+если основной API недоступен или исчерпал квоту.
 Прогнозы с сайтов собирает отдельный collect_tips.py. По умолчанию DRY-RUN
 (без записи); DRY_RUN=0 включает запись."""
 import os, json, time, re, unicodedata, urllib.request, urllib.error, datetime, subprocess
@@ -124,17 +125,18 @@ def espn_team_name(team):
             return mapped
     return None
 
-def fetch_espn_results(today):
-    """Free fallback for completed scores when the RapidAPI quota is exhausted."""
+def fetch_espn_matches(today):
+    """Free fallback for recent results and the next four days of fixtures."""
     results = {}
     seen = set()
     responded = 0
     updated = added = 0
     unmapped = set()
     failures = []
-    target_dates = {(today + datetime.timedelta(days=x)).strftime("%Y-%m-%d") for x in (-2, -1, 0)}
+    offsets = (-2, -1, 0, 1, 2, 3, 4)
+    target_dates = {(today + datetime.timedelta(days=x)).strftime("%Y-%m-%d") for x in offsets}
     for league, tid in ESPN_LEAGUES.items():
-        for offset in (-2, -1, 0):
+        for offset in offsets:
             day = today + datetime.timedelta(days=offset)
             date_key = day.strftime("%Y%m%d")
             url = f"https://site.api.espn.com/apis/site/v2/sports/soccer/{league}/scoreboard?dates={date_key}"
@@ -169,8 +171,10 @@ def fetch_espn_results(today):
                 competition = competitions[0]
                 status_container = competition.get("status") or event.get("status") or {}
                 status = status_container.get("type") or {}
-                if not (status.get("completed") or status.get("state") == "post"):
+                status_name = str(status.get("name") or "").upper()
+                if "CANCEL" in status_name or "POSTPON" in status_name:
                     continue
+                finished = bool(status.get("completed") or status.get("state") == "post")
 
                 home = away = None
                 home_score = away_score = None
@@ -188,10 +192,6 @@ def fetch_espn_results(today):
                         if not espn_team_name(raw_team):
                             unmapped.add(str(raw_team.get("displayName") or raw_team.get("name") or "?"))
                     continue
-                if not (home_score.isdigit() and away_score.isdigit()):
-                    continue
-
-                score = f"{home_score}:{away_score}"
                 key = (tid, local_date, home, away)
                 if key in seen:
                     continue
@@ -199,18 +199,29 @@ def fetch_espn_results(today):
                 match = next((m for m in tour[tid]["matches"]
                               if m.get("home") == home and m.get("away") == away
                               and m.get("date") == local_date), None)
-                if match is None:
-                    match = {"date": local_date, "time": local_time, "home": home,
-                             "away": away, "status": "full", "ft": score}
-                    tour[tid]["matches"].append(match)
-                    added += 1
-                else:
-                    match["ft"] = score
-                    match["status"] = "full"
-                    updated += 1
-                results[home] = score
 
-    print(f"ESPN fallback: responses={responded}/{len(ESPN_LEAGUES) * 3} updated={updated} added={added} finished_scores={len(results)} unmapped={len(unmapped)} errors={len(failures)}")
+                if finished and home_score.isdigit() and away_score.isdigit():
+                    score = f"{home_score}:{away_score}"
+                    if match is None:
+                        match = {"date": local_date, "time": local_time, "home": home,
+                                 "away": away, "status": "full", "ft": score}
+                        tour[tid]["matches"].append(match)
+                        added += 1
+                    else:
+                        match["ft"] = score
+                        match["status"] = "full"
+                        updated += 1
+                    results[home] = score
+                elif local_date >= today.isoformat():
+                    if match is None:
+                        tour[tid]["matches"].append({"date": local_date, "time": local_time,
+                            "home": home, "away": away, "status": "fixture"})
+                        added += 1
+                    elif match.get("status") != "full":
+                        match["date"], match["time"], match["status"] = local_date, local_time, "fixture"
+                        updated += 1
+
+    print(f"ESPN fallback: responses={responded}/{len(ESPN_LEAGUES) * len(offsets)} updated={updated} added={added} finished_scores={len(results)} unmapped={len(unmapped)} errors={len(failures)}")
     if unmapped:
         print("ESPN UNMAPPED:", sorted(unmapped))
     if failures:
@@ -291,7 +302,7 @@ if errors:
     tour = {t["id"]: t for t in data["tournaments"]}
     updated = added = 0
     scores = {}
-    espn_scores, fallback_ok, updated, added, espn_unmapped = fetch_espn_results(today)
+    espn_scores, fallback_ok, updated, added, espn_unmapped = fetch_espn_matches(today)
     scores.update(espn_scores)
     unmapped.update(espn_unmapped)
     got_response = got_response or fallback_ok
