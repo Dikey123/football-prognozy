@@ -2,6 +2,7 @@ name: Мнение ChatGPT (gpt.json)
 
 on:
   push:
+    branches: [main]
     paths: ["data.json", "results.json", "gen_gpt.py", ".github/workflows/gpt.yml"]
   schedule:
     - cron: "0 6 * * *"         # ежедневно в 09:00 по Москве (06:00 UTC)
