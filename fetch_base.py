@@ -120,9 +120,7 @@ TEAM_BY_ESPN_NAME.update({
     "akhmatgrozny": "Ахмат", "akrontolyatti": "Акрон", "alaves": "Алавес",
     "deportivo": "Депортиво", "cologne": "Кёльн", "fakelvoronezh": "Факел",
     "hamburgsv": "Гамбург", "krylyasovetov": "Крылья Советов",
-    "kryliyasovetov": "Крылья Советов", "rodinamoscow": "Родина",
-    "baltikakaliningrad": "Балтика", "krylyasovetov": "Крылья Советов",
-    "mainz": "Майнц",
+    "kryliasovetov": "Крылья Советов", "mainz": "Майнц",
     "psg": "ПСЖ", "barcelona": "Барселона", "realmadrid": "Реал Мадрид",
 })
 
@@ -242,7 +240,6 @@ def fetch_espn_matches(today):
     if failures:
         print("ESPN ERRORS:", " | ".join(failures[:8]))
     return results, responded > 0, updated, added, unmapped
-
 
 def fetch_open_odds():
     """Обновляет коэффициенты 1X2 из открытого агрегатора букмекерских котировок."""
@@ -391,6 +388,7 @@ def fetch_open_odds():
         print("ODDS UNMAPPED:", sorted(unmapped))
     return updated
 
+
 data = json.load(open("data.json"))
 tour = {t["id"]: t for t in data["tournaments"]}
 original_data = json.loads(json.dumps(data))
@@ -506,7 +504,7 @@ else:
     if scores:
         json.dump(scores, open("scores_api.json", "w"), ensure_ascii=False)
         try:
-            r = subprocess.run(["python3", "settle.py", "data.json", "scores_api.json", "results.json"],
+            r = subprocess.run(["python3", "settle.py", "data.json", "scores_api.json", "results.json", "airesults.json", "gpt.json"],
                                capture_output=True, text=True, timeout=120)
             print("settle stdout:", (r.stdout or "")[-600:])
             if r.stderr: print("settle stderr:", r.stderr[-300:])

@@ -2,6 +2,7 @@ name: Мнение ChatGPT (gpt.json)
 
 on:
   push:
+    branches: [main]
     paths: ["data.json", "results.json", "gen_gpt.py", ".github/workflows/gpt.yml"]
   schedule:
     - cron: "0 6 * * *"         # ежедневно в 09:00 по Москве (06:00 UTC)
@@ -30,7 +31,7 @@ jobs:
       - name: Сгенерировать мнения
         env:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
-          OPENAI_MODEL: gpt-4o-mini
+          OPENAI_MODEL: gpt-6.1-sol
         run: python gen_gpt.py
 
       - name: Закоммитить gpt.json при изменениях
@@ -44,3 +45,4 @@ jobs:
             git commit -m "chore: обновление мнения ChatGPT (gpt.json)"
             git push
           fi
+

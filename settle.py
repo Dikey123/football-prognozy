@@ -1,13 +1,48 @@
 #!/usr/bin/env python3
-# Движок расчёта прогнозов: settle.py data.json scores.json results.json [airesults.json]
+# Движок расчёта прогнозов: settle.py data.json scores.json results.json [airesults.json] [gpt.json]
 # scores.json: {"<home>": "h:a", ...}  (ключ — имя хозяев)
 # airesults.json (необяз., для сида): {"<home>": "win|lose|push"} — готовый итог ИИ
 # results.json читается и дополняется (накопление по дням). Пушы в % не учитываются.
 import json, re, sys, datetime
 
 MSK = datetime.timezone(datetime.timedelta(hours=3))
+AI_MIN_PROBABILITY = 75
 
 def norm(s): return re.sub(r'[^а-яёa-z0-9]', '', str(s).lower())
+
+def ai_probability(opinion):
+    if not isinstance(opinion, dict): return None
+    value = opinion.get("probability")
+    try:
+        if value is not None: return max(0, min(100, int(value)))
+    except (TypeError, ValueError):
+        pass
+    match = re.search(r'(?<!\d)(100|[1-9]?\d)\s*%', str(opinion.get("text", "")))
+    return int(match.group(1)) if match else None
+
+def ai_pick_has_coefficient(opinion, match):
+    if not isinstance(opinion, dict): return False
+    try:
+        quoted = float(opinion.get("coefficient"))
+        if 1.01 < quoted < 100: return True
+    except (TypeError, ValueError):
+        pass
+    code = re.sub(r"\s+", "", str(opinion.get("bet") or opinion.get("pick") or "").upper()).replace("Х", "X")
+    odds = match.get("odds") or []
+    direct = {"П1": 0, "1": 0, "X": 1, "П2": 2, "2": 2}
+    if code in direct:
+        try: return 1.01 < float(odds[direct[code]]) < 100
+        except (IndexError, TypeError, ValueError): return False
+    indices = {"1X": (0, 1), "X2": (1, 2)}.get(code)
+    if not indices: return False
+    for source in match.get("odds_sources") or []:
+        values = source.get("odds") or []
+        try:
+            if float(values[indices[0]]) > 1.01 and float(values[indices[1]]) > 1.01: return True
+        except (IndexError, TypeError, ValueError):
+            continue
+    try: return float(odds[indices[0]]) > 1.01 and float(odds[indices[1]]) > 1.01
+    except (IndexError, TypeError, ValueError): return False
 
 def team_side(q, home, away):
     q, H, A = norm(q), norm(home), norm(away)
@@ -95,7 +130,7 @@ def load(path, default):
 
 def published_before_kickoff(tip, match):
     """Не засчитываем источник, если прогноз опубликован после начала матча."""
-    raw = tip.get("published_at")
+    raw = tip.get("published_at") or tip.get("generated_at")
     if not raw:  # Старые записи не содержат временную метку.
         return True
     try:
@@ -114,8 +149,11 @@ def main():
     scores = load(sys.argv[2], {})
     res_path = sys.argv[3]
     aires = load(sys.argv[4], {}) if len(sys.argv)>4 else {}
+    gpt_doc = load(sys.argv[5], {}) if len(sys.argv)>5 else {}
+    gpt_matches = gpt_doc.get("matches", {}) if isinstance(gpt_doc, dict) else {}
     R = load(res_path, {"updated":"","sources":{},"ai":{"win":0,"lose":0,"push":0},"recent":[],"done":[]})
     R.setdefault("sources",{}); R.setdefault("ai",{"win":0,"lose":0,"push":0}); R.setdefault("recent",[]); R.setdefault("done",[]); R.setdefault("matches",0)
+    R.setdefault("ai75",{"win":0,"lose":0,"push":0}); R.setdefault("gpt75",{"win":0,"lose":0,"push":0})
     done=set(R["done"])
     added=0
     for t in data.get("tournaments",[]):
@@ -140,10 +178,14 @@ def main():
                 S=R["sources"].setdefault(src,{"reg":reg,"win":0,"lose":0,"push":0})
                 if r in ("win","lose","push"): S[r]+=1
                 picklog.append({"src":src,"reg":reg,"pick":tp.get("pick",""),"res":r or "skip"})
-            # ИИ
+            # Историческое поле ai оставляем для совместимости; отдельные ai75/gpt75
+            # считают только новые AI-ставки с оценкой не ниже установленного порога.
             air=None
-            if m.get("ai",{}).get("pick"):
-                air=settle_pick(m["ai"]["pick"], h, a, m["home"], m["away"])
+            ai_opinion=m.get("ai") or {}
+            ai_prob=ai_probability(ai_opinion)
+            ai_pick=str(ai_opinion.get("pick") or ai_opinion.get("bet") or "").strip()
+            if ai_pick:
+                air=settle_pick(ai_pick, h, a, m["home"], m["away"])
             if air is None and m["home"] in aires:
                 air=aires[m["home"]]
             if air is None and m.get("ai",{}).get("score"):
@@ -152,8 +194,29 @@ def main():
                     ao='1' if int(aim.group(1))>int(aim.group(2)) else ('2' if int(aim.group(1))<int(aim.group(2)) else 'x')
                     air='win' if ao==out else 'lose'
             if air in ("win","lose","push"): R["ai"][air]+=1
+            ai75=None
+            if (ai_opinion.get("eligible") is True and ai_prob is not None
+                    and ai_prob >= AI_MIN_PROBABILITY and ai_pick
+                    and ai_pick_has_coefficient(ai_opinion, m)):
+                if published_before_kickoff(ai_opinion, m):
+                    ai75=settle_pick(ai_pick, h, a, m["home"], m["away"])
+                if ai75 in ("win","lose","push"): R["ai75"][ai75]+=1
+
+            gpt_opinion=gpt_matches.get(key) or {}
+            gpt_prob=ai_probability(gpt_opinion)
+            gpt_pick=str(gpt_opinion.get("bet") or "").strip()
+            gpt_result=None
+            if (gpt_opinion.get("eligible") is True and gpt_prob is not None
+                    and gpt_prob >= AI_MIN_PROBABILITY and gpt_pick
+                    and ai_pick_has_coefficient(gpt_opinion, m)
+                    and published_before_kickoff({"published_at":gpt_opinion.get("generated_at")}, m)):
+                gpt_result=settle_pick(gpt_pick, h, a, m["home"], m["away"])
+                if gpt_result in ("win","lose","push"): R["gpt75"][gpt_result]+=1
             R["recent"].insert(0, {"date":m["date"],"home":m["home"],"away":m["away"],"score":f"{h}:{a}",
-                                   "tour":t.get("short",t.get("name","")),"ai":air or "skip","picks":picklog})
+                                   "tour":t.get("short",t.get("name","")),"ai":air or "skip",
+                                   "ai75":ai75 or "skip","gpt75":gpt_result or "skip",
+                                   "gpt_bet":gpt_pick if gpt_result else "",
+                                   "gpt_probability":gpt_prob if gpt_result else None,"picks":picklog})
             done.add(key); added+=1
     R["matches"]=R.get("matches",0)+added
     R["recent"]=R["recent"][:60]
@@ -163,3 +226,4 @@ def main():
     print("settled matches:",added,"| sources:",len(R["sources"]))
 
 if __name__=="__main__": main()
+
