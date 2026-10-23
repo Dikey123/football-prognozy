@@ -1,10 +1,13 @@
 ERR 20261021 HTTP Error 429: {"message":"You have exceeded the MONTHLY quota for Requests on your current plan, BASIC. Upgrade your plan at https:\/\/rapidapi.com\/Creativesdev\/api\/free-api-live-football-data"} (requests remaining: 0)
 Остановка запросов: достигнут лимит API (HTTP 429).
 RapidAPI returned errors; restoring the previous schedule and trying ESPN for recent results.
-ESPN fallback: responses=56/56 updated=87 added=0 finished_scores=28 unmapped=0 errors=0
-updated=87 added=0 finished_scores=28 unmapped=0 errors=1 espn_fallback=True DRY=False
-ODDS: updated_matches=53 bookmaker_quotes=1123 remaining_credits=492 errors=0
-ODDS UNMAPPED: ['Atalanta BC', 'Besiktas JK', 'Brighton and Hove Albion', 'CA Osasuna', 'Deportivo La Coruña', 'FC Baltika Kaliningrad', 'FSV Mainz 05', 'Fenerbahce', 'Ferencváros TC', 'Kryliya Sovetov', 'Olympiakos Piraeus', 'Omonoia FC', 'PFC Levski Sofia', 'RC Lens', 'Real Racing Club de Santander', 'Rodina Moscow', 'SK Sturm Graz', 'Sabah FK', 'Slavia Praha', 'Sporting Lisbon', 'TSG Hoffenheim', 'Union Saint-Gilloise', 'ŠK Slovan Bratislava']
+ESPN fallback: responses=55/56 updated=86 added=0 finished_scores=28 unmapped=1 errors=1
+ESPN UNMAPPED: ['Krylia Sovetov']
+ESPN ERRORS: ESPN eng.1 20261022: <urlopen error _ssl.c:993: The handshake operation timed out>
+updated=86 added=0 finished_scores=28 unmapped=1 errors=1 espn_fallback=True DRY=False
+UNMAPPED: ['Krylia Sovetov']
+ODDS: updated_matches=56 bookmaker_quotes=1136 remaining_credits=484 errors=0
+ODDS UNMAPPED: ['Atalanta BC', 'Besiktas JK', 'Brighton and Hove Albion', 'CA Osasuna', 'Deportivo La Coruña', 'FSV Mainz 05', 'Fenerbahce', 'Ferencváros TC', 'Olympiakos Piraeus', 'Omonoia FC', 'PFC Levski Sofia', 'RC Lens', 'Real Racing Club de Santander', 'SK Sturm Graz', 'Sabah FK', 'Slavia Praha', 'Sporting Lisbon', 'TSG Hoffenheim', 'Union Saint-Gilloise', 'ŠK Slovan Bratislava']
 data.json записан.
 settle stdout: settled matches: 0 | sources: 37
 
