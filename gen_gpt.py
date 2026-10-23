@@ -151,7 +151,8 @@ def parse_timestamp(value):
         return None
     try:
         stamp = datetime.datetime.fromisoformat(str(value).replace("Z", "+00:00"))
-        return stamp.replace(tzinfo=datetime.timezone.utc) if stamp.tzinfo is None else stamp
+        # Source timestamps without an offset are written in Moscow local time.
+        return stamp.replace(tzinfo=MSK) if stamp.tzinfo is None else stamp
     except ValueError:
         return None
 
