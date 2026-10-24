@@ -27,7 +27,7 @@ OUT_FILE  = os.environ.get("OUT_FILE", "gpt.json")
 RES_FILE  = os.environ.get("RES_FILE", "results.json")
 MODEL     = os.environ.get("OPENAI_MODEL", "gpt-6.1-sol")
 FORCE     = os.environ.get("FORCE", "") == "1"
-MIN_PROBABILITY = 75
+MIN_PROBABILITY = 60
 MAX_DAYS_AHEAD = 4
 MSK = datetime.timezone(datetime.timedelta(hours=3))
 
@@ -41,10 +41,10 @@ SYSTEM = (
     "Ищи актуальную информацию именно по этому матчу: новости и травмы, ожидаемые/" 
     "подтверждённые составы, свежую форму, контекст турнира и коэффициенты. Используй "
     "факты из поиска и переданных данных; не выдумывай. При нехватке надёжных данных "
-    "или конфликте источников выбери пропуск. Оцени вероятность выбранного исхода "
+    "или конфликте источников укажи ограничения, но всегда выбери наиболее вероятный исход даже ниже 60% и не скрывай мнение. Оцени вероятность выбранного исхода "
     "консервативно, как оценку модели, а не гарантию; учитывай базовую вероятность "
-    "по коэффициентам и не завышай её. Ставку указывай только если оценка не ниже 75%. "
-    "Допустимые варианты: П1, Х, П2, 1Х, Х2. Для пропуска верни пустую ставку. "
+    "по коэффициентам и не завышай её. Порог 60% влияет только на статистику. "
+    "Допустимые варианты: П1, Х, П2, 1Х, Х2. Обязательно выбери допустимый исход. "
     "Верни JSON: score (наиболее вероятный счёт), text (короткое обоснование по-русски), "
     "probability (целое 0–100), bet (допустимый вариант или пустая строка). Никакого "
     "текста вне JSON. Источники поиска будут сохранены отдельно."
@@ -56,7 +56,7 @@ OUTPUT_SCHEMA = {
         "score": {"type": "string"},
         "text": {"type": "string"},
         "probability": {"type": "integer"},
-        "bet": {"type": "string", "enum": ["П1", "Х", "П2", "1Х", "Х2", ""]},
+        "bet": {"type": "string", "enum": ["П1", "Х", "П2", "1Х", "Х2"]},
     },
     "required": ["score", "text", "probability", "bet"],
     "additionalProperties": False,
@@ -333,7 +333,7 @@ def main():
                 coefficient, coefficient_estimated = pick_coefficient(m, candidate_bet)
                 eligible = (probability >= MIN_PROBABILITY and bool(candidate_bet)
                             and bool(sources) and coefficient is not None)
-                bet = candidate_bet if eligible else ""
+                bet = candidate_bet
                 matches[k] = {
                     "score": str(op.get("score", "")),
                     "text":  str(op.get("text", "")),
@@ -341,8 +341,8 @@ def main():
                     "threshold": MIN_PROBABILITY,
                     "eligible": eligible,
                     "bet": bet,
-                    "coefficient": coefficient if eligible else None,
-                    "coefficient_estimated": coefficient_estimated if eligible else False,
+                    "coefficient": coefficient,
+                    "coefficient_estimated": coefficient_estimated,
                     "skip_reason": "" if eligible else (
                         "нет подтверждённых веб-источников" if not sources else
                         "нет котировки по выбранному исходу" if coefficient is None else
