@@ -373,8 +373,8 @@ def fetch_open_odds():
                 continue
             match = next((item for item in tour[tid]["matches"]
                           if item.get("date") == local_date
-                          and item.get("home") == home
-                          and item.get("away") == away), None)
+                          and norm(item.get("home", "")) == norm(home)
+                          and norm(item.get("away", "")) == norm(away)), None)
             if not match or match.get("ft"):
                 continue
 
