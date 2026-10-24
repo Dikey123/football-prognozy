@@ -41,12 +41,15 @@ SYSTEM = (
     "Ищи актуальную информацию именно по этому матчу: новости и травмы, ожидаемые/" 
     "подтверждённые составы, свежую форму, контекст турнира и коэффициенты. Используй "
     "факты из поиска и переданных данных; не выдумывай. При нехватке надёжных данных "
-    "или конфликте источников выбери пропуск. Оцени вероятность выбранного исхода "
+    "или конфликте источников прямо укажи ограничения в обосновании. Всегда дай собственное "
+    "мнение, наиболее вероятный счёт и выбери наиболее подходящий исход из допустимых "
+    "вариантов, даже если уверенность ниже 75%: порог влияет только на статистическую "
+    "категорию, а не на публикацию прогноза. Оцени вероятность выбранного исхода "
     "консервативно, как оценку модели, а не гарантию; учитывай базовую вероятность "
-    "по коэффициентам и не завышай её. Ставку указывай только если оценка не ниже 75%. "
-    "Допустимые варианты: П1, Х, П2, 1Х, Х2. Для пропуска верни пустую ставку. "
+    "по коэффициентам и не завышай её. Допустимые варианты: П1, Х, П2, 1Х, Х2. "
+    "Не выдумывай коэффициент: он будет добавлен приложением только при наличии котировки. "
     "Верни JSON: score (наиболее вероятный счёт), text (короткое обоснование по-русски), "
-    "probability (целое 0–100), bet (допустимый вариант или пустая строка). Никакого "
+    "probability (целое 0–100), bet (обязательно один из допустимых вариантов). Никакого "
     "текста вне JSON. Источники поиска будут сохранены отдельно."
 )
 
@@ -56,7 +59,7 @@ OUTPUT_SCHEMA = {
         "score": {"type": "string"},
         "text": {"type": "string"},
         "probability": {"type": "integer"},
-        "bet": {"type": "string", "enum": ["П1", "Х", "П2", "1Х", "Х2", ""]},
+        "bet": {"type": "string", "enum": ["П1", "Х", "П2", "1Х", "Х2"]},
     },
     "required": ["score", "text", "probability", "bet"],
     "additionalProperties": False,
@@ -331,28 +334,29 @@ def main():
                 candidate_bet = str(op.get("bet", "")).strip()
                 sources = response_sources(r)
                 coefficient, coefficient_estimated = pick_coefficient(m, candidate_bet)
-                eligible = (probability >= MIN_PROBABILITY and bool(candidate_bet)
-                            and bool(sources) and coefficient is not None)
-                bet = candidate_bet if eligible else ""
+                # 75% остаётся отдельной статистической категорией, но не фильтром публикации.
+                # Сохраняем выбор модели даже без котировки: UI покажет его как мнение без кф.
+                eligible = bool(candidate_bet) and coefficient is not None
+                score = str(op.get("score", "")).strip() or "Счёт не определён"
+                opinion_text = str(op.get("text", "")).strip() or "Обоснование модели не указано."
                 matches[k] = {
-                    "score": str(op.get("score", "")),
-                    "text":  str(op.get("text", "")),
+                    "score": score,
+                    "text": opinion_text,
                     "probability": probability,
                     "threshold": MIN_PROBABILITY,
                     "eligible": eligible,
-                    "bet": bet,
-                    "coefficient": coefficient if eligible else None,
-                    "coefficient_estimated": coefficient_estimated if eligible else False,
+                    "bet": candidate_bet,
+                    "coefficient": coefficient if candidate_bet else None,
+                    "coefficient_estimated": coefficient_estimated if candidate_bet and coefficient else False,
                     "skip_reason": "" if eligible else (
-                        "нет подтверждённых веб-источников" if not sources else
-                        "нет котировки по выбранному исходу" if coefficient is None else
-                        f"оценка ниже {MIN_PROBABILITY}% или модель не выбрала ставку"
+                        "модель не выбрала исход" if not candidate_bet else
+                        "котировка выбранного исхода недоступна"
                     ),
                     "sources": sources,
                     "generated_at": datetime.datetime.now(datetime.timezone.utc).isoformat(timespec="seconds").replace("+00:00", "Z"),
                 }
                 added += 1
-                print("OK  ", k, "→", matches[k]["bet"] or "ПРОПУСК", f"({probability}%, источников {len(sources)})")
+                print("OK  ", k, "→", matches[k]["bet"] or "нет выбранного исхода", f"({probability}%, источников {len(sources)})")
             except Exception as ex:
                 if first_error is None:
                     first_error = ex
