@@ -856,12 +856,12 @@
       {
        "src": "90min Waffle",
        "reg": "eu",
-       "pick": "П1",
+       "pick": "Х",
        "k": "",
        "url": "https://90minwaffle.co.uk/weekend/",
-       "published_at": "2026-10-23T18:41+03:00",
-       "collected_at": "2026-10-23T18:41+03:00",
-       "lean": "1"
+       "published_at": "2026-10-24T12:17+03:00",
+       "collected_at": "2026-10-24T12:17+03:00",
+       "lean": "X"
       },
       {
        "src": "Expected90",
@@ -879,8 +879,8 @@
        "pick": "П2",
        "k": "",
        "url": "https://metisfootball.com/match/premier_league/aston-villa-vs-man-city-2026-10-24",
-       "published_at": "2026-10-23T20:07+03:00",
-       "collected_at": "2026-10-23T20:07+03:00",
+       "published_at": "2026-10-24T12:17+03:00",
+       "collected_at": "2026-10-24T12:17+03:00",
        "lean": "2"
       }
      ],
@@ -1140,8 +1140,8 @@
        "pick": "П1",
        "k": "",
        "url": "https://90minwaffle.co.uk/weekend/",
-       "published_at": "2026-10-23T18:41+03:00",
-       "collected_at": "2026-10-23T18:41+03:00",
+       "published_at": "2026-10-24T12:17+03:00",
+       "collected_at": "2026-10-24T12:17+03:00",
        "lean": "1"
       },
       {
@@ -1160,8 +1160,8 @@
        "pick": "П1",
        "k": "",
        "url": "https://metisfootball.com/match/premier_league/arsenal-vs-everton-2026-10-24",
-       "published_at": "2026-10-23T20:07+03:00",
-       "collected_at": "2026-10-23T20:07+03:00",
+       "published_at": "2026-10-24T12:17+03:00",
+       "collected_at": "2026-10-24T12:17+03:00",
        "lean": "1"
       }
      ],
@@ -1430,8 +1430,8 @@
        "pick": "П1",
        "k": "",
        "url": "https://90minwaffle.co.uk/weekend/",
-       "published_at": "2026-10-23T18:41+03:00",
-       "collected_at": "2026-10-23T18:41+03:00",
+       "published_at": "2026-10-24T12:17+03:00",
+       "collected_at": "2026-10-24T12:17+03:00",
        "lean": "1"
       },
       {
@@ -1708,8 +1708,8 @@
        "pick": "П2",
        "k": "",
        "url": "https://90minwaffle.co.uk/weekend/",
-       "published_at": "2026-10-23T18:41+03:00",
-       "collected_at": "2026-10-23T18:41+03:00",
+       "published_at": "2026-10-24T12:17+03:00",
+       "collected_at": "2026-10-24T12:17+03:00",
        "lean": "2"
       },
       {
@@ -1988,8 +1988,8 @@
        "pick": "П1",
        "k": "",
        "url": "https://90minwaffle.co.uk/weekend/",
-       "published_at": "2026-10-23T18:41+03:00",
-       "collected_at": "2026-10-23T18:41+03:00",
+       "published_at": "2026-10-24T12:17+03:00",
+       "collected_at": "2026-10-24T12:17+03:00",
        "lean": "1"
       },
       {
@@ -2268,8 +2268,8 @@
        "pick": "Х",
        "k": "",
        "url": "https://90minwaffle.co.uk/weekend/",
-       "published_at": "2026-10-23T18:41+03:00",
-       "collected_at": "2026-10-23T18:41+03:00",
+       "published_at": "2026-10-24T12:17+03:00",
+       "collected_at": "2026-10-24T12:17+03:00",
        "lean": "X"
       },
       {
@@ -2546,8 +2546,8 @@
        "pick": "П1",
        "k": "",
        "url": "https://90minwaffle.co.uk/weekend/",
-       "published_at": "2026-10-23T18:41+03:00",
-       "collected_at": "2026-10-23T18:41+03:00",
+       "published_at": "2026-10-24T12:17+03:00",
+       "collected_at": "2026-10-24T12:17+03:00",
        "lean": "1"
       },
       {
@@ -2592,8 +2592,8 @@
        "pick": "П2",
        "k": "",
        "url": "https://90minwaffle.co.uk/weekend/",
-       "published_at": "2026-10-23T18:41+03:00",
-       "collected_at": "2026-10-23T18:41+03:00",
+       "published_at": "2026-10-24T12:17+03:00",
+       "collected_at": "2026-10-24T12:17+03:00",
        "lean": "2"
       },
       {
@@ -2612,8 +2612,8 @@
        "pick": "Х",
        "k": "",
        "url": "https://metisfootball.com/match/premier_league/aston-villa-vs-man-city-2026-10-24",
-       "published_at": "2026-10-23T20:07+03:00",
-       "collected_at": "2026-10-23T20:07+03:00",
+       "published_at": "2026-10-24T12:17+03:00",
+       "collected_at": "2026-10-24T12:17+03:00",
        "lean": "X"
       }
      ],
@@ -2882,8 +2882,8 @@
        "pick": "П1",
        "k": "",
        "url": "https://90minwaffle.co.uk/weekend/",
-       "published_at": "2026-10-23T18:41+03:00",
-       "collected_at": "2026-10-23T18:41+03:00",
+       "published_at": "2026-10-24T12:17+03:00",
+       "collected_at": "2026-10-24T12:17+03:00",
        "lean": "1"
       },
       {
@@ -3213,19 +3213,19 @@
        "pick": "П1",
        "k": "",
        "url": "https://laligaexpert.com/la-liga-predictions-match-previews/",
-       "published_at": "2026-10-23T20:07+03:00",
-       "collected_at": "2026-10-23T20:07+03:00",
+       "published_at": "2026-10-24T12:17+03:00",
+       "collected_at": "2026-10-24T12:17+03:00",
        "lean": "1"
       },
       {
        "src": "90min Waffle",
        "reg": "eu",
-       "pick": "П1",
+       "pick": "П2",
        "k": "",
        "url": "https://90minwaffle.co.uk/weekend/",
-       "published_at": "2026-10-23T18:41+03:00",
-       "collected_at": "2026-10-23T18:41+03:00",
-       "lean": "1"
+       "published_at": "2026-10-24T12:17+03:00",
+       "collected_at": "2026-10-24T12:17+03:00",
+       "lean": "2"
       },
       {
        "src": "Expected90",
@@ -3243,8 +3243,8 @@
        "pick": "П1",
        "k": "",
        "url": "https://metisfootball.com/match/la_liga/rayo-vallecano-vs-elche-2026-10-24",
-       "published_at": "2026-10-23T20:07+03:00",
-       "collected_at": "2026-10-23T20:07+03:00",
+       "published_at": "2026-10-24T12:17+03:00",
+       "collected_at": "2026-10-24T12:17+03:00",
        "lean": "1"
       }
      ],
@@ -3467,8 +3467,8 @@
        "pick": "П1",
        "k": "",
        "url": "https://laligaexpert.com/la-liga-predictions-match-previews/",
-       "published_at": "2026-10-23T20:07+03:00",
-       "collected_at": "2026-10-23T20:07+03:00",
+       "published_at": "2026-10-24T12:17+03:00",
+       "collected_at": "2026-10-24T12:17+03:00",
        "lean": "1"
       }
      ],
@@ -3493,8 +3493,8 @@
        "pick": "П1",
        "k": "",
        "url": "https://laligaexpert.com/la-liga-predictions-match-previews/",
-       "published_at": "2026-10-23T20:07+03:00",
-       "collected_at": "2026-10-23T20:07+03:00",
+       "published_at": "2026-10-24T12:17+03:00",
+       "collected_at": "2026-10-24T12:17+03:00",
        "lean": "1"
       },
       {
@@ -3503,8 +3503,8 @@
        "pick": "П1",
        "k": "",
        "url": "https://90minwaffle.co.uk/weekend/",
-       "published_at": "2026-10-23T18:41+03:00",
-       "collected_at": "2026-10-23T18:41+03:00",
+       "published_at": "2026-10-24T12:17+03:00",
+       "collected_at": "2026-10-24T12:17+03:00",
        "lean": "1"
       },
       {
@@ -3523,8 +3523,8 @@
        "pick": "П2",
        "k": "",
        "url": "https://metisfootball.com/match/la_liga/valencia-vs-villarreal-2026-10-24",
-       "published_at": "2026-10-23T20:07+03:00",
-       "collected_at": "2026-10-23T20:07+03:00",
+       "published_at": "2026-10-24T12:17+03:00",
+       "collected_at": "2026-10-24T12:17+03:00",
        "lean": "2"
       }
      ],
@@ -3771,8 +3771,8 @@
        "pick": "П1",
        "k": "",
        "url": "https://laligaexpert.com/la-liga-predictions-match-previews/",
-       "published_at": "2026-10-23T20:07+03:00",
-       "collected_at": "2026-10-23T20:07+03:00",
+       "published_at": "2026-10-24T12:17+03:00",
+       "collected_at": "2026-10-24T12:17+03:00",
        "lean": "1"
       },
       {
@@ -3781,8 +3781,8 @@
        "pick": "П2",
        "k": "",
        "url": "https://90minwaffle.co.uk/weekend/",
-       "published_at": "2026-10-23T18:41+03:00",
-       "collected_at": "2026-10-23T18:41+03:00",
+       "published_at": "2026-10-24T12:17+03:00",
+       "collected_at": "2026-10-24T12:17+03:00",
        "lean": "2"
       },
       {
@@ -3801,8 +3801,8 @@
        "pick": "П1",
        "k": "",
        "url": "https://metisfootball.com/match/la_liga/athletic-club-vs-getafe-2026-10-25",
-       "published_at": "2026-10-23T20:07+03:00",
-       "collected_at": "2026-10-23T20:07+03:00",
+       "published_at": "2026-10-24T12:17+03:00",
+       "collected_at": "2026-10-24T12:17+03:00",
        "lean": "1"
       }
      ],
@@ -4033,8 +4033,8 @@
        "pick": "П1",
        "k": "",
        "url": "https://90minwaffle.co.uk/weekend/",
-       "published_at": "2026-10-23T18:41+03:00",
-       "collected_at": "2026-10-23T18:41+03:00",
+       "published_at": "2026-10-24T12:17+03:00",
+       "collected_at": "2026-10-24T12:17+03:00",
        "lean": "1"
       },
       {
@@ -4053,8 +4053,8 @@
        "pick": "Х",
        "k": "",
        "url": "https://metisfootball.com/match/la_liga/valencia-vs-villarreal-2026-10-24",
-       "published_at": "2026-10-23T20:07+03:00",
-       "collected_at": "2026-10-23T20:07+03:00",
+       "published_at": "2026-10-24T12:17+03:00",
+       "collected_at": "2026-10-24T12:17+03:00",
        "lean": "X"
       }
      ],
@@ -4277,8 +4277,8 @@
        "pick": "П2",
        "k": "",
        "url": "https://laligaexpert.com/la-liga-predictions-match-previews/",
-       "published_at": "2026-10-23T20:07+03:00",
-       "collected_at": "2026-10-23T20:07+03:00",
+       "published_at": "2026-10-24T12:17+03:00",
+       "collected_at": "2026-10-24T12:17+03:00",
        "lean": "2"
       },
       {
@@ -4287,8 +4287,8 @@
        "pick": "П1",
        "k": "",
        "url": "https://90minwaffle.co.uk/weekend/",
-       "published_at": "2026-10-23T18:41+03:00",
-       "collected_at": "2026-10-23T18:41+03:00",
+       "published_at": "2026-10-24T12:17+03:00",
+       "collected_at": "2026-10-24T12:17+03:00",
        "lean": "1"
       },
       {
@@ -4297,8 +4297,8 @@
        "pick": "П1",
        "k": "",
        "url": "https://metisfootball.com/match/la_liga/real-sociedad-vs-levante-2026-10-25",
-       "published_at": "2026-10-23T20:07+03:00",
-       "collected_at": "2026-10-23T20:07+03:00",
+       "published_at": "2026-10-24T12:17+03:00",
+       "collected_at": "2026-10-24T12:17+03:00",
        "lean": "1"
       },
       {
@@ -4539,8 +4539,8 @@
        "pick": "П1",
        "k": "",
        "url": "https://90minwaffle.co.uk/weekend/",
-       "published_at": "2026-10-23T18:41+03:00",
-       "collected_at": "2026-10-23T18:41+03:00",
+       "published_at": "2026-10-24T12:17+03:00",
+       "collected_at": "2026-10-24T12:17+03:00",
        "lean": "1"
       },
       {
@@ -4549,8 +4549,8 @@
        "pick": "П1",
        "k": "",
        "url": "https://metisfootball.com/match/la_liga/barcelona-vs-real-madrid-2026-10-25",
-       "published_at": "2026-10-23T20:07+03:00",
-       "collected_at": "2026-10-23T20:07+03:00",
+       "published_at": "2026-10-24T12:17+03:00",
+       "collected_at": "2026-10-24T12:17+03:00",
        "lean": "1"
       }
      ],
@@ -4773,8 +4773,8 @@
        "pick": "П1",
        "k": "",
        "url": "https://laligaexpert.com/la-liga-predictions-match-previews/",
-       "published_at": "2026-10-23T20:07+03:00",
-       "collected_at": "2026-10-23T20:07+03:00",
+       "published_at": "2026-10-24T12:17+03:00",
+       "collected_at": "2026-10-24T12:17+03:00",
        "lean": "1"
       },
       {
@@ -4783,8 +4783,8 @@
        "pick": "П1",
        "k": "",
        "url": "https://90minwaffle.co.uk/weekend/",
-       "published_at": "2026-10-23T18:41+03:00",
-       "collected_at": "2026-10-23T18:41+03:00",
+       "published_at": "2026-10-24T12:17+03:00",
+       "collected_at": "2026-10-24T12:17+03:00",
        "lean": "1"
       },
       {
@@ -4803,8 +4803,8 @@
        "pick": "П1",
        "k": "",
        "url": "https://metisfootball.com/match/la_liga/sevilla-vs-osasuna-2026-10-26",
-       "published_at": "2026-10-23T20:07+03:00",
-       "collected_at": "2026-10-23T20:07+03:00",
+       "published_at": "2026-10-24T12:17+03:00",
+       "collected_at": "2026-10-24T12:17+03:00",
        "lean": "1"
       }
      ],
@@ -4897,12 +4897,12 @@
       {
        "src": "90min Waffle",
        "reg": "eu",
-       "pick": "П1",
+       "pick": "Х",
        "k": "",
        "url": "https://90minwaffle.co.uk/weekend/",
-       "published_at": "2026-10-23T18:41+03:00",
-       "collected_at": "2026-10-23T18:41+03:00",
-       "lean": "1"
+       "published_at": "2026-10-24T12:17+03:00",
+       "collected_at": "2026-10-24T12:17+03:00",
+       "lean": "X"
       },
       {
        "src": "Expected90",
@@ -4920,8 +4920,8 @@
        "pick": "Х",
        "k": "",
        "url": "https://metisfootball.com/match/serie_a/lazio-vs-parma-2026-10-24",
-       "published_at": "2026-10-23T20:07+03:00",
-       "collected_at": "2026-10-23T20:07+03:00",
+       "published_at": "2026-10-24T12:17+03:00",
+       "collected_at": "2026-10-24T12:17+03:00",
        "lean": "X"
       }
      ],
@@ -5167,12 +5167,12 @@
       {
        "src": "90min Waffle",
        "reg": "eu",
-       "pick": "П1",
+       "pick": "П2",
        "k": "",
        "url": "https://90minwaffle.co.uk/weekend/",
-       "published_at": "2026-10-23T18:41+03:00",
-       "collected_at": "2026-10-23T18:41+03:00",
-       "lean": "1"
+       "published_at": "2026-10-24T12:17+03:00",
+       "collected_at": "2026-10-24T12:17+03:00",
+       "lean": "2"
       },
       {
        "src": "Expected90",
@@ -5190,8 +5190,8 @@
        "pick": "П1",
        "k": "",
        "url": "https://metisfootball.com/match/serie_a/como-vs-sassuolo-2026-10-24",
-       "published_at": "2026-10-23T20:07+03:00",
-       "collected_at": "2026-10-23T20:07+03:00",
+       "published_at": "2026-10-24T12:17+03:00",
+       "collected_at": "2026-10-24T12:17+03:00",
        "lean": "1"
       }
      ],
@@ -5440,8 +5440,8 @@
        "pick": "П1",
        "k": "",
        "url": "https://90minwaffle.co.uk/weekend/",
-       "published_at": "2026-10-23T18:41+03:00",
-       "collected_at": "2026-10-23T18:41+03:00",
+       "published_at": "2026-10-24T12:17+03:00",
+       "collected_at": "2026-10-24T12:17+03:00",
        "lean": "1"
       },
       {
@@ -5700,8 +5700,8 @@
        "pick": "П2",
        "k": "",
        "url": "https://90minwaffle.co.uk/weekend/",
-       "published_at": "2026-10-23T18:41+03:00",
-       "collected_at": "2026-10-23T18:41+03:00",
+       "published_at": "2026-10-24T12:17+03:00",
+       "collected_at": "2026-10-24T12:17+03:00",
        "lean": "2"
       },
       {
@@ -5720,8 +5720,8 @@
        "pick": "П1",
        "k": "",
        "url": "https://metisfootball.com/match/serie_a/lazio-vs-parma-2026-10-24",
-       "published_at": "2026-10-23T20:07+03:00",
-       "collected_at": "2026-10-23T20:07+03:00",
+       "published_at": "2026-10-24T12:17+03:00",
+       "collected_at": "2026-10-24T12:17+03:00",
        "lean": "1"
       }
      ],
@@ -5970,8 +5970,8 @@
        "pick": "П1",
        "k": "",
        "url": "https://90minwaffle.co.uk/weekend/",
-       "published_at": "2026-10-23T18:41+03:00",
-       "collected_at": "2026-10-23T18:41+03:00",
+       "published_at": "2026-10-24T12:17+03:00",
+       "collected_at": "2026-10-24T12:17+03:00",
        "lean": "1"
       },
       {
@@ -5990,8 +5990,8 @@
        "pick": "П1",
        "k": "",
        "url": "https://metisfootball.com/match/serie_a/inter-vs-fiorentina-2026-10-25",
-       "published_at": "2026-10-23T20:07+03:00",
-       "collected_at": "2026-10-23T20:07+03:00",
+       "published_at": "2026-10-24T12:17+03:00",
+       "collected_at": "2026-10-24T12:17+03:00",
        "lean": "1"
       }
      ],
@@ -6240,8 +6240,8 @@
        "pick": "П1",
        "k": "",
        "url": "https://90minwaffle.co.uk/weekend/",
-       "published_at": "2026-10-23T18:41+03:00",
-       "collected_at": "2026-10-23T18:41+03:00",
+       "published_at": "2026-10-24T12:17+03:00",
+       "collected_at": "2026-10-24T12:17+03:00",
        "lean": "1"
       },
       {
@@ -6260,8 +6260,8 @@
        "pick": "П1",
        "k": "",
        "url": "https://metisfootball.com/match/serie_a/atalanta-vs-frosinone-2026-10-25",
-       "published_at": "2026-10-23T20:07+03:00",
-       "collected_at": "2026-10-23T20:07+03:00",
+       "published_at": "2026-10-24T12:17+03:00",
+       "collected_at": "2026-10-24T12:17+03:00",
        "lean": "1"
       }
      ],
@@ -6294,8 +6294,8 @@
        "pick": "П1",
        "k": "",
        "url": "https://90minwaffle.co.uk/weekend/",
-       "published_at": "2026-10-23T18:41+03:00",
-       "collected_at": "2026-10-23T18:41+03:00",
+       "published_at": "2026-10-24T12:17+03:00",
+       "collected_at": "2026-10-24T12:17+03:00",
        "lean": "1"
       },
       {
@@ -6314,8 +6314,8 @@
        "pick": "П1",
        "k": "",
        "url": "https://metisfootball.com/match/serie_a/genoa-vs-venezia-2026-10-25",
-       "published_at": "2026-10-23T20:07+03:00",
-       "collected_at": "2026-10-23T20:07+03:00",
+       "published_at": "2026-10-24T12:17+03:00",
+       "collected_at": "2026-10-24T12:17+03:00",
        "lean": "1"
       }
      ],
@@ -6564,8 +6564,8 @@
        "pick": "П1",
        "k": "",
        "url": "https://90minwaffle.co.uk/weekend/",
-       "published_at": "2026-10-23T18:41+03:00",
-       "collected_at": "2026-10-23T18:41+03:00",
+       "published_at": "2026-10-24T12:17+03:00",
+       "collected_at": "2026-10-24T12:17+03:00",
        "lean": "1"
       },
       {
@@ -6584,8 +6584,8 @@
        "pick": "П2",
        "k": "",
        "url": "https://metisfootball.com/match/serie_a/lecce-vs-juventus-2026-10-25",
-       "published_at": "2026-10-23T20:07+03:00",
-       "collected_at": "2026-10-23T20:07+03:00",
+       "published_at": "2026-10-24T12:17+03:00",
+       "collected_at": "2026-10-24T12:17+03:00",
        "lean": "2"
       }
      ],
@@ -6834,8 +6834,8 @@
        "pick": "П1",
        "k": "",
        "url": "https://90minwaffle.co.uk/weekend/",
-       "published_at": "2026-10-23T18:41+03:00",
-       "collected_at": "2026-10-23T18:41+03:00",
+       "published_at": "2026-10-24T12:17+03:00",
+       "collected_at": "2026-10-24T12:17+03:00",
        "lean": "1"
       },
       {
@@ -6843,9 +6843,9 @@
        "reg": "eu",
        "pick": "Х",
        "k": "",
-       "url": "https://metisfootball.com/match/serie_a/torino-vs-monza-2026-10-23",
-       "published_at": "2026-10-23T20:07+03:00",
-       "collected_at": "2026-10-23T20:07+03:00",
+       "url": "https://metisfootball.com/match/serie_a/lazio-vs-parma-2026-10-24",
+       "published_at": "2026-10-24T12:17+03:00",
+       "collected_at": "2026-10-24T12:17+03:00",
        "lean": "X"
       }
      ],
@@ -7094,8 +7094,8 @@
        "pick": "П2",
        "k": "",
        "url": "https://90minwaffle.co.uk/preview/sassuolo-vs-lazio-2026-10-27/",
-       "published_at": "2026-10-23T18:41+03:00",
-       "collected_at": "2026-10-23T18:41+03:00",
+       "published_at": "2026-10-24T12:17+03:00",
+       "collected_at": "2026-10-24T12:17+03:00",
        "lean": "2"
       },
       {
@@ -7114,8 +7114,8 @@
        "pick": "П2",
        "k": "",
        "url": "https://metisfootball.com/match/serie_a/sassuolo-vs-lazio-2026-10-27",
-       "published_at": "2026-10-23T20:07+03:00",
-       "collected_at": "2026-10-23T20:07+03:00",
+       "published_at": "2026-10-24T12:17+03:00",
+       "collected_at": "2026-10-24T12:17+03:00",
        "lean": "2"
       }
      ],
@@ -7337,8 +7337,8 @@
        "pick": "П1",
        "k": "",
        "url": "https://90minwaffle.co.uk/weekend/",
-       "published_at": "2026-10-23T18:41+03:00",
-       "collected_at": "2026-10-23T18:41+03:00",
+       "published_at": "2026-10-24T12:17+03:00",
+       "collected_at": "2026-10-24T12:17+03:00",
        "lean": "1"
       },
       {
@@ -7569,9 +7569,9 @@
        "reg": "eu",
        "pick": "П1",
        "k": "",
-       "url": "https://90minwaffle.co.uk/weekend/",
-       "published_at": "2026-10-23T18:41+03:00",
-       "collected_at": "2026-10-23T18:41+03:00",
+       "url": "https://90minwaffle.co.uk/preview/torino-vs-como-2026-10-27/",
+       "published_at": "2026-10-24T12:17+03:00",
+       "collected_at": "2026-10-24T12:17+03:00",
        "lean": "1"
       },
       {
@@ -7590,8 +7590,8 @@
        "pick": "П2",
        "k": "",
        "url": "https://metisfootball.com/match/serie_a/torino-vs-como-2026-10-27",
-       "published_at": "2026-10-23T20:07+03:00",
-       "collected_at": "2026-10-23T20:07+03:00",
+       "published_at": "2026-10-24T12:17+03:00",
+       "collected_at": "2026-10-24T12:17+03:00",
        "lean": "2"
       }
      ],
@@ -7977,7 +7977,29 @@
       }
      ],
      "odds_updated": "2026-10-24T08:31:41Z",
-     "odds_provider": "The Odds API"
+     "odds_provider": "The Odds API",
+     "tips": [
+      {
+       "src": "Expected90",
+       "reg": "eu",
+       "pick": "Х",
+       "k": "",
+       "url": "https://expected90.com/football-predictions/serie-a/como-vs-sassuolo",
+       "published_at": "2026-10-21T22:49+03:00",
+       "collected_at": "2026-10-24T12:17+03:00",
+       "lean": "X"
+      },
+      {
+       "src": "Metis Football",
+       "reg": "eu",
+       "pick": "Х",
+       "k": "",
+       "url": "https://metisfootball.com/match/serie_a/lazio-vs-parma-2026-10-24",
+       "published_at": "2026-10-24T12:17+03:00",
+       "collected_at": "2026-10-24T12:17+03:00",
+       "lean": "X"
+      }
+     ]
     },
     {
      "date": "2026-10-28",
@@ -8164,7 +8186,39 @@
       }
      ],
      "odds_updated": "2026-10-24T08:31:41Z",
-     "odds_provider": "The Odds API"
+     "odds_provider": "The Odds API",
+     "tips": [
+      {
+       "src": "Expected90",
+       "reg": "eu",
+       "pick": "Х",
+       "k": "",
+       "url": "https://expected90.com/football-predictions/serie-a/lazio-vs-parma",
+       "published_at": "2026-10-21T22:50+03:00",
+       "collected_at": "2026-10-24T12:17+03:00",
+       "lean": "X"
+      },
+      {
+       "src": "Metis Football",
+       "reg": "eu",
+       "pick": "П1",
+       "k": "",
+       "url": "https://metisfootball.com/match/serie_a/lazio-vs-parma-2026-10-24",
+       "published_at": "2026-10-24T12:17+03:00",
+       "collected_at": "2026-10-24T12:17+03:00",
+       "lean": "1"
+      },
+      {
+       "src": "90min Waffle",
+       "reg": "eu",
+       "pick": "Х",
+       "k": "",
+       "url": "https://90minwaffle.co.uk/preview/parma-vs-udinese-2026-10-28/",
+       "published_at": "2026-10-24T12:17+03:00",
+       "collected_at": "2026-10-24T12:17+03:00",
+       "lean": "X"
+      }
+     ]
     },
     {
      "date": "2026-10-28",
@@ -8360,7 +8414,39 @@
       }
      ],
      "odds_updated": "2026-10-24T08:31:41Z",
-     "odds_provider": "The Odds API"
+     "odds_provider": "The Odds API",
+     "tips": [
+      {
+       "src": "90min Waffle",
+       "reg": "eu",
+       "pick": "П1",
+       "k": "",
+       "url": "https://90minwaffle.co.uk/weekend/",
+       "published_at": "2026-10-24T12:17+03:00",
+       "collected_at": "2026-10-24T12:17+03:00",
+       "lean": "1"
+      },
+      {
+       "src": "Expected90",
+       "reg": "eu",
+       "pick": "П2",
+       "k": "",
+       "url": "https://expected90.com/football-predictions/serie-a/inter-vs-fiorentina",
+       "published_at": "2026-10-21T22:51+03:00",
+       "collected_at": "2026-10-24T12:17+03:00",
+       "lean": "2"
+      },
+      {
+       "src": "Metis Football",
+       "reg": "eu",
+       "pick": "П2",
+       "k": "",
+       "url": "https://metisfootball.com/match/serie_a/inter-vs-fiorentina-2026-10-25",
+       "published_at": "2026-10-24T12:17+03:00",
+       "collected_at": "2026-10-24T12:17+03:00",
+       "lean": "2"
+      }
+     ]
     },
     {
      "date": "2026-10-28",
@@ -8556,7 +8642,39 @@
       }
      ],
      "odds_updated": "2026-10-24T08:31:41Z",
-     "odds_provider": "The Odds API"
+     "odds_provider": "The Odds API",
+     "tips": [
+      {
+       "src": "90min Waffle",
+       "reg": "eu",
+       "pick": "П1",
+       "k": "",
+       "url": "https://90minwaffle.co.uk/preview/genoa-vs-juventus-2026-10-28/",
+       "published_at": "2026-10-24T12:17+03:00",
+       "collected_at": "2026-10-24T12:17+03:00",
+       "lean": "1"
+      },
+      {
+       "src": "Expected90",
+       "reg": "eu",
+       "pick": "П2",
+       "k": "",
+       "url": "https://expected90.com/football-predictions/serie-a/genoa-vs-juventus",
+       "published_at": "2026-10-21T23:11+03:00",
+       "collected_at": "2026-10-24T12:17+03:00",
+       "lean": "2"
+      },
+      {
+       "src": "Metis Football",
+       "reg": "eu",
+       "pick": "П2",
+       "k": "",
+       "url": "https://metisfootball.com/match/serie_a/genoa-vs-juventus-2026-10-28",
+       "published_at": "2026-10-24T12:17+03:00",
+       "collected_at": "2026-10-24T12:17+03:00",
+       "lean": "2"
+      }
+     ]
     },
     {
      "date": "2026-10-28",
@@ -8752,7 +8870,29 @@
       }
      ],
      "odds_updated": "2026-10-24T08:31:42Z",
-     "odds_provider": "The Odds API"
+     "odds_provider": "The Odds API",
+     "tips": [
+      {
+       "src": "Expected90",
+       "reg": "eu",
+       "pick": "П1",
+       "k": "",
+       "url": "https://expected90.com/football-predictions/serie-a/torino-vs-monza",
+       "published_at": "2026-10-21T22:47+03:00",
+       "collected_at": "2026-10-24T12:17+03:00",
+       "lean": "1"
+      },
+      {
+       "src": "Metis Football",
+       "reg": "eu",
+       "pick": "Х",
+       "k": "",
+       "url": "https://metisfootball.com/match/serie_a/como-vs-sassuolo-2026-10-24",
+       "published_at": "2026-10-24T12:17+03:00",
+       "collected_at": "2026-10-24T12:17+03:00",
+       "lean": "X"
+      }
+     ]
     },
     {
      "date": "2026-10-29",
@@ -9218,8 +9358,8 @@
        "pick": "П1",
        "k": "",
        "url": "https://luckadjusted.com/bundesliga/predictions",
-       "published_at": "2026-10-23T20:07+03:00",
-       "collected_at": "2026-10-23T20:07+03:00",
+       "published_at": "2026-10-24T12:17+03:00",
+       "collected_at": "2026-10-24T12:17+03:00",
        "lean": "1"
       },
       {
@@ -9228,8 +9368,8 @@
        "pick": "П2",
        "k": "",
        "url": "https://90minwaffle.co.uk/weekend/",
-       "published_at": "2026-10-23T18:41+03:00",
-       "collected_at": "2026-10-23T18:41+03:00",
+       "published_at": "2026-10-24T12:17+03:00",
+       "collected_at": "2026-10-24T12:17+03:00",
        "lean": "2"
       },
       {
@@ -9238,8 +9378,8 @@
        "pick": "П1",
        "k": "",
        "url": "https://metisfootball.com/match/bundesliga/augsburg-vs-union-berlin-2026-10-24",
-       "published_at": "2026-10-23T20:07+03:00",
-       "collected_at": "2026-10-23T20:07+03:00",
+       "published_at": "2026-10-24T12:17+03:00",
+       "collected_at": "2026-10-24T12:17+03:00",
        "lean": "1"
       }
      ],
@@ -9479,8 +9619,8 @@
        "pick": "Х",
        "k": "",
        "url": "https://90minwaffle.co.uk/weekend/",
-       "published_at": "2026-10-23T18:41+03:00",
-       "collected_at": "2026-10-23T18:41+03:00",
+       "published_at": "2026-10-24T12:17+03:00",
+       "collected_at": "2026-10-24T12:17+03:00",
        "lean": "X"
       },
       {
@@ -9489,8 +9629,8 @@
        "pick": "П1",
        "k": "",
        "url": "https://metisfootball.com/match/bundesliga/mainz-05-vs-werder-bremen-2026-10-24",
-       "published_at": "2026-10-23T20:07+03:00",
-       "collected_at": "2026-10-23T20:07+03:00",
+       "published_at": "2026-10-24T12:17+03:00",
+       "collected_at": "2026-10-24T12:17+03:00",
        "lean": "1"
       }
      ],
@@ -9523,8 +9663,8 @@
        "pick": "П1",
        "k": "",
        "url": "https://90minwaffle.co.uk/weekend/",
-       "published_at": "2026-10-23T18:41+03:00",
-       "collected_at": "2026-10-23T18:41+03:00",
+       "published_at": "2026-10-24T12:17+03:00",
+       "collected_at": "2026-10-24T12:17+03:00",
        "lean": "1"
       }
      ],
@@ -9761,12 +9901,12 @@
       {
        "src": "90min Waffle",
        "reg": "eu",
-       "pick": "П2",
+       "pick": "П1",
        "k": "",
        "url": "https://90minwaffle.co.uk/weekend/",
-       "published_at": "2026-10-23T18:41+03:00",
-       "collected_at": "2026-10-23T18:41+03:00",
-       "lean": "2"
+       "published_at": "2026-10-24T12:17+03:00",
+       "collected_at": "2026-10-24T12:17+03:00",
+       "lean": "1"
       }
      ],
      "ai": {
@@ -10005,8 +10145,8 @@
        "pick": "П1",
        "k": "",
        "url": "https://90minwaffle.co.uk/weekend/",
-       "published_at": "2026-10-23T18:41+03:00",
-       "collected_at": "2026-10-23T18:41+03:00",
+       "published_at": "2026-10-24T12:17+03:00",
+       "collected_at": "2026-10-24T12:17+03:00",
        "lean": "1"
       },
       {
@@ -10015,8 +10155,8 @@
        "pick": "П1",
        "k": "",
        "url": "https://metisfootball.com/match/bundesliga/borussia-dortmund-vs-eintracht-frankfurt-2026-10-24",
-       "published_at": "2026-10-23T20:07+03:00",
-       "collected_at": "2026-10-23T20:07+03:00",
+       "published_at": "2026-10-24T12:17+03:00",
+       "collected_at": "2026-10-24T12:17+03:00",
        "lean": "1"
       }
      ],
@@ -10256,8 +10396,8 @@
        "pick": "П2",
        "k": "",
        "url": "https://metisfootball.com/match/bundesliga/hoffenheim-vs-bayer-leverkusen-2026-10-25",
-       "published_at": "2026-10-23T20:07+03:00",
-       "collected_at": "2026-10-23T20:07+03:00",
+       "published_at": "2026-10-24T12:17+03:00",
+       "collected_at": "2026-10-24T12:17+03:00",
        "lean": "2"
       }
      ],
@@ -10290,8 +10430,8 @@
        "pick": "П1",
        "k": "",
        "url": "https://90minwaffle.co.uk/weekend/",
-       "published_at": "2026-10-23T18:41+03:00",
-       "collected_at": "2026-10-23T18:41+03:00",
+       "published_at": "2026-10-24T12:17+03:00",
+       "collected_at": "2026-10-24T12:17+03:00",
        "lean": "1"
       }
      ],
@@ -10568,19 +10708,19 @@
        "pick": "П1",
        "k": "",
        "url": "https://placarhub.com/es/noticias/ligue-1-2026-rodada-8-palpites/",
-       "published_at": "2026-10-23T20:07+03:00",
-       "collected_at": "2026-10-23T20:07+03:00",
+       "published_at": "2026-10-24T12:17+03:00",
+       "collected_at": "2026-10-24T12:17+03:00",
        "lean": "1"
       },
       {
        "src": "90min Waffle",
        "reg": "eu",
-       "pick": "П2",
+       "pick": "П1",
        "k": "",
        "url": "https://90minwaffle.co.uk/weekend/",
-       "published_at": "2026-10-23T18:41+03:00",
-       "collected_at": "2026-10-23T18:41+03:00",
-       "lean": "2"
+       "published_at": "2026-10-24T12:17+03:00",
+       "collected_at": "2026-10-24T12:17+03:00",
+       "lean": "1"
       },
       {
        "src": "Metis Football",
@@ -10624,19 +10764,19 @@
        "pick": "ТБ 2.5",
        "k": "",
        "url": "https://placarhub.com/es/noticias/ligue-1-2026-rodada-8-palpites/",
-       "published_at": "2026-10-23T20:07+03:00",
-       "collected_at": "2026-10-23T20:07+03:00",
+       "published_at": "2026-10-24T12:17+03:00",
+       "collected_at": "2026-10-24T12:17+03:00",
        "lean": ""
       },
       {
        "src": "90min Waffle",
        "reg": "eu",
-       "pick": "П1",
+       "pick": "П2",
        "k": "",
        "url": "https://90minwaffle.co.uk/weekend/",
-       "published_at": "2026-10-23T18:41+03:00",
-       "collected_at": "2026-10-23T18:41+03:00",
-       "lean": "1"
+       "published_at": "2026-10-24T12:17+03:00",
+       "collected_at": "2026-10-24T12:17+03:00",
+       "lean": "2"
       },
       {
        "src": "Metis Football",
@@ -10644,8 +10784,8 @@
        "pick": "П1",
        "k": "",
        "url": "https://metisfootball.com/match/ligue_1/monaco-vs-lille-2026-10-25",
-       "published_at": "2026-10-23T20:07+03:00",
-       "collected_at": "2026-10-23T20:07+03:00",
+       "published_at": "2026-10-24T12:17+03:00",
+       "collected_at": "2026-10-24T12:17+03:00",
        "lean": "1"
       },
       {
@@ -10878,8 +11018,8 @@
        "pick": "П1",
        "k": "",
        "url": "https://placarhub.com/es/noticias/ligue-1-2026-rodada-8-palpites/",
-       "published_at": "2026-10-23T20:07+03:00",
-       "collected_at": "2026-10-23T20:07+03:00",
+       "published_at": "2026-10-24T12:17+03:00",
+       "collected_at": "2026-10-24T12:17+03:00",
        "lean": "1"
       },
       {
@@ -10888,8 +11028,8 @@
        "pick": "П1",
        "k": "",
        "url": "https://90minwaffle.co.uk/weekend/",
-       "published_at": "2026-10-23T18:41+03:00",
-       "collected_at": "2026-10-23T18:41+03:00",
+       "published_at": "2026-10-24T12:17+03:00",
+       "collected_at": "2026-10-24T12:17+03:00",
        "lean": "1"
       },
       {
@@ -10908,8 +11048,8 @@
        "pick": "Х",
        "k": "",
        "url": "https://metisfootball.com/match/ligue_1/monaco-vs-lille-2026-10-25",
-       "published_at": "2026-10-23T20:07+03:00",
-       "collected_at": "2026-10-23T20:07+03:00",
+       "published_at": "2026-10-24T12:17+03:00",
+       "collected_at": "2026-10-24T12:17+03:00",
        "lean": "X"
       }
      ],
@@ -11132,8 +11272,8 @@
        "pick": "Х",
        "k": "",
        "url": "https://placarhub.com/es/noticias/ligue-1-2026-rodada-8-palpites/",
-       "published_at": "2026-10-23T20:07+03:00",
-       "collected_at": "2026-10-23T20:07+03:00",
+       "published_at": "2026-10-24T12:17+03:00",
+       "collected_at": "2026-10-24T12:17+03:00",
        "lean": "X"
       },
       {
@@ -11142,8 +11282,8 @@
        "pick": "П1",
        "k": "",
        "url": "https://90minwaffle.co.uk/weekend/",
-       "published_at": "2026-10-23T18:41+03:00",
-       "collected_at": "2026-10-23T18:41+03:00",
+       "published_at": "2026-10-24T12:17+03:00",
+       "collected_at": "2026-10-24T12:17+03:00",
        "lean": "1"
       },
       {
@@ -11162,8 +11302,8 @@
        "pick": "П2",
        "k": "",
        "url": "https://metisfootball.com/match/ligue_1/angers-vs-lorient-2026-10-25",
-       "published_at": "2026-10-23T20:07+03:00",
-       "collected_at": "2026-10-23T20:07+03:00",
+       "published_at": "2026-10-24T12:17+03:00",
+       "collected_at": "2026-10-24T12:17+03:00",
        "lean": "2"
       }
      ],
@@ -11386,8 +11526,8 @@
        "pick": "П1",
        "k": "",
        "url": "https://placarhub.com/es/noticias/ligue-1-2026-rodada-8-palpites/",
-       "published_at": "2026-10-23T20:07+03:00",
-       "collected_at": "2026-10-23T20:07+03:00",
+       "published_at": "2026-10-24T12:17+03:00",
+       "collected_at": "2026-10-24T12:17+03:00",
        "lean": "1"
       },
       {
@@ -11396,8 +11536,8 @@
        "pick": "П1",
        "k": "",
        "url": "https://90minwaffle.co.uk/weekend/",
-       "published_at": "2026-10-23T18:41+03:00",
-       "collected_at": "2026-10-23T18:41+03:00",
+       "published_at": "2026-10-24T12:17+03:00",
+       "collected_at": "2026-10-24T12:17+03:00",
        "lean": "1"
       },
       {
@@ -11406,8 +11546,8 @@
        "pick": "П1",
        "k": "",
        "url": "https://metisfootball.com/match/ligue_1/auxerre-vs-le-mans-2026-10-25",
-       "published_at": "2026-10-23T20:07+03:00",
-       "collected_at": "2026-10-23T20:07+03:00",
+       "published_at": "2026-10-24T12:17+03:00",
+       "collected_at": "2026-10-24T12:17+03:00",
        "lean": "1"
       },
       {
@@ -11640,8 +11780,8 @@
        "pick": "П1",
        "k": "",
        "url": "https://placarhub.com/es/noticias/ligue-1-2026-rodada-8-palpites/",
-       "published_at": "2026-10-23T20:07+03:00",
-       "collected_at": "2026-10-23T20:07+03:00",
+       "published_at": "2026-10-24T12:17+03:00",
+       "collected_at": "2026-10-24T12:17+03:00",
        "lean": "1"
       },
       {
@@ -11650,8 +11790,8 @@
        "pick": "П1",
        "k": "",
        "url": "https://90minwaffle.co.uk/weekend/",
-       "published_at": "2026-10-23T18:41+03:00",
-       "collected_at": "2026-10-23T18:41+03:00",
+       "published_at": "2026-10-24T12:17+03:00",
+       "collected_at": "2026-10-24T12:17+03:00",
        "lean": "1"
       },
       {
@@ -11660,8 +11800,8 @@
        "pick": "П1",
        "k": "",
        "url": "https://metisfootball.com/match/ligue_1/marseille-vs-le-havre-2026-10-25",
-       "published_at": "2026-10-23T20:07+03:00",
-       "collected_at": "2026-10-23T20:07+03:00",
+       "published_at": "2026-10-24T12:17+03:00",
+       "collected_at": "2026-10-24T12:17+03:00",
        "lean": "1"
       },
       {
@@ -11894,8 +12034,8 @@
        "pick": "ТБ 2.5",
        "k": "",
        "url": "https://placarhub.com/es/noticias/ligue-1-2026-rodada-8-palpites/",
-       "published_at": "2026-10-23T20:07+03:00",
-       "collected_at": "2026-10-23T20:07+03:00",
+       "published_at": "2026-10-24T12:17+03:00",
+       "collected_at": "2026-10-24T12:17+03:00",
        "lean": ""
       },
       {
@@ -11904,8 +12044,8 @@
        "pick": "П1",
        "k": "",
        "url": "https://metisfootball.com/match/ligue_1/rennes-vs-strasbourg-2026-10-25",
-       "published_at": "2026-10-23T20:07+03:00",
-       "collected_at": "2026-10-23T20:07+03:00",
+       "published_at": "2026-10-24T12:17+03:00",
+       "collected_at": "2026-10-24T12:17+03:00",
        "lean": "1"
       }
      ],
@@ -12471,8 +12611,8 @@
        "pick": "П2",
        "k": "",
        "url": "https://www.fixture360.com/en/football/russia/premier-league/fixtures",
-       "published_at": "2026-10-23T20:07+03:00",
-       "collected_at": "2026-10-23T20:07+03:00",
+       "published_at": "2026-10-24T12:17+03:00",
+       "collected_at": "2026-10-24T12:17+03:00",
        "lean": "2"
       }
      ],
@@ -12521,8 +12661,8 @@
        "pick": "П2",
        "k": "",
        "url": "https://www.fixture360.com/en/football/russia/premier-league/fixtures",
-       "published_at": "2026-10-23T20:07+03:00",
-       "collected_at": "2026-10-23T20:07+03:00",
+       "published_at": "2026-10-24T12:17+03:00",
+       "collected_at": "2026-10-24T12:17+03:00",
        "lean": "2"
       }
      ],
@@ -12625,8 +12765,8 @@
        "pick": "П2",
        "k": "",
        "url": "https://www.fixture360.com/en/football/russia/premier-league/fixtures",
-       "published_at": "2026-10-23T20:07+03:00",
-       "collected_at": "2026-10-23T20:07+03:00",
+       "published_at": "2026-10-24T12:17+03:00",
+       "collected_at": "2026-10-24T12:17+03:00",
        "lean": "2"
       }
      ],
@@ -12773,6 +12913,6 @@
    ]
   }
  ],
- "tips_updated": "2026-10-23T20:07+03:00",
+ "tips_updated": "2026-10-24T12:17+03:00",
  "odds_updated": "2026-10-24T11:32:01+03:00"
 }
