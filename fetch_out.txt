@@ -1,11 +1,11 @@
-ERR 20261021 HTTP Error 429: {"message":"You have exceeded the MONTHLY quota for Requests on your current plan, BASIC. Upgrade your plan at https:\/\/rapidapi.com\/Creativesdev\/api\/free-api-live-football-data"} (requests remaining: 0)
+ERR 20261022 HTTP Error 429: {"message":"You have exceeded the MONTHLY quota for Requests on your current plan, BASIC. Upgrade your plan at https:\/\/rapidapi.com\/Creativesdev\/api\/free-api-live-football-data"} (requests remaining: 0)
 Остановка запросов: достигнут лимит API (HTTP 429).
 RapidAPI returned errors; restoring the previous schedule and trying ESPN for recent results.
-ESPN fallback: responses=56/56 updated=87 added=0 finished_scores=29 unmapped=0 errors=0
-updated=87 added=0 finished_scores=29 unmapped=0 errors=1 espn_fallback=True DRY=False
-ODDS: updated_matches=48 bookmaker_quotes=988 remaining_credits=476 errors=0
+ESPN fallback: responses=56/56 updated=82 added=0 finished_scores=24 unmapped=0 errors=0
+updated=82 added=0 finished_scores=24 unmapped=0 errors=1 espn_fallback=True DRY=False
+ODDS: updated_matches=48 bookmaker_quotes=983 remaining_credits=468 errors=0
 ODDS UNMAPPED: ['Atalanta BC', 'Besiktas JK', 'Brighton and Hove Albion', 'CA Osasuna', 'Deportivo La Coruña', 'FC Baltika Kaliningrad', 'FSV Mainz 05', 'Fenerbahce', 'Ferencváros TC', 'Kryliya Sovetov', 'Olympiakos Piraeus', 'Omonoia FC', 'PFC Levski Sofia', 'RC Lens', 'Real Racing Club de Santander', 'Rodina Moscow', 'SK Sturm Graz', 'Sabah FK', 'Slavia Praha', 'Sporting Lisbon', 'TSG Hoffenheim', 'Union Saint-Gilloise', 'ŠK Slovan Bratislava']
 data.json записан.
-settle stdout: settled matches: 1 | sources: 38
+settle stdout: settled matches: 5 | sources: 46
 
 ==== DONE5
