@@ -352,7 +352,6 @@ function lineupSide(s,name,cls){
     +'<div class="absent"><span><b>Не сыграют:</b> '+(s.out&&s.out.length?esc(s.out.join(", ")):"потерь нет")+'</span>'
     +(s.doubt&&s.doubt.length?'<span><b>Под вопросом:</b> '+esc(s.doubt.join(", "))+'</span>':"")+'</div></div>';
 }
-const AI_MIN_PROBABILITY=75;
 function aiProbability(o){
   if(!o)return null;
   const explicit=Number(o.probability);
@@ -363,7 +362,7 @@ function aiProbability(o){
 function aiCoefficient(m,o){
   const stored=Number(o&&o.coefficient);
   if(Number.isFinite(stored)&&stored>1.01&&stored<100)return {value:stored,estimated:!!o.coefficient_estimated};
-  const code=String(o&&(o.bet||o.pick)||"").toUpperCase().replace(/\s+/g,"").replace(/Х/g,"X"),odds=m&&m.odds||[];
+  const code=String(o&&(o.pick||o.bet)||"").toUpperCase().replace(/\s+/g,"").replace(/Х/g,"X"),odds=m&&m.odds||[];
   const direct={"П1":0,"1":0,"X":1,"П2":2,"2":2};
   if(Object.prototype.hasOwnProperty.call(direct,code)){
     const price=Number(odds[direct[code]]);
@@ -380,7 +379,32 @@ function aiCoefficient(m,o){
   return prices.length?{value:Math.round(Math.max(...prices)*100)/100,estimated:true}:null;
 }
 function aiBetEligible(o,m){
-  return !!o&&o.eligible===true&&aiProbability(o)>=AI_MIN_PROBABILITY&&String(o.bet||o.pick||"").trim().length>0&&!!aiCoefficient(m,o);
+  return !!o&&String(o.pick||o.bet||"").trim().length>0&&!!aiCoefficient(m,o);
+}
+function aiConfidenceLabel(o){
+  const probability=aiProbability(o);
+  if(probability!==null)return "оценка модели "+probability+"%";
+  const confidence=Number(o&&o.conf);
+  if(Number.isFinite(confidence)&&confidence>=1&&confidence<=5)return "уверенность "+confidence+"/5";
+  return "оценка уверенности не указана";
+}
+function aiOpinionBlock(o,label,m,withSources){
+  const pick=String(o&&(o.pick||o.bet)||"").trim();
+  const score=String(o&&o.score||"").trim()||"Счёт не указан";
+  const opinion=String(o&&o.text||"").trim()||"Модель не добавила текстовое обоснование.";
+  const quote=pick?aiCoefficient(m,o):null;
+  const prob=aiConfidenceLabel(o),sources=withSources?aiSources(o):[];
+  let h='<div class="ai"><div class="ai-head"><span class="ai-label">'+label+'</span><span class="score">'+esc(score)+'</span></div>'
+    +'<p>'+esc(opinion)+'</p>';
+  if(pick){
+    h+='<div class="bet">Выбор модели: <b>'+esc(pick)+'</b>'
+      +(quote?' · кф <b>'+(quote.estimated?'≈':'')+quote.value.toFixed(2)+'</b>':' · котировка выбранного исхода не найдена')
+      +' <span style="color:var(--muted)">· '+esc(prob)+'</span></div>';
+  }else{
+    h+='<div class="bet">Модель не выбрала рынок · '+esc(prob)+'</div>';
+  }
+  if(sources.length)h+='<div class="lsrc">Источники ИИ: '+sources.map(s=>'<a href="'+esc(s.url)+'" target="_blank" rel="noopener">'+esc(s.title||s.url)+'</a>').join(' · ')+'</div>';
+  return h+'</div>';
 }
 function aiSources(o){
   const sources=Array.isArray(o&&o.sources)?o.sources:[];
@@ -410,19 +434,8 @@ function cardInner(m,open){
   if(m.lineups)h+='<details'+op+'><summary>Предполагаемые составы</summary><div class="lineups"><div class="pitches">'+lineupSide(m.lineups.home,m.home,"home")+lineupSide(m.lineups.away,m.away,"away")+'</div>'+(m.lineups.source?'<div class="lsrc">Источник: <a href="'+esc(m.lineups.source.url)+'" target="_blank" rel="noopener">'+esc(m.lineups.source.name)+'</a></div>':"")+'</div></details>';
   else if(matchState(m)==="soon")h+='<details'+op+'><summary>Предполагаемые составы</summary><div class="lineups"><p class="lineup-note">Составы ещё не опубликованы. Обычно они появляются ближе к началу матча.</p></div></details>';
   h+='<details'+op+'><summary>Все прогнозы ('+tips.length+')</summary><ul class="tips">'+(tips.map(t=>'<li class="tip"><span class="src"><a href="'+esc(t.url)+'" target="_blank" rel="noopener">'+esc(t.src)+'</a><span class="tagr '+t.reg+'">'+(t.reg==="ru"?"РУ":"EU")+'</span></span><span class="pick">'+esc(t.pick)+'</span><span class="k">'+(t.k?"кф "+esc(t.k):"")+'</span></li>').join("")||'<li class="tip"><span class="pick">Нет прогнозов из этой группы</span></li>')+'</ul></details>';
-  if(m.gpt){
-    const eligible=aiBetEligible(m.gpt,m),prob=aiProbability(m.gpt),sources=aiSources(m.gpt),quote=aiCoefficient(m,m.gpt);
-    h+='<div class="ai"><div class="ai-head"><span class="ai-label">Прогноз ИИ · GPT</span>'+(eligible?'<span class="score">'+esc(m.gpt.score)+'</span>':"")+'</div>'
-      +(eligible?'<p>'+esc(m.gpt.text)+'</p><div class="bet">Ставка: <b>'+esc(m.gpt.bet)+'</b> · кф <b>'+(quote.estimated?'≈':'')+quote.value.toFixed(2)+'</b> <span style="color:var(--muted)">· оценка модели '+prob+'%</span></div>':
-        '<p>ИИ не публикует ставку: оценка ниже 75%, нет источников или коэффициента.</p>')
-      +(sources.length?'<div class="lsrc">Источники ИИ: '+sources.map(s=>'<a href="'+esc(s.url)+'" target="_blank" rel="noopener">'+esc(s.title||s.url)+'</a>').join(' · ')+'</div>':"")+'</div>';
-  }
-  if(m.ai){
-    const eligible=aiBetEligible(m.ai,m),prob=aiProbability(m.ai),pick=m.ai.bet||m.ai.pick,quote=aiCoefficient(m,m.ai);
-    h+='<div class="ai"><div class="ai-head"><span class="ai-label">Мнение ИИ</span>'+(eligible?'<span class="score">'+esc(m.ai.score)+'</span>':"")+'</div>'
-      +(eligible?'<p>'+esc(m.ai.text)+'</p><div class="bet">Ставка: <b>'+esc(pick)+'</b> · кф <b>'+(quote.estimated?'≈':'')+quote.value.toFixed(2)+'</b> <span style="color:var(--muted)">· оценка модели '+prob+'%</span></div>':
-        '<p>ИИ не публикует ставку: нет оценки от 75% или коэффициента.</p>')+'</div>';
-  }
+  if(m.gpt)h+=aiOpinionBlock(m.gpt,"Прогноз ИИ · GPT",m,true);
+  if(m.ai)h+=aiOpinionBlock(m.ai,"Мнение ИИ",m,false);
   return h+'</div>';
 }
 function boardHead(m,st,asLink){
@@ -564,7 +577,7 @@ function renderAiExpressFallback(cands,distinct){
   const v=document.getElementById("view");
   let h='<div class="detail"><button class="back" id="back">← Все матчи</button><div class="exp">'
     +'<div class="exp-head"><span class="ai-label" style="color:var(--accent)">⚡ Подбор по прогнозам ИИ</span>'
-    +'<p>Для полноценного экспресса не хватает коэффициентов минимум по двум матчам. Ниже — самые уверенные прогнозы ИИ на предстоящие матчи; общий коэффициент не рассчитывается.</p></div>';
+    +'<p>Для полноценного экспресса не хватает коэффициентов минимум по двум матчам. Ниже — выборы ИИ с доступной котировкой на предстоящие матчи; общий коэффициент не рассчитывается.</p></div>';
   if(cands.length){
     h+='<ol class="exp-list">'+cands.slice(0,4).map(c=>{
       const t=D.tournaments.find(x=>x.id===c.tab),odds=c.m.odds||[];
