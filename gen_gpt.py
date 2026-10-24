@@ -22,6 +22,12 @@ ENV:
 """
 import os, sys, json, datetime, re, urllib.request, urllib.error
 
+for _stream in (sys.stdout, sys.stderr):
+    try:
+        _stream.reconfigure(encoding="utf-8", errors="replace")
+    except AttributeError:
+        pass
+
 DATA_FILE = os.environ.get("DATA_FILE", "data.json")
 OUT_FILE  = os.environ.get("OUT_FILE", "gpt.json")
 RES_FILE  = os.environ.get("RES_FILE", "results.json")
