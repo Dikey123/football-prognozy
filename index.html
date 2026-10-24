@@ -441,7 +441,7 @@ function cardInner(m,open){
   if(m.lineups)h+='<details'+op+'><summary>Предполагаемые составы</summary><div class="lineups"><div class="pitches">'+lineupSide(m.lineups.home,m.home,"home")+lineupSide(m.lineups.away,m.away,"away")+'</div>'+(m.lineups.source?'<div class="lsrc">Источник: <a href="'+esc(m.lineups.source.url)+'" target="_blank" rel="noopener">'+esc(m.lineups.source.name)+'</a></div>':"")+'</div></details>';
   else if(matchState(m)==="soon")h+='<details'+op+'><summary>Предполагаемые составы</summary><div class="lineups"><p class="lineup-note">Составы ещё не опубликованы. Обычно они появляются ближе к началу матча.</p></div></details>';
   h+='<details'+op+'><summary>Все прогнозы ('+tips.length+')</summary><ul class="tips">'+(tips.map(t=>'<li class="tip"><span class="src"><a href="'+esc(t.url)+'" target="_blank" rel="noopener">'+esc(t.src)+'</a><span class="tagr '+t.reg+'">'+(t.reg==="ru"?"РУ":"EU")+'</span></span><span class="pick">'+esc(t.pick)+'</span><span class="k">'+(t.k?"кф "+esc(t.k):"")+'</span></li>').join("")||'<li class="tip"><span class="pick">Нет прогнозов из этой группы</span></li>')+'</ul></details>';
-  if(m.gpt)h+=aiOpinionBlock(m.gpt,"Прогноз ИИ · GPT",m,true);
+  if(m.gpt)h+=aiOpinionBlock(m.gpt,"Прогноз ИИ · локально",m,true);
   if(m.ai)h+=aiOpinionBlock(m.ai,"Мнение ИИ",m,false);
   return h+'</div>';
 }
@@ -567,7 +567,7 @@ function aiExpCands(){
   const n=Date.now(),byMatch=new Map();
   allMatches().forEach(m=>{
     if(inst(m)<=n)return;
-    const options=[["ИИ",m.ai],["ChatGPT",m.gpt]].filter(x=>aiBetEligible(x[1],m));
+    const options=[["ИИ",m.ai],["Локальная модель",m.gpt]].filter(x=>aiBetEligible(x[1],m));
     if(!options.length)return;
     const candidates=options.map(([model,o])=>{
       const probability=aiProbability(o);
@@ -685,7 +685,7 @@ function renderRating(){
     document.getElementById("back").onclick=()=>{location.hash=tab};return;
   }
   const rows=Object.entries(sourceStats).map(([src,x])=>{const n=x.win+x.lose;return {src,reg:x.reg,win:x.win,lose:x.lose,push:x.push||0,n,pct:n?Math.round(x.win/n*100):0,w:wilson(x.win,n)}});
-  [["ИИ · ChatGPT ≥60%",RES.gpt60],["ИИ · Claude ≥60%",RES.ai60]].forEach(([src,x])=>{
+  [["ИИ · локальная модель ≥60%",RES.gpt60],["ИИ · Claude ≥60%",RES.ai60]].forEach(([src,x])=>{
     x=x||{win:0,lose:0,push:0};const n=x.win+x.lose;
     rows.push({src,reg:"ai",win:x.win,lose:x.lose,push:x.push||0,n,pct:n?Math.round(x.win/n*100):0,w:wilson(x.win,n),isAI:1});
   });
@@ -695,7 +695,7 @@ function renderRating(){
    +'<ol class="rate-list">'+rows.map((r,i)=>'<li class="rate-row'+(r.isAI?' ai':'')+'"><span class="rank">'+(i+1)+'</span><span class="rsrc">'+esc(r.src)+(r.isAI?'<span class="aib">ИИ</span>':'<span class="tagr '+r.reg+'">'+(r.reg==="ru"?"РУ":"EU")+'</span>')+'<span class="rrec">'+r.win+'–'+r.lose+' · '+(r.n?r.n+' ставок':'нет рассчитанных ставок')+(r.push?' · пуш '+r.push:'')+(r.n>0&&r.n<3?' · мало данных':'')+'</span></span><span class="rpct"><b>'+(r.n?r.pct+'%':'—')+'</b><span class="rbar"><i style="width:'+r.pct+'%"></i></span></span></li>').join("")+'</ol>';
   if(RES.recent&&RES.recent.length){
     h+='<div class="day" style="margin-top:18px"><h2>Последние результаты</h2><span class="rule"></span></div><div class="rres">'
-     +RES.recent.slice(0,15).map(m=>{const hit=m.picks.filter(p=>p.res==="win").length,set=m.picks.filter(p=>p.res==="win"||p.res==="lose").length;return '<div class="rres-row"><span class="rr-m">'+esc(m.home)+' <b>'+esc(m.score)+'</b> '+esc(m.away)+'<span class="rr-t">'+esc(m.tour||"")+'</span></span><span class="rr-s"><span class="aib '+esc(m.gpt60||"skip")+'">GPT ≥60% '+(m.gpt60==="win"?"✓":m.gpt60==="lose"?"✕":m.gpt60==="push"?"=":"—")+'</span><span class="aib '+esc(m.ai60||"skip")+'">Claude ≥60% '+(m.ai60==="win"?"✓":m.ai60==="lose"?"✕":m.ai60==="push"?"=":"—")+'</span><span class="rr-hit">'+hit+'/'+set+' источников зашло</span></span></div>'}).join("")+'</div>';
+     +RES.recent.slice(0,15).map(m=>{const hit=m.picks.filter(p=>p.res==="win").length,set=m.picks.filter(p=>p.res==="win"||p.res==="lose").length;return '<div class="rres-row"><span class="rr-m">'+esc(m.home)+' <b>'+esc(m.score)+'</b> '+esc(m.away)+'<span class="rr-t">'+esc(m.tour||"")+'</span></span><span class="rr-s"><span class="aib '+esc(m.gpt60||"skip")+'">Локальный ИИ ≥60% '+(m.gpt60==="win"?"✓":m.gpt60==="lose"?"✕":m.gpt60==="push"?"=":"—")+'</span><span class="aib '+esc(m.ai60||"skip")+'">Claude ≥60% '+(m.ai60==="win"?"✓":m.ai60==="lose"?"✕":m.ai60==="push"?"=":"—")+'</span><span class="rr-hit">'+hit+'/'+set+' источников зашло</span></span></div>'}).join("")+'</div>';
   }
   h+='<p class="exp-note">Статистика накапливается автоматически после каждого игрового дня. Это аналитика, не гарантия. 18+.</p></div>';
   v.innerHTML=h;
