@@ -180,8 +180,7 @@ def main():
                 S=R["sources"].setdefault(src,{"reg":reg,"win":0,"lose":0,"push":0})
                 if r in ("win","lose","push"): S[r]+=1
                 picklog.append({"src":src,"reg":reg,"pick":tp.get("pick",""),"res":r or "skip"})
-            # Историческое поле ai оставляем для совместимости; отдельные ai75/gpt75
-            # считают только новые AI-ставки с оценкой не ниже установленного порога.
+            # Историческое поле ai оставляем для совместимости. ai60/gpt60 начинают новую выборку с порога 60%; ai75/gpt75 сохраняют историю прогнозов от 75%.
             air=None
             ai_opinion=m.get("ai") or {}
             ai_prob=ai_probability(ai_opinion)
@@ -226,8 +225,8 @@ def main():
             R["recent"].insert(0, {"date":m["date"],"home":m["home"],"away":m["away"],"score":f"{h}:{a}",
                                    "tour":t.get("short",t.get("name","")),"ai":air or "skip",
                                    "ai60":ai60 or "skip","gpt60":gpt60_result or "skip","ai75":ai75 or "skip","gpt75":gpt75_result or "skip",
-                                   "gpt_bet":gpt_pick if gpt_result else "",
-                                   "gpt_probability":gpt_prob if gpt_result else None,"picks":picklog})
+                                   "gpt_bet":gpt_pick if gpt60_result else "",
+                                   "gpt_probability":gpt_prob if gpt60_result else None,"picks":picklog})
             done.add(key); added+=1
     R["matches"]=R.get("matches",0)+added
     R["recent"]=R["recent"][:60]
