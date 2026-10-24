@@ -1,4 +1,4 @@
-$ErrorActionPreference = 'Stop'
+﻿$ErrorActionPreference = 'Stop'
 
 $root = Join-Path $env:LOCALAPPDATA 'KaperAI'
 $repo = Join-Path $root 'football-prognozy-main'
