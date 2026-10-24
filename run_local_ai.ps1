@@ -87,6 +87,7 @@ try {
 
         $env:OLLAMA_MODEL = 'qwen3:4b'
         $env:OLLAMA_URL = 'http://127.0.0.1:11434/api/chat'
+        $env:PYTHONIOENCODING = 'utf-8'
         & $pythonPath gen_gpt.py
         if ($LASTEXITCODE -ne 0) { throw "Локальная генерация завершилась с кодом $LASTEXITCODE." }
 
