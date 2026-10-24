@@ -6,7 +6,8 @@
 import json, re, sys, datetime
 
 MSK = datetime.timezone(datetime.timedelta(hours=3))
-AI_MIN_PROBABILITY = 75
+AI_MIN_PROBABILITY = 60
+AI_HIGH_PROBABILITY = 75
 
 def norm(s): return re.sub(r'[^а-яёa-z0-9]', '', str(s).lower())
 
@@ -154,6 +155,7 @@ def main():
     R = load(res_path, {"updated":"","sources":{},"ai":{"win":0,"lose":0,"push":0},"recent":[],"done":[]})
     R.setdefault("sources",{}); R.setdefault("ai",{"win":0,"lose":0,"push":0}); R.setdefault("recent",[]); R.setdefault("done",[]); R.setdefault("matches",0)
     R.setdefault("ai75",{"win":0,"lose":0,"push":0}); R.setdefault("gpt75",{"win":0,"lose":0,"push":0})
+    R.setdefault("ai60",{"win":0,"lose":0,"push":0}); R.setdefault("gpt60",{"win":0,"lose":0,"push":0})
     done=set(R["done"])
     added=0
     for t in data.get("tournaments",[]):
@@ -194,27 +196,36 @@ def main():
                     ao='1' if int(aim.group(1))>int(aim.group(2)) else ('2' if int(aim.group(1))<int(aim.group(2)) else 'x')
                     air='win' if ao==out else 'lose'
             if air in ("win","lose","push"): R["ai"][air]+=1
+            ai60=None
             ai75=None
             if (ai_opinion.get("eligible") is True and ai_prob is not None
                     and ai_prob >= AI_MIN_PROBABILITY and ai_pick
                     and ai_pick_has_coefficient(ai_opinion, m)):
                 if published_before_kickoff(ai_opinion, m):
-                    ai75=settle_pick(ai_pick, h, a, m["home"], m["away"])
-                if ai75 in ("win","lose","push"): R["ai75"][ai75]+=1
-
+                    ai60=settle_pick(ai_pick, h, a, m["home"], m["away"])
+                if ai60 in ("win","lose","push"):
+                    R["ai60"][ai60]+=1
+                    if ai_prob >= AI_HIGH_PROBABILITY:
+                        ai75=ai60
+                        R["ai75"][ai75]+=1
             gpt_opinion=gpt_matches.get(key) or {}
             gpt_prob=ai_probability(gpt_opinion)
             gpt_pick=str(gpt_opinion.get("bet") or "").strip()
-            gpt_result=None
+            gpt60_result=None
+            gpt75_result=None
             if (gpt_opinion.get("eligible") is True and gpt_prob is not None
                     and gpt_prob >= AI_MIN_PROBABILITY and gpt_pick
                     and ai_pick_has_coefficient(gpt_opinion, m)
                     and published_before_kickoff({"published_at":gpt_opinion.get("generated_at")}, m)):
-                gpt_result=settle_pick(gpt_pick, h, a, m["home"], m["away"])
-                if gpt_result in ("win","lose","push"): R["gpt75"][gpt_result]+=1
+                gpt60_result=settle_pick(gpt_pick, h, a, m["home"], m["away"])
+                if gpt60_result in ("win","lose","push"):
+                    R["gpt60"][gpt60_result]+=1
+                    if gpt_prob >= AI_HIGH_PROBABILITY:
+                        gpt75_result=gpt60_result
+                        R["gpt75"][gpt75_result]+=1
             R["recent"].insert(0, {"date":m["date"],"home":m["home"],"away":m["away"],"score":f"{h}:{a}",
                                    "tour":t.get("short",t.get("name","")),"ai":air or "skip",
-                                   "ai75":ai75 or "skip","gpt75":gpt_result or "skip",
+                                   "ai60":ai60 or "skip","gpt60":gpt60_result or "skip","ai75":ai75 or "skip","gpt75":gpt75_result or "skip",
                                    "gpt_bet":gpt_pick if gpt_result else "",
                                    "gpt_probability":gpt_prob if gpt_result else None,"picks":picklog})
             done.add(key); added+=1
