@@ -66,8 +66,12 @@ try {
 
         & $git pull --rebase origin main
         if ($LASTEXITCODE -ne 0) { throw 'Не удалось синхронизировать прогнозы с GitHub.' }
-        & $git push origin main
-        if ($LASTEXITCODE -ne 0) { throw 'GitHub не принял предыдущие изменения; проверьте вход Git Credential Manager.' }
+        $ahead = & $git rev-list --count origin/main..HEAD
+        if ($LASTEXITCODE -ne 0) { throw 'Не удалось проверить локальные коммиты.' }
+        if ([int]$ahead -gt 0) {
+            & $git push origin main
+            if ($LASTEXITCODE -ne 0) { throw 'GitHub не принял предыдущие изменения; проверьте вход Git Credential Manager.' }
+        }
         & $git reset --hard origin/main
         if ($LASTEXITCODE -ne 0) { throw 'Не удалось обновить изолированную копию до main.' }
 
@@ -92,6 +96,8 @@ try {
         if ($LASTEXITCODE -eq 1) {
             & $git commit -m 'auto: локальное мнение ИИ по матчам'
             if ($LASTEXITCODE -ne 0) { throw 'Не удалось сохранить новые прогнозы.' }
+            & $git pull --rebase origin main
+            if ($LASTEXITCODE -ne 0) { throw 'Не удалось синхронизировать изменения перед публикацией.' }
             & $git push origin main
             if ($LASTEXITCODE -ne 0) { throw 'Не удалось опубликовать прогнозы в GitHub.' }
             Write-Output 'Новые прогнозы локальной модели опубликованы в GitHub main.'
