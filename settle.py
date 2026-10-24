@@ -28,7 +28,9 @@ def ai_pick_has_coefficient(opinion, match):
         if 1.01 < quoted < 100: return True
     except (TypeError, ValueError):
         pass
-    code = re.sub(r"\s+", "", str(opinion.get("bet") or opinion.get("pick") or "").upper()).replace("Х", "X")
+    raw = str(opinion.get("pick") or opinion.get("bet") or "").strip().upper()
+    found = re.match(r"^(П1|П2|1Х|Х2|1X|X2|Х|X|1|2)(?=$|[\s—–-])", raw)
+    code = (found.group(1) if found else re.sub(r"\s+", "", raw)).replace("Х", "X")
     odds = match.get("odds") or []
     direct = {"П1": 0, "1": 0, "X": 1, "П2": 2, "2": 2}
     if code in direct:
