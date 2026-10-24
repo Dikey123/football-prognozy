@@ -1,10 +1,11 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Генерация «мнения ChatGPT» по матчам для сервиса «Капер ИИ».
+Генерация локального ИИ-мнения по матчам для сервиса «Капер ИИ».
 
 Читает data.json и results.json, для каждого предстоящего матча без прогноза
-вызывает OpenAI с формой команд по подтверждённым предыдущим результатам.
+вызывает Ollama на этом компьютере с формой по подтверждённым результатам.
+Скрипт не отправляет запросы в OpenAI и не использует облачный веб-поиск.
 Результат — gpt.json,
 ключ матча: "date|home|away" (ровно как поля в data.json).
 
@@ -12,20 +13,20 @@
 После начала матча он фиксируется. Чтобы пересчитать предстоящие матчи — FORCE=1.
 
 ENV:
-  OPENAI_API_KEY  — обязателен
-  OPENAI_MODEL    — модель (по умолчанию gpt-6.1-sol)
+  OLLAMA_MODEL    — локальная модель (по умолчанию qwen3:4b)
+  OLLAMA_URL      — локальный адрес Ollama (по умолчанию 127.0.0.1:11434)
   DATA_FILE       — путь к data.json (по умолчанию data.json)
   OUT_FILE        — путь к gpt.json  (по умолчанию gpt.json)
   RES_FILE        — путь к results.json (по умолчанию results.json)
   FORCE           — "1" → перегенерировать прогнозы предстоящих матчей
 """
-import os, sys, json, datetime, re
-from openai import OpenAI
+import os, sys, json, datetime, re, urllib.request, urllib.error
 
 DATA_FILE = os.environ.get("DATA_FILE", "data.json")
 OUT_FILE  = os.environ.get("OUT_FILE", "gpt.json")
 RES_FILE  = os.environ.get("RES_FILE", "results.json")
-MODEL     = os.environ.get("OPENAI_MODEL", "gpt-6.1-sol")
+MODEL     = os.environ.get("OLLAMA_MODEL", "qwen3:4b")
+OLLAMA_URL = os.environ.get("OLLAMA_URL", "http://127.0.0.1:11434/api/chat")
 FORCE     = os.environ.get("FORCE", "") == "1"
 MIN_PROBABILITY = 60
 MAX_DAYS_AHEAD = 4
@@ -37,17 +38,19 @@ SYSTEM = (
     "обеих команд из контекста, домашнюю/гостевую форму, составы и фактор поля. "
     "Коэффициенты и чужие прогнозы используй только как дополнительную проверку, "
     "не копируй их. Используй только переданные факты; не выдумывай форму, травмы, "
-    "составы, очные встречи и статистику. Если данных о форме мало, прямо укажи это "
-    "Ищи актуальную информацию именно по этому матчу: новости и травмы, ожидаемые/" 
-    "подтверждённые составы, свежую форму, контекст турнира и коэффициенты. Используй "
-    "факты из поиска и переданных данных; не выдумывай. При нехватке надёжных данных "
-    "или конфликте источников укажи ограничения, но всегда выбери наиболее вероятный исход даже ниже 60% и не скрывай мнение. Оцени вероятность выбранного исхода "
+    "составы, очные встречи и статистику. Не ищи информацию в интернете: используй только "
+    "переданные факты из локальных файлов, включая форму, новости, составы, котировки и "
+    "прогнозы источников. Если каких-то данных нет, прямо укажи это и не додумывай. "
+    "При нехватке надёжных данных или конфликте источников укажи ограничения. Всегда дай собственное "
+    "мнение, наиболее вероятный счёт и выбери наиболее подходящий исход из допустимых "
+    "вариантов, даже если уверенность ниже 75%: порог влияет только на статистическую "
+    "категорию, а не на публикацию прогноза. Оцени вероятность выбранного исхода "
     "консервативно, как оценку модели, а не гарантию; учитывай базовую вероятность "
-    "по коэффициентам и не завышай её. Порог 60% влияет только на статистику. "
-    "Допустимые варианты: П1, Х, П2, 1Х, Х2. Обязательно выбери допустимый исход. "
+    "по коэффициентам и не завышай её. Допустимые варианты: П1, Х, П2, 1Х, Х2. "
+    "Не выдумывай коэффициент: используй котировку только из переданных данных. "
     "Верни JSON: score (наиболее вероятный счёт), text (короткое обоснование по-русски), "
-    "probability (целое 0–100), bet (допустимый вариант или пустая строка). Никакого "
-    "текста вне JSON. Источники поиска будут сохранены отдельно."
+    "probability (целое 0–100), bet (обязательно один из допустимых вариантов). Никакого "
+    "текста вне JSON."
 )
 
 OUTPUT_SCHEMA = {
@@ -174,26 +177,52 @@ def parse_timestamp(value):
     except ValueError:
         return None
 
-def response_sources(response):
-    """Collect clickable web citations returned by the Responses API."""
+def local_forecast(context):
+    """Call only the Ollama server bound to this computer; reject remote URLs."""
+    from urllib.parse import urlparse
+    parsed = urlparse(OLLAMA_URL)
+    if parsed.scheme != "http" or parsed.hostname not in ("127.0.0.1", "localhost", "::1"):
+        raise RuntimeError("OLLAMA_URL должен указывать только на локальный компьютер")
+    payload = {
+        "model": MODEL,
+        "messages": [
+            {"role": "system", "content": SYSTEM},
+            {"role": "user", "content": context},
+        ],
+        "format": OUTPUT_SCHEMA,
+        "stream": False,
+        "think": False,
+        "options": {"temperature": 0.2, "num_ctx": 8192},
+    }
+    request = urllib.request.Request(
+        OLLAMA_URL,
+        data=json.dumps(payload, ensure_ascii=False).encode("utf-8"),
+        headers={"Content-Type": "application/json"},
+        method="POST",
+    )
+    with urllib.request.urlopen(request, timeout=300) as response:
+        body = json.load(response)
+    content = (body.get("message") or {}).get("content")
+    if not content:
+        raise RuntimeError("Локальная модель вернула пустой ответ")
+    return json.loads(content)
+
+def ensure_local_model():
+    """Fail once, with a useful message, if the local Ollama model is unavailable."""
+    from urllib.parse import urlparse
+    parsed = urlparse(OLLAMA_URL)
+    tags_url = f"{parsed.scheme}://{parsed.netloc}/api/tags"
     try:
-        raw = response.model_dump()
-    except Exception:
-        return []
-    found, seen = [], set()
-    stack = [raw]
-    while stack:
-        item = stack.pop()
-        if isinstance(item, dict):
-            url = item.get("url")
-            title = item.get("title")
-            if isinstance(url, str) and url.startswith(("https://", "http://")) and url not in seen:
-                seen.add(url)
-                found.append({"title": str(title or url), "url": url})
-            stack.extend(item.values())
-        elif isinstance(item, list):
-            stack.extend(item)
-    return found[:10]
+        with urllib.request.urlopen(tags_url, timeout=10) as response:
+            installed = json.load(response).get("models", [])
+    except Exception as ex:
+        sys.exit(
+            "Локальная Ollama не отвечает. Запустите её на этом компьютере "
+            f"и повторите попытку. Причина: {ex!r}"
+        )
+    names = {str(item.get("name", "")) for item in installed}
+    if MODEL not in names:
+        sys.exit(f"Локальная модель {MODEL} не установлена. Выполните: ollama pull {MODEL}")
 
 def needs_generation(key, matches, previous_generated, source_updates, now):
     if FORCE or key not in matches:
@@ -270,8 +299,10 @@ def pick_coefficient(match, bet):
     return (round(max(prices), 2), True) if prices else (None, False)
 
 def main():
-    if not os.environ.get("OPENAI_API_KEY"):
-        sys.exit("OPENAI_API_KEY не задан")
+    from urllib.parse import urlparse
+    if urlparse(OLLAMA_URL).hostname not in ("127.0.0.1", "localhost", "::1"):
+        sys.exit("Запрещён удалённый ИИ-сервис: разрешён только Ollama на этом компьютере")
+    ensure_local_model()
     with open(DATA_FILE, encoding="utf-8") as f:
         data = json.load(f)
     try:
@@ -291,7 +322,6 @@ def main():
 
     now_msk = datetime.datetime.now(MSK)
     source_updates = [parse_timestamp(data.get("updated")), parse_timestamp(results.get("updated"))]
-    client = OpenAI()
     added = 0
     attempted = 0
     first_error = None
@@ -312,47 +342,34 @@ def main():
                 continue
             attempted += 1
             try:
-                r = client.responses.create(
-                    model=MODEL,
-                    instructions=SYSTEM,
-                    input=match_context(t, m, history),
-                    tools=[{"type": "web_search"}],
-                    tool_choice="required",
-                    text={"format": {
-                        "type": "json_schema",
-                        "name": "football_prediction",
-                        "strict": True,
-                        "schema": OUTPUT_SCHEMA,
-                    }},
-                    store=False,
-                )
-                op = json.loads(r.output_text)
+                op = local_forecast(match_context(t, m, history))
                 probability = max(0, min(100, int(op.get("probability", 0) or 0)))
                 candidate_bet = str(op.get("bet", "")).strip()
-                sources = response_sources(r)
+                sources = []
                 coefficient, coefficient_estimated = pick_coefficient(m, candidate_bet)
-                eligible = (probability >= MIN_PROBABILITY and bool(candidate_bet)
-                            and bool(sources) and coefficient is not None)
-                bet = candidate_bet
+                # 60% — оценка модели, а не фильтр публикации. Сохраняем мнение и ставку,
+                # даже если котировки пока нет; приложение не должно придумывать коэффициент.
+                eligible = bool(candidate_bet) and coefficient is not None
+                score = str(op.get("score", "")).strip() or "Счёт не определён"
+                opinion_text = str(op.get("text", "")).strip() or "Обоснование модели не указано."
                 matches[k] = {
-                    "score": str(op.get("score", "")),
-                    "text":  str(op.get("text", "")),
+                    "score": score,
+                    "text":  opinion_text,
                     "probability": probability,
                     "threshold": MIN_PROBABILITY,
                     "eligible": eligible,
-                    "bet": bet,
-                    "coefficient": coefficient,
-                    "coefficient_estimated": coefficient_estimated,
+                    "bet": candidate_bet,
+                    "coefficient": coefficient if candidate_bet else None,
+                    "coefficient_estimated": coefficient_estimated if candidate_bet and coefficient else False,
                     "skip_reason": "" if eligible else (
-                        "нет подтверждённых веб-источников" if not sources else
-                        "нет котировки по выбранному исходу" if coefficient is None else
-                        f"оценка ниже {MIN_PROBABILITY}% или модель не выбрала ставку"
+                        "модель не выбрала исход" if not candidate_bet else
+                        "котировка выбранного исхода недоступна"
                     ),
                     "sources": sources,
                     "generated_at": datetime.datetime.now(datetime.timezone.utc).isoformat(timespec="seconds").replace("+00:00", "Z"),
                 }
                 added += 1
-                print("OK  ", k, "→", matches[k]["bet"] or "ПРОПУСК", f"({probability}%, источников {len(sources)})")
+                print("OK  ", k, "→", matches[k]["bet"] or "нет выбранного исхода", f"({probability}%, источников {len(sources)})")
             except Exception as ex:
                 if first_error is None:
                     first_error = ex
@@ -364,10 +381,8 @@ def main():
     # причиной (job станет красным) и НЕ публикуем пустой файл.
     if added == 0 and attempted > 0 and not matches:
         sys.exit(
-            "Ни одно мнение не сгенерировано — все вызовы OpenAI упали.\n"
-            f"Первая ошибка: {first_error!r}\n"
-            "Частые причины: на аккаунте OpenAI нет кредитов / не настроен биллинг, "
-            "либо OPENAI_API_KEY неверный. Проверь platform.openai.com/account/billing."
+            "Локальная модель не сгенерировала прогнозы. Убедитесь, что Ollama запущена "
+            f"и модель {MODEL} установлена. Первая ошибка: {first_error!r}"
         )
 
     if added == 0:
