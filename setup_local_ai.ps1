@@ -1,4 +1,4 @@
-$ErrorActionPreference = 'Stop'
+﻿$ErrorActionPreference = 'Stop'
 
 $ollama = Get-Command ollama -ErrorAction SilentlyContinue
 if (-not $ollama) {
