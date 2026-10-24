@@ -1,4 +1,4 @@
-2026-10-24T07:53:07.425718Z
+2026-10-24T07:59:50.433616Z
 updated=82 added=0 finished_scores=24 unmapped=0 errors=1 espn_fallback=True DRY=False
 ERRORS:
 20261022: HTTP Error 429: {"message":"You have exceeded the MONTHLY quota for Requests on your current plan, BASIC. Upgrade your plan at https:\/\/rapidapi.com\/Creativesdev\/api\/free-api-live-football-data"} (requests remaining: 0)
