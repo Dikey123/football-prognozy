@@ -102,6 +102,60 @@ def msk(utc):
 def norm(s):
     return s.replace("РБ ","").replace("ФК ","").lower().replace(" ","").replace("-","").replace("ё","е")
 
+def merge_duplicate_match(primary, duplicate):
+    """Combine useful fields from duplicate fixture rows without losing odds or opinions."""
+    for key in ("tips", "news", "odds_sources"):
+        current = primary.get(key) or []
+        incoming = duplicate.get(key) or []
+        merged = list(current)
+        seen_items = {json.dumps(item, ensure_ascii=False, sort_keys=True) for item in merged}
+        for item in incoming:
+            marker = json.dumps(item, ensure_ascii=False, sort_keys=True)
+            if marker not in seen_items:
+                merged.append(item)
+                seen_items.add(marker)
+        if merged:
+            primary[key] = merged
+
+    for key in ("ai", "gpt", "lineups", "ft", "score"):
+        if not primary.get(key) and duplicate.get(key):
+            primary[key] = duplicate[key]
+
+    primary_odds_time = str(primary.get("odds_updated") or "")
+    duplicate_odds_time = str(duplicate.get("odds_updated") or "")
+    if duplicate.get("odds") and (
+        not primary.get("odds") or duplicate_odds_time > primary_odds_time
+    ):
+        for key in ("odds", "odds_updated", "odds_provider"):
+            if duplicate.get(key) is not None:
+                primary[key] = duplicate[key]
+
+    if primary.get("status") != "full" and duplicate.get("status") == "full":
+        primary["status"] = "full"
+    for key, value in duplicate.items():
+        if key not in primary or primary[key] in (None, "", [], {}):
+            primary[key] = value
+    return primary
+
+
+def dedupe_tournament_matches(tournament):
+    """Merge rows for the same date and teams, including common team-name aliases."""
+    unique = {}
+    matches = []
+    for match in tournament.get("matches", []):
+        key = (
+            match.get("date", ""),
+            norm(match.get("home", "")),
+            norm(match.get("away", "")),
+        )
+        previous = unique.get(key)
+        if previous is None:
+            unique[key] = match
+            matches.append(match)
+        else:
+            merge_duplicate_match(previous, match)
+    tournament["matches"] = matches
+
 def normalized_team_name(value):
     value = str(value or "").casefold().translate(str.maketrans({
         "ł": "l", "ø": "o", "æ": "ae", "œ": "oe", "ß": "ss",
@@ -205,12 +259,13 @@ def fetch_espn_matches(today):
                         if not espn_team_name(raw_team):
                             unmapped.add(str(raw_team.get("displayName") or raw_team.get("name") or "?"))
                     continue
-                key = (tid, local_date, home, away)
+                key = (tid, local_date, norm(home), norm(away))
                 if key in seen:
                     continue
                 seen.add(key)
                 match = next((m for m in tour[tid]["matches"]
-                              if m.get("home") == home and m.get("away") == away
+                              if norm(m.get("home", "")) == norm(home)
+                              and norm(m.get("away", "")) == norm(away)
                               and m.get("date") == local_date), None)
 
                 if finished and home_score.isdigit() and away_score.isdigit():
@@ -493,6 +548,8 @@ elif not got_response:
     print("Ни одного успешного ответа API — data.json НЕ трогаем (вероятно лимит API).")
     raise SystemExit("API не вернул матчи; существующие данные сохранены.")
 else:
+    for t in data["tournaments"]:
+        dedupe_tournament_matches(t)
     fetch_open_odds()
     for t in data["tournaments"]:
         t["matches"].sort(key=lambda x: (x.get("date", ""), x.get("time", "")))
