@@ -153,7 +153,7 @@ def main():
     gpt_matches = gpt_doc.get("matches", {}) if isinstance(gpt_doc, dict) else {}
     R = load(res_path, {"updated":"","sources":{},"ai":{"win":0,"lose":0,"push":0},"recent":[],"done":[]})
     R.setdefault("sources",{}); R.setdefault("ai",{"win":0,"lose":0,"push":0}); R.setdefault("recent",[]); R.setdefault("done",[]); R.setdefault("matches",0)
-    R.setdefault("ai75",{"win":0,"lose":0,"push":0}); R.setdefault("gpt75",{"win":0,"lose":0,"push":0})
+    R.setdefault("ai75",{"win":0,"lose":0,"push":0}); R.setdefault("gpt",{"win":0,"lose":0,"push":0}); R.setdefault("gpt75",{"win":0,"lose":0,"push":0})
     done=set(R["done"])
     added=0
     for t in data.get("tournaments",[]):
@@ -178,8 +178,7 @@ def main():
                 S=R["sources"].setdefault(src,{"reg":reg,"win":0,"lose":0,"push":0})
                 if r in ("win","lose","push"): S[r]+=1
                 picklog.append({"src":src,"reg":reg,"pick":tp.get("pick",""),"res":r or "skip"})
-            # Историческое поле ai оставляем для совместимости; отдельные ai75/gpt75
-            # считают только новые AI-ставки с оценкой не ниже установленного порога.
+            # Все прогнозы ИИ считаются отдельно от подвыборок с оценкой не ниже 75%.
             air=None
             ai_opinion=m.get("ai") or {}
             ai_prob=ai_probability(ai_opinion)
@@ -206,15 +205,18 @@ def main():
             gpt_prob=ai_probability(gpt_opinion)
             gpt_pick=str(gpt_opinion.get("bet") or "").strip()
             gpt_result=None
-            if (gpt_opinion.get("eligible") is True and gpt_prob is not None
-                    and gpt_prob >= AI_MIN_PROBABILITY and gpt_pick
-                    and ai_pick_has_coefficient(gpt_opinion, m)
+            gpt75_result=None
+            if (gpt_pick and ai_pick_has_coefficient(gpt_opinion, m)
                     and published_before_kickoff({"published_at":gpt_opinion.get("generated_at")}, m)):
                 gpt_result=settle_pick(gpt_pick, h, a, m["home"], m["away"])
-                if gpt_result in ("win","lose","push"): R["gpt75"][gpt_result]+=1
+                if gpt_result in ("win","lose","push"):
+                    R["gpt"][gpt_result]+=1
+                    if gpt_prob is not None and gpt_prob >= AI_MIN_PROBABILITY:
+                        gpt75_result=gpt_result
+                        R["gpt75"][gpt_result]+=1
             R["recent"].insert(0, {"date":m["date"],"home":m["home"],"away":m["away"],"score":f"{h}:{a}",
                                    "tour":t.get("short",t.get("name","")),"ai":air or "skip",
-                                   "ai75":ai75 or "skip","gpt75":gpt_result or "skip",
+                                   "ai75":ai75 or "skip","gpt":gpt_result or "skip","gpt75":gpt75_result or "skip",
                                    "gpt_bet":gpt_pick if gpt_result else "",
                                    "gpt_probability":gpt_prob if gpt_result else None,"picks":picklog})
             done.add(key); added+=1
